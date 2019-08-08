@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="~/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="~/css/public.css" media="all" />
+    @RenderSection("head", false)
+</head>
+<body class="childrenBody">
+    @switch (ViewData["iPageType"])
+    {
+        //数据页
+        case 0:
+            <div class="layui-collapse" lay-filter="test">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">展开此面板进行搜索~</h2>
+                    <div class="layui-colla-content">
+                        <form class="layui-form">
+                            @Html.AntiForgeryToken()
+                            <table style="text-align:center;border-collapse:separate; border-spacing:0px 10px;">
+                                @RenderSection("Search", false)
+                                <tr>
+                                    <td colspan="6">
+                                        <button type="button" class="layui-btn" lay-filter="btnSearch" id="btnSearch"><i class="layui-icon layui-icon-search"></i>搜索</button>
+                                        <button type="reset" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>清空</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <blockquote class="layui-elem-quote quoteBox">
+                <div class="layui-inline">
+                    <a id="btnAdd" class="layui-btn"><i class="layui-icon layui-icon-add-1">&#xe654;</i>新增</a>
+                </div>
+                <div class="layui-inline">
+                    <a id="btnUpdate" class="layui-btn"><i class="layui-icon layui-icon-edit">&#xe642;</i>修改</a>
+                </div>
+                <div class="layui-inline">
+                    <a id="btnCopy" class="layui-btn"><i class="layui-icon layui-icon-add-1">&#xe654;</i>复制</a>
+                </div>
+                <div class="layui-inline">
+                    <a id="btnDelete" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                </div>
+                @RenderSection("Button", false)
+            </blockquote>
+            <table id="dataTable" lay-filter="dataTable"></table>
+            @RenderBody()
+            @RenderSection("Scripts", false)
+            break;
+        //新增修改页
+        case 1:
+            <form class="layui-form" id="form1">
+                @Html.Hidden("Id")
+                @Html.AntiForgeryToken()
+                <table style="text-align:center;border-collapse:separate; border-spacing:0px 10px;">
+                    @RenderBody()
+                    <tr>
+                        <td colspan="6">
+                            <button class="layui-btn" lay-submit="" lay-filter="btnSubmit" id="btnSubmit"><i class="layui-icon layui-icon-ok">&#xe605;</i>确定</button>
+                            <button type="reset" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>重置</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            @RenderSection("Scripts", false)
+            break;
+    }
+</body>
+</html>

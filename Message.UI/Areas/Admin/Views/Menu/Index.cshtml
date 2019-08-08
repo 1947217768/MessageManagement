@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "用户管理";
+}
+@section Search{
+    <tr>
+        <td style="width:200px">菜单名称:</td>
+        <td style="width:400px"><input type="text" id="Sname" name="Sname" class="layui-input"></td>
+        <td style="width:200px;">备注:</td>
+        <td style="width:400px"><input type="text" id="Sremarks" name="Sremarks" class="layui-input"></td>
+        <td style="width:200px">是否显示:</td>
+        <td style="width:400px;text-align:left"><input type="checkbox" name="Bdisplay" id="Bdisplay" lay-filter="BisLock" lay-skin="switch" lay-text="是|否" value="1" /></td>
+    </tr>
+}
+@section Button{
+    @*按钮扩展*@
+}
+<script type="text/html" id="BdisplayTmp">
+    {{#  if(d.Bdisplay ===true){ }}
+    <input type="checkbox" name="Bdisplay" value="{{d.Id}}" lay-filter="BdisplayTmp" lay-skin="switch" lay-text="是|否" checked>
+    {{#  } else{ }}
+    <input type="checkbox" name="Bdisplay" value="{{d.Id}}" lay-filter="BdisplayTmp" lay-skin="switch" lay-text="是|否">
+    {{#  }}}
+</script>
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script src="~/Admin/Menu/Index.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}

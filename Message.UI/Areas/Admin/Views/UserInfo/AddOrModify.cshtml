@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "编辑用户";
+}
+<tr>
+    <td style="width:130px">登录名:</td>
+    <td style="width:250px"><input type="text" id="SloginName" name="SloginName" lay-verify="required|SloginName" class="layui-input"></td>
+    <td style="width:130px">用户名:</td>
+    <td style="width:250px"><input type="text" id="SuserName" name="SuserName" lay-verify="required" class="layui-input"></td>
+</tr>
+<tr>
+    <td>邮箱:</td>
+    <td><input type="text" id="SuserEmail" name="SuserEmail" lay-verify="required|email" class="layui-input"></td>
+    <td>手机号:</td>
+    <td><input type="text" id="SuserPhone" name="SuserPhone" lay-verify="phone|number" class="layui-input"></td>
+</tr>
+<tr>
+    <td>所属角色</td>
+    <td>
+        <div style="text-align:left" id="roles"></div>
+    </td>
+    <td>是否锁定:</td>
+    <td style="text-align:left">
+        <input type="checkbox" name="BisLock" id="BisLock" lay-filter="BisLock" lay-skin="switch" lay-text="是|否" value="1" />
+    </td>
+</tr>
+<tr>
+    <td>备注:</td>
+    <td colspan="3"><textarea id="Sremarks" name="Sremarks" class="layui-textarea"></textarea></td>
+</tr>
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Admin/UserInfo/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}
+
+
+

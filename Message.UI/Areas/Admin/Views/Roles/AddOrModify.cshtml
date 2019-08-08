@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "编辑角色";
+}
+<tr>
+    <td style="width:130px">角色名称:</td>
+    <td style="width:250px"><input type="text" id="SroleName" name="SroleName" lay-verify="required" class="layui-input"></td>
+    <td style="width:130px"></td>
+    <td style="width:250px"></td>
+</tr>
+<tr>
+    <td>用户:</td>
+    <td>
+        <div style="text-align:left" id="users"></div>
+    </td>
+    <td>菜单:</td>
+    <td>
+        <div style="text-align:left" id="menus"></div>
+    </td>
+</tr>
+<tr>
+    <td>备注:</td>
+    <td colspan="3"><textarea id="Sremarks" name="Sremarks" class="layui-textarea"></textarea></td>
+</tr>
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Admin/Roles/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}
+
+
+
