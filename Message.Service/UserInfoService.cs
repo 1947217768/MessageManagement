@@ -80,6 +80,7 @@ namespace Message.Service
                 entityUserInfo = await _UserInfoRepository.SelectAsync(model.Id);
                 if (entityUserInfo != null)
                 {
+                    model.SloginPwd = entityUserInfo.SloginPwd;
                     _mapper.Map(model, entityUserInfo);
                     _UserInfoRepository.Update(entityUserInfo, sOperator);
                 }

@@ -33,14 +33,5 @@ namespace Message.Repository
         {
             base.AfterAppend(DB, entity, sOperator);
         }
-        public override void ChangeDataDeleteKey(Menu entity, string sOperator)
-        {
-            string[] arrUser_Menu = RedisHelper.Keys("*_Menu");
-            for (int i = 0; i < arrUser_Menu.Length; i++)
-            {
-                RedisHelper.Del(arrUser_Menu[i]);
-            }
-            base.ChangeDataDeleteKey(entity, sOperator);
-        }
     }
 }

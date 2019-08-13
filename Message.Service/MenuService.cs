@@ -98,7 +98,8 @@ namespace Message.Service
                 {
                     foreach (int id in arrId)
                     {
-                        _roleMenuRepository.Delete(new RoleMenu() { ImenuId = id }, sOperator);
+
+                        _roleMenuRepository.DeleteRange(_roleMenuRepository.SelectALL(new RoleMenu() { ImenuId = id }), sOperator);
                     }
                 }
                 return true;

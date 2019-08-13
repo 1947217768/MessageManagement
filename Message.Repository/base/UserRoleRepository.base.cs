@@ -11,7 +11,11 @@ namespace Message.Repository
 {
     public sealed partial class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepository
     {
-        public UserRoleRepository(MessageManagementContext messagemanagementcontext) : base(messagemanagementcontext) { }
+        private readonly IUserInfoRepository _userInfoRepository;
+        public UserRoleRepository(MessageManagementContext messagemanagementcontext, IUserInfoRepository userInfoRepository) : base(messagemanagementcontext)
+        {
+            _userInfoRepository = userInfoRepository;
+        }
         //public UserRoleRepository(MessageManagementContext messagemanagementcontext)
         //{
         //    _dbContext = messagemanagementcontext;

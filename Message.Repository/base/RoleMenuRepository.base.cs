@@ -16,10 +16,12 @@ namespace Message.Repository
         //    _dbContext = messagemanagementcontext;
         //}
 
-        protected readonly IUserRoleRepository _userRoleRepository;
-        public RoleMenuRepository(MessageManagementContext messagemanagementcontext, IUserRoleRepository userRoleRepository) : base(messagemanagementcontext)
+        private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IUserInfoRepository _userInfoRepository;
+        public RoleMenuRepository(MessageManagementContext messagemanagementcontext, IUserRoleRepository userRoleRepository, IUserInfoRepository userInfoRepository) : base(messagemanagementcontext)
         {
             _userRoleRepository = userRoleRepository;
+            _userInfoRepository = userInfoRepository;
         }
         protected override IQueryable<RoleMenu> SearchFilterB(DbContext DB, RoleMenu oSearchEntity, IQueryable<RoleMenu> query, string sOperator = null)
         {

@@ -126,34 +126,43 @@ namespace Message.Core.Repository
         public int Delete(TEntity entity, string sOperator)
         {
             int iResult = 0;
-            if (!BeforDelete(_dbContext, entity, sOperator))
+            if (entity != null)
             {
-                return iResult;
+                if (!BeforDelete(_dbContext, entity, sOperator))
+                {
+                    return iResult;
+                }
+                _dbContext.Set<TEntity>().Remove(entity);
+                iResult += _dbContext.SaveChanges();
+                AfterDelete(_dbContext, entity, sOperator);
             }
-            _dbContext.Set<TEntity>().Remove(entity);
-            iResult += _dbContext.SaveChanges();
-            AfterDelete(_dbContext, entity, sOperator);
             return iResult;
         }
         public int Delete(int id, string sOperator)
         {
             int iResult = 0;
             TEntity entity = _dbContext.Set<TEntity>().Find(id);
-            if (!BeforDelete(_dbContext, entity, sOperator))
+            if (entity != null)
             {
-                return iResult;
+                if (!BeforDelete(_dbContext, entity, sOperator))
+                {
+                    return iResult;
+                }
+                _dbContext.Set<TEntity>().Remove(entity);
+                iResult += _dbContext.SaveChanges();
+                AfterDelete(_dbContext, entity, sOperator);
             }
-            _dbContext.Set<TEntity>().Remove(entity);
-            iResult += _dbContext.SaveChanges();
-            AfterDelete(_dbContext, entity, sOperator);
             return iResult;
         }
         public int DeleteRange(List<TEntity> lstTentity, string sOperator)
         {
             int iResult = 0;
-            foreach (TEntity entity in lstTentity)
+            if (lstTentity?.Count > 0)
             {
-                iResult += Delete(entity, sOperator);
+                foreach (TEntity entity in lstTentity)
+                {
+                    iResult += Delete(entity, sOperator);
+                }
             }
             return iResult;
         }

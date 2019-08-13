@@ -135,7 +135,18 @@ namespace Message.Repository
         }
         public override void ChangeDataDeleteKey(RoleMenu entity, string sOperator)
         {
-            _userRoleRepository.Select(entity.IroleId);
+            List<UserRole> lstUserRole = _userRoleRepository.SelectALL(new UserRole() { IroleId = entity.IroleId });
+            if (lstUserRole?.Count > 0)
+            {
+                foreach (UserRole entityUserRole in lstUserRole)
+                {
+                    UserInfo entityUserInfo = _userInfoRepository.Select(entityUserRole.IuserId);
+                    if (RedisHelper.Exists(entityUserInfo.SloginName + "_UserMenu"))
+                    {
+                        RedisHelper.Del(entityUserInfo.SloginName + "_UserMenu");
+                    }
+                }
+            }
             base.ChangeDataDeleteKey(entity, sOperator);
         }
     }

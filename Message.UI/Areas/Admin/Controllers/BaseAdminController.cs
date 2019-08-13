@@ -18,6 +18,7 @@ namespace Message.UI.Areas.Admin.Controllers
     [Route("Admin/[controller]/[action]")]
     public abstract class BaseAdminController : Controller
     {
+        
         /// <summary>
         /// 读取appsettings.json配置文件
         /// </summary>

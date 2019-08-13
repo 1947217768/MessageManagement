@@ -61,12 +61,11 @@ namespace Message.UI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<string> GetMenuAsync()
         {
-            string sUserMenuKey = User.Identity.Name + "_Menu";
+            string sUserMenuKey = User.Identity.Name + "_UserMenu";
             List<TreeItem<ViewMenu>> lstTreeItem;
-            lstTreeItem = RedisHelper.Get<List<TreeItem<ViewMenu>>>(sUserMenuKey);
-            RedisHelper.Del(sUserMenuKey);
-            if (lstTreeItem?.Count > 0)
+            if (RedisHelper.Exists(sUserMenuKey))
             {
+                lstTreeItem = RedisHelper.Get<List<TreeItem<ViewMenu>>>(sUserMenuKey);
                 return JsonHelper.ObjectToJSON(lstTreeItem);
             }
             else

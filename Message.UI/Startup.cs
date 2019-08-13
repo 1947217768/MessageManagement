@@ -41,6 +41,7 @@ namespace Message.UI
             var connection = Configuration.GetConnectionString("DefaultSqlServer");
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<MessageManagementContext>(options => options.UseSqlServer(connection));
+            //初始化Redis
             var csredis = new CSRedis.CSRedisClient(Configuration.GetSection("RedisConnectionStrins")["DefaultRedis"]);
             RedisHelper.Initialization(csredis);
             services.AddControllers();

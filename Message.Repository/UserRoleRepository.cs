@@ -80,6 +80,18 @@ namespace Message.Repository
             return lstUserRole;
         }
 
+        public override void ChangeDataDeleteKey(UserRole entity, string sOperator)
+        {
+            UserInfo entityUserInfo = _userInfoRepository.Select(entity.IuserId);
+            if (entityUserInfo != null)
+            {
+                if (RedisHelper.Exists(entityUserInfo.SloginName + "_UserMenu"))
+                {
+                    RedisHelper.Del(entityUserInfo.SloginName + "_UserMenu");
+                }
+            }
+            base.ChangeDataDeleteKey(entity, sOperator);
+        }
         public async Task<List<UserRole>> AddOrDeleteUserRoleAsync(int iUserId, List<int> lstRoleId, string sOperator)
         {
             List<UserRole> lstUserRole = new List<UserRole>();
