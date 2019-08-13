@@ -23,7 +23,6 @@ namespace Message.Service
             _UserRoleRepository = UserRoleRepository;
             _mapper = mapper;
         }
-
         public PageInfo<UserInfo> GetPageList(PageInfo<UserInfo> pageInfo, UserInfo oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
             return _UserInfoRepository.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder);

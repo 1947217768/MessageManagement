@@ -31,7 +31,17 @@ namespace Message.Repository
         }
         public override void AfterAppend(DbContext DB, Menu entity, string sOperator)
         {
+            entity.SlinkUrl += "?id=" + entity.Id;
+            Update(entity, sOperator);
             base.AfterAppend(DB, entity, sOperator);
+        }
+        public override void ChangeDataDeleteKey(Menu entity, string sOperator)
+        {
+            string[] sUserMenuKey = RedisHelper.Keys("*_UserMenu");
+            string[] sUseTreeItemMenuKey = RedisHelper.Keys("*_UserTreeItemMenu");
+            RedisHelper.Del(sUserMenuKey);
+            RedisHelper.Del(sUseTreeItemMenuKey);
+            base.ChangeDataDeleteKey(entity, sOperator);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Message.UI.Areas.Admin.Controllers
     public class RolesController : BaseAdminController
     {
         private readonly IRolesService _rolesService;
-        public RolesController(IRolesService rolesService)
+        public RolesController(IRolesService rolesService, IMenuService menuService) : base(menuService)
         {
             _rolesService = rolesService;
         }
@@ -31,19 +31,31 @@ namespace Message.UI.Areas.Admin.Controllers
         }
         public string GetRoleList()
         {
-            List<Roles> lstRoles = _rolesService.GetRolesList();
             List<ViewSelect> lstViewSelect = new List<ViewSelect>();
-            if (lstRoles?.Count > 0)
+            string sRoleKey = "System_Roles";
+            if (RedisHelper.Exists(sRoleKey))
             {
-                foreach (Roles entityRoles in lstRoles)
-                {
-                    ViewSelect entity = new ViewSelect();
-                    entity.id = entityRoles.Id;
-                    entity.name = entityRoles.SroleName;
-                    lstViewSelect.Add(entity);
-                }
+                //读取Redis
+                lstViewSelect = RedisHelper.Get<List<ViewSelect>>(sRoleKey);
+                return JsonHelper.ObjectToJSON(lstViewSelect);
             }
-            return JsonHelper.ObjectToJSON(lstViewSelect);
+            else
+            {
+                List<Roles> lstRoles = _rolesService.GetRolesList();
+                if (lstRoles?.Count > 0)
+                {
+                    foreach (Roles entityRoles in lstRoles)
+                    {
+                        ViewSelect entity = new ViewSelect();
+                        entity.id = entityRoles.Id;
+                        entity.name = entityRoles.SroleName;
+                        lstViewSelect.Add(entity);
+                    }
+                }
+                //设置Redis
+                RedisHelper.Set(sRoleKey, lstViewSelect);
+                return JsonHelper.ObjectToJSON(lstViewSelect);
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

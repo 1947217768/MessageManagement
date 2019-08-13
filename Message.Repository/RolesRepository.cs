@@ -25,5 +25,14 @@ namespace Message.Repository
                     return query = query.OrderByDescending(x => x.TmodifyTime).ThenBy(x => x.Id);
             }
         }
+        public override void ChangeDataDeleteKey(Roles entity, string sOperator)
+        {
+            string sRolesKey = "System_Roles";
+            if (RedisHelper.Exists(sRolesKey))
+            {
+                RedisHelper.Del(sRolesKey);
+            }
+            base.ChangeDataDeleteKey(entity, sOperator);
+        }
     }
 }

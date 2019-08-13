@@ -89,6 +89,12 @@ namespace Message.Repository
                 {
                     RedisHelper.Del(entityUserInfo.SloginName + "_UserMenu");
                 }
+                //用户菜树Redis Key
+                string sUserTreeItemMenuKey = entityUserInfo.SloginName + "_UserTreeItemMenu";
+                if (RedisHelper.Exists(sUserTreeItemMenuKey))
+                {
+                    RedisHelper.Del(sUserTreeItemMenuKey);
+                }
             }
             base.ChangeDataDeleteKey(entity, sOperator);
         }

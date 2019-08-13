@@ -141,9 +141,15 @@ namespace Message.Repository
                 foreach (UserRole entityUserRole in lstUserRole)
                 {
                     UserInfo entityUserInfo = _userInfoRepository.Select(entityUserRole.IuserId);
+                    //用户菜树Redis Key
+                    string sUserTreeItemMenuKey = entityUserInfo.SloginName + "_UserTreeItemMenu";
                     if (RedisHelper.Exists(entityUserInfo.SloginName + "_UserMenu"))
                     {
                         RedisHelper.Del(entityUserInfo.SloginName + "_UserMenu");
+                    }
+                    if (RedisHelper.Exists(sUserTreeItemMenuKey))
+                    {
+                        RedisHelper.Del(sUserTreeItemMenuKey);
                     }
                 }
             }

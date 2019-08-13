@@ -15,7 +15,7 @@ namespace Message.UI.Areas.Admin.Controllers
     {
         private readonly IUploadFileInfoService _UploadFileInfoService;
 
-        public UploadFileInfoController(IUploadFileInfoService UploadFileInfoService)
+        public UploadFileInfoController(IUploadFileInfoService UploadFileInfoService, IMenuService menuService) : base(menuService)
         {
             _UploadFileInfoService = UploadFileInfoService;
         }

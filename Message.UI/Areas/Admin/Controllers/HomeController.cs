@@ -26,8 +26,6 @@ namespace Message.UI.Areas.Admin.Controllers
         private readonly IUploadFileInfoService _uploadFileInfoService;
 
 
-
-
         public HomeController(IHttpContextAccessor httpContextAccessor, IUserRoleService userRoleService, IUserInfoService UserInfoService, IRoleMenuService RoleMenuService, IMenuService MenuService, IUploadFileInfoService uploadFileInfoService)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -61,54 +59,39 @@ namespace Message.UI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<string> GetMenuAsync()
         {
+            string sUserTreeItemMenuKey = User.Identity.Name + "_UserTreeItemMenu";
             string sUserMenuKey = User.Identity.Name + "_UserMenu";
-            List<TreeItem<ViewMenu>> lstTreeItem;
-            if (RedisHelper.Exists(sUserMenuKey))
+            List<TreeItem<ViewMenu>> lstTreeItem = new List<TreeItem<ViewMenu>>(); ;
+            if (RedisHelper.Exists(sUserTreeItemMenuKey))
             {
-                lstTreeItem = RedisHelper.Get<List<TreeItem<ViewMenu>>>(sUserMenuKey);
-                return JsonHelper.ObjectToJSON(lstTreeItem);
+                lstTreeItem = RedisHelper.Get<List<TreeItem<ViewMenu>>>(sUserTreeItemMenuKey);
             }
             else
             {
                 List<ViewMenu> lstViewMenu = new List<ViewMenu>();
+                List<Menu> lstUserMenu = new List<Menu>();
                 int iUserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value);
-                //查询用户拥有角色集合
-                List<UserRole> lstUserRoleList = await _UserInfoService.GetUserRoleListAsync(new UserRole() { IuserId = iUserId });
                 //查询角色所拥有的菜单集合
-                List<RoleMenu> lstRoleMenuList = new List<RoleMenu>();
-                if (lstUserRoleList?.Count > 0)
+                lstUserMenu = await _MenuService.GetRoleMenuListAnyncAsync(iUserId);
+                if (lstUserMenu?.Count > 0)
                 {
-                    foreach (UserRole entityUserRole in lstUserRoleList)
+                    //排序
+                    lstUserMenu = lstUserMenu.OrderBy(x => x.Isort).ToList();
+                    //设置用户菜单Redis
+                    RedisHelper.Set(sUserMenuKey, lstUserMenu);
+                    lstUserMenu.ForEach(entityMenu =>
                     {
-                        List<RoleMenu> lstRoleMenu = await _RoleMenuService.GetRoleMenuListAsync(new RoleMenu() { IroleId = entityUserRole.IroleId });
-                        if (lstRoleMenu?.Count > 0)
-                        {
-                            lstRoleMenuList.AddRange(lstRoleMenu);
-                        }
-                    }
-                    //去重
-                    lstRoleMenuList = lstRoleMenuList.Where((x, i) => lstRoleMenuList.FindIndex(z => z.ImenuId == x.ImenuId) == i).ToList();
-                    //获取菜单
-                    List<Menu> lstUserMenu = await _MenuService.GetRoleMenuListAnyncAsync(lstRoleMenuList);
-                    if (lstUserMenu?.Count > 0)
-                    {
-                        //排序
-                        lstUserMenu = lstUserMenu.OrderBy(x => x.Isort).ToList();
-                        lstUserMenu.ForEach(entityMenu =>
-                        {
-                            ViewMenu entityViewMenu = new ViewMenu();
-                            entityViewMenu.Id = entityMenu.Id;
-                            entityViewMenu.ParentId = entityMenu.IparentId == -1 ? 0 : entityMenu.IparentId;
-                            entityViewMenu.DisplayName = entityMenu.Sname;
-                            entityViewMenu.IconUrl = entityMenu.SiconUrl;
-                            entityViewMenu.LinkUrl = entityMenu.SlinkUrl;
-                            entityViewMenu.Target = "";
-                            lstViewMenu.Add(entityViewMenu);
-                        });
-                    }
+                        ViewMenu entityViewMenu = new ViewMenu();
+                        entityViewMenu.Id = entityMenu.Id;
+                        entityViewMenu.ParentId = entityMenu.IparentId == -1 ? 0 : entityMenu.IparentId;
+                        entityViewMenu.DisplayName = entityMenu.Sname;
+                        entityViewMenu.IconUrl = entityMenu.SiconUrl;
+                        entityViewMenu.LinkUrl = entityMenu.SlinkUrl;
+                        entityViewMenu.Target = "";
+                        lstViewMenu.Add(entityViewMenu);
+                    });
                 }
                 lstTreeItem = lstViewMenu.GenerateTree(x => x.Id, x => x.ParentId).ToList();
-                RedisHelper.Set(sUserMenuKey, lstTreeItem);
             }
             return JsonHelper.ObjectToJSON(lstTreeItem);
         }
@@ -117,5 +100,23 @@ namespace Message.UI.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult Error(int iErrorCode)
+        {
+            string sMsg = string.Empty;
+            switch (iErrorCode)
+            {
+                case 1:
+                    sMsg = "参数错误!";
+                    break;
+                case 2:
+                    sMsg = "菜单ID不匹配!";
+                    break;
+                case 3:
+                    sMsg = "没有权限!";
+                    break;
+            }
+            ViewBag.Msg = sMsg;
+            return View();
+        }
     }
 }

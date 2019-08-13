@@ -32,47 +32,6 @@ namespace Message.Service
         {
             return await _UserRoleRepository.SelectALLAsync(entityUserRole);
         }
-
-        //public async Task<List<UserRole>> AddOrDeleteUserRoleAsync(int iUserId, List<int> lstRoleId, string sOperator)
-        //{
-        //    List<UserRole> lstUserRole = new List<UserRole>();
-        //    if (iUserId > 0 && lstRoleId?.Count > 0)
-        //    {
-        //        lstUserRole = await _UserRoleRepository.SelectALLAsync(new UserRole() { IuserId = iUserId });
-        //        //用户角色集合
-        //        //老用户角色对应关系集合
-        //        List<int> lstOldUserRoleId = lstUserRole.Select(x => x.IroleId).ToList();
-        //        //判断是否相同
-        //        if (!lstOldUserRoleId.Equals(lstRoleId))
-        //        {
-        //            //取差集
-        //            List<int> lstNewUserRoleId = new List<int>();
-        //            if (lstOldUserRoleId?.Count > lstRoleId?.Count)
-        //            {
-        //                lstNewUserRoleId = lstOldUserRoleId.Except(lstRoleId).ToList();
-        //            }
-        //            else
-        //            {
-        //                lstNewUserRoleId = lstRoleId.Except(lstOldUserRoleId).ToList();
-        //            }
-        //            foreach (int iRoleId in lstNewUserRoleId)
-        //            {
-        //                UserRole entityUserRole = await _UserRoleRepository.SelectAsync(new UserRole() { IuserId = iUserId, IroleId = iRoleId });
-        //                if (entityUserRole == null)
-        //                {
-        //                    await _UserRoleRepository.InsertAsync(new UserRole() { IuserId = iUserId, IroleId = iRoleId }, sOperator);
-        //                }
-        //                else
-        //                {
-        //                    _UserRoleRepository.Delete(entityUserRole, sOperator);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    lstUserRole = await _UserRoleRepository.SelectALLAsync(new UserRole() { IuserId = iUserId });
-        //    return lstUserRole;
-
-        //}
         public async Task<List<UserRole>> GetRoleListAsync(UserRole entityUserRole = null, string sOperator = null)
         {
             return await _UserRoleRepository.SelectALLAsync(entityUserRole, sOperator);

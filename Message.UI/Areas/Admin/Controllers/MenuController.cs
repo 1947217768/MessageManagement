@@ -15,7 +15,7 @@ namespace Message.UI.Areas.Admin.Controllers
     public class MenuController : BaseAdminController
     {
         private readonly IMenuService _menuService;
-        public MenuController(IMenuService menuService)
+        public MenuController(IMenuService menuService) : base(menuService)
         {
             _menuService = menuService;
         }

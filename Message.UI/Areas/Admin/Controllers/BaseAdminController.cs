@@ -9,6 +9,9 @@ using Message.Entity.Mapping;
 using Message.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Message.IService;
 
 namespace Message.UI.Areas.Admin.Controllers
 {
@@ -18,7 +21,37 @@ namespace Message.UI.Areas.Admin.Controllers
     [Route("Admin/[controller]/[action]")]
     public abstract class BaseAdminController : Controller
     {
-        
+        private readonly IMenuService _MenuService;
+        public BaseAdminController(IMenuService menuService)
+        {
+            _MenuService = menuService;
+        }
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            int iUserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value);
+            string sAreaName = context.ActionDescriptor.RouteValues["area"].ToString();
+            string sControllerName = context.ActionDescriptor.RouteValues["controller"].ToString();
+            string sActionNmae = context.ActionDescriptor.RouteValues["action"].ToString();
+            int iMenuId = Convert.ToInt32(context.HttpContext.Request.Query["Id"]);
+            if (string.IsNullOrWhiteSpace(sAreaName) || string.IsNullOrWhiteSpace(sControllerName) || string.IsNullOrWhiteSpace(sActionNmae) || iMenuId == 0)
+            {
+               // context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=1");
+            }
+            else
+            {
+
+                if (await _MenuService.CheckUserMenuPowerAsync(iUserId, iMenuId))
+                {
+
+                }
+                else
+                {
+                    context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=3");
+                }
+            }
+            await base.OnActionExecutionAsync(context, next);
+        }
+
         /// <summary>
         /// 读取appsettings.json配置文件
         /// </summary>

@@ -23,7 +23,7 @@ namespace Message.UI.Areas.Admin.Controllers
         private readonly IUploadFileInfoService _uploadFileInfoService;
         private readonly IMapper _mapper;
 
-        public UserInfoController(IUserInfoService userInfoService, IUserRoleService userRoleService, IUploadFileInfoService uploadFileInfoService, IMapper mapper)
+        public UserInfoController(IUserInfoService userInfoService, IUserRoleService userRoleService, IUploadFileInfoService uploadFileInfoService, IMenuService menuService, IMapper mapper) : base(menuService)
         {
             _userInfoService = userInfoService;
             _userRoleService = userRoleService;

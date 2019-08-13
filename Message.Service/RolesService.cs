@@ -49,14 +49,8 @@ namespace Message.Service
                 entityRoles = _Mapper.Map(model, entityRoles);
                 _RolesRepository.Update(entityRoles, sOperctor);
             }
-            if (model.lstUserId?.Count > 0 && entityRoles.Id > 0)
-            {
-                await _userRoleRepository.AddOrDeleteRoleUserAsync(entityRoles.Id, model.lstUserId, sOperctor);
-            }
-            if (model.lstMenuId?.Count > 0 && entityRoles.Id > 0)
-            {
-                await _roleMenuRepository.AddOrDeleteRoleMenuAsync(entityRoles.Id, model.lstMenuId, sOperctor);
-            }
+            await _userRoleRepository.AddOrDeleteRoleUserAsync(entityRoles.Id, model.lstUserId, sOperctor);
+            await _roleMenuRepository.AddOrDeleteRoleMenuAsync(entityRoles.Id, model.lstMenuId, sOperctor);
             return entityRoles;
 
         }
