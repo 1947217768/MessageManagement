@@ -11,7 +11,7 @@ namespace Message.UI.Areas.Admin.Controllers
     public class UserRoleController : BaseAdminController
     {
         private readonly IUserRoleService _UserRoleService;
-        public UserRoleController(IUserRoleService UserRoleService, IMenuService menuService) : base(menuService)
+        public UserRoleController(IUserRoleService UserRoleService)
         {
             _UserRoleService = UserRoleService;
         }

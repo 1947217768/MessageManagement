@@ -4,14 +4,16 @@ using Message.Entity.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Message.Entity.Migrations
 {
     [DbContext(typeof(MessageManagementContext))]
-    partial class MessageManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20190814055651_HasIndex")]
+    partial class HasIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,38 +139,6 @@ namespace Message.Entity.Migrations
                     b.ToTable("Menu");
                 });
 
-            modelBuilder.Entity("Message.Entity.Mapping.MenuAction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IactionId");
-
-                    b.Property<int>("ImenuId");
-
-                    b.Property<string>("Screater")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Smodifier")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Sremarks")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime?>("TcreateTime");
-
-                    b.Property<DateTime?>("TmodifyTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImenuId", "IactionId");
-
-                    b.ToTable("MenuAction");
-                });
-
             modelBuilder.Entity("Message.Entity.Mapping.RoleMenu", b =>
                 {
                     b.Property<int>("Id")
@@ -233,72 +203,6 @@ namespace Message.Entity.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Message.Entity.Mapping.SystemAction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IcontrollerId");
-
-                    b.Property<string>("SactionName")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("Screater")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Smodifier")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Sremarks")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime?>("TcreateTime");
-
-                    b.Property<DateTime?>("TmodifyTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IcontrollerId");
-
-                    b.ToTable("SystemAction");
-                });
-
-            modelBuilder.Entity("Message.Entity.Mapping.SystemController", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Bvalid");
-
-                    b.Property<string>("ScontrollerName")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Screater")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Smodifier")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Sremarks")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("SresultType");
-
-                    b.Property<DateTime?>("TcreateTime");
-
-                    b.Property<DateTime?>("TmodifyTime");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SystemController");
                 });
 
             modelBuilder.Entity("Message.Entity.Mapping.UploadFileInfo", b =>

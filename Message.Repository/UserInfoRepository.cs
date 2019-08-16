@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public partial class UserInfoRepository : BaseRepository<UserInfo>, IUserInfoRepository
+    public partial class UserInfoRepository : MessageManagementDBRepository<UserInfo>, IUserInfoRepository
     {
         //private readonly IUserRoleRepository _userRoleRepository;
         //public UserInfoRepository()

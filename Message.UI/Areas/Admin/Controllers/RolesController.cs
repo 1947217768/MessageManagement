@@ -13,7 +13,7 @@ namespace Message.UI.Areas.Admin.Controllers
     public class RolesController : BaseAdminController
     {
         private readonly IRolesService _rolesService;
-        public RolesController(IRolesService rolesService, IMenuService menuService) : base(menuService)
+        public RolesController(IRolesService rolesService) 
         {
             _rolesService = rolesService;
         }

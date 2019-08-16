@@ -14,10 +14,15 @@ namespace Message.Core.Repository
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, new()
     {
         protected readonly DbContext _dbContext;
-        public BaseRepository(DbContext dbContext)
+        //public BaseRepository(DbContext dbContext)
+        //{
+        //    _dbContext = dbContext;
+        //}
+        public BaseRepository()
         {
-            _dbContext = dbContext;
+            _dbContext = GetDB();
         }
+        public abstract DbContext GetDB();
         protected virtual IQueryable<TEntity> SearchFilter(DbContext DB, TEntity oSearchEntity, IQueryable<TEntity> query, string sOperator = null)
         {
             query = FixedQueryFilter(DB, oSearchEntity, query, sOperator);

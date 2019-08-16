@@ -27,7 +27,7 @@ namespace Message.Service
         }
         public async Task<UploadFileInfo> GetFileInfoAsync(int iFileId, string sOperator = null)
         {
-            return await _UploadFileInfoRepository.SelectAsync(iFileId);
+            return await _UploadFileInfoRepository.SelectAsync(iFileId, sOperator);
         }
 
         [Obsolete]
@@ -75,9 +75,9 @@ namespace Message.Service
             }
             return uploadFileInfo;
         }
-        public async Task<UploadFileInfo> GetFileInfoAsync(Guid guid, string sOperator = null)
+        public async Task<UploadFileInfo> GetFileInfoAsync(UploadFileInfo entity, string sOperator = null)
         {
-            return await _UploadFileInfoRepository.SelectAsync(new UploadFileInfo() { Uid = guid });
+            return await _UploadFileInfoRepository.SelectAsync(entity, sOperator);
         }
     }
 }

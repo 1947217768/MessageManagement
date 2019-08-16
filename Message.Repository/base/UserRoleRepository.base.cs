@@ -9,10 +9,10 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public sealed partial class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepository
+    public sealed partial class UserRoleRepository : MessageManagementDBRepository<UserRole>, IUserRoleRepository
     {
         private readonly IUserInfoRepository _userInfoRepository;
-        public UserRoleRepository(MessageManagementContext messagemanagementcontext, IUserInfoRepository userInfoRepository) : base(messagemanagementcontext)
+        public UserRoleRepository(MessageManagementContext messagemanagementcontext, IUserInfoRepository userInfoRepository) // : base(messagemanagementcontext)
         {
             _userInfoRepository = userInfoRepository;
         }

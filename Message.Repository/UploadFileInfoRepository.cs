@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public partial class UploadFileInfoRepository : BaseRepository<UploadFileInfo>, IUploadFileInfoRepository
+    public partial class UploadFileInfoRepository : MessageManagementDBRepository<UploadFileInfo>, IUploadFileInfoRepository
     {
         protected override IQueryable<UploadFileInfo> ExistsFilter(out string sErrorMessage, UploadFileInfo entity, IQueryable<UploadFileInfo> query)
         {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Message.Repository
 {
-    public partial class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepository
+    public partial class UserRoleRepository : MessageManagementDBRepository<UserRole>, IUserRoleRepository
     {
         protected override IQueryable<UserRole> ExistsFilter(out string sErrorMessage, UserRole entity, IQueryable<UserRole> query)
         {

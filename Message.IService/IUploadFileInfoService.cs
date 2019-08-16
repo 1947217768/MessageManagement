@@ -22,11 +22,12 @@ namespace Message.IService
 
         Task<UploadFileInfo> AppendFileAsync(IFormFile file, string sOperator, string sDirectoryName = null);
         /// <summary>
-        /// 根据Guid查找文件信息
+        /// 查找文件信息
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
-        Task<UploadFileInfo> GetFileInfoAsync(Guid guid, string sOperator = null);
+        Task<UploadFileInfo> GetFileInfoAsync(UploadFileInfo entity, string sOperator = null);
+
 
     }
 }

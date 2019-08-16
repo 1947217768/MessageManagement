@@ -15,6 +15,6 @@ namespace Message.Entity.ViewEntity.UserInfo
         public bool BisLock { get; set; }
         public string SuserEmail { get; set; }
         public string Sremarks { get; set; }
-        public List<int> lstRoleId { get; set; }
+        public List<int> lstRoleId { get; set; } = new List<int>();
     }
 }

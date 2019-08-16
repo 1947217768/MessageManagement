@@ -22,9 +22,9 @@ namespace Message.UI.Areas.Admin.Controllers
     public abstract class BaseAdminController : Controller
     {
         private readonly IMenuService _MenuService;
-        public BaseAdminController(IMenuService menuService)
+        public BaseAdminController()
         {
-            _MenuService = menuService;
+            _MenuService = AppDependencyResolver.Current.GetService<IMenuService>();
         }
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
@@ -35,18 +35,24 @@ namespace Message.UI.Areas.Admin.Controllers
             int iMenuId = Convert.ToInt32(context.HttpContext.Request.Query["Id"]);
             if (string.IsNullOrWhiteSpace(sAreaName) || string.IsNullOrWhiteSpace(sControllerName) || string.IsNullOrWhiteSpace(sActionNmae) || iMenuId == 0)
             {
-               // context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=1");
+                // context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=1");
             }
             else
             {
-
-                if (await _MenuService.CheckUserMenuPowerAsync(iUserId, iMenuId))
+                if (await _MenuService.CheckMenuActionAsync(sAreaName, sControllerName, sActionNmae, iMenuId))
                 {
+                    if (await _MenuService.CheckUserMenuPowerAsync(iUserId, iMenuId))
+                    {
 
+                    }
+                    else
+                    {
+                        context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=3");
+                    }
                 }
                 else
                 {
-                    context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=3");
+                    context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=2");
                 }
             }
             await base.OnActionExecutionAsync(context, next);

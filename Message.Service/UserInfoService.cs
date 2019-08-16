@@ -84,10 +84,7 @@ namespace Message.Service
                     _UserInfoRepository.Update(entityUserInfo, sOperator);
                 }
             }
-            if (model.lstRoleId?.Count > 0 && entityUserInfo.Id > 0)
-            {
-                await _UserRoleRepository.AddOrDeleteUserRoleAsync(entityUserInfo.Id, model.lstRoleId, sOperator);
-            }
+            await _UserRoleRepository.AddOrDeleteUserRoleAsync(entityUserInfo.Id, model.lstRoleId, sOperator);
             return entityUserInfo;
         }
         public async Task<bool> ChangeUserLockStatusAsync(ChangeUserStatus entity, string sOperator)

@@ -61,7 +61,7 @@ namespace Message.UI.Areas.Admin.Controllers
         {
             string sUserTreeItemMenuKey = User.Identity.Name + "_UserTreeItemMenu";
             string sUserMenuKey = User.Identity.Name + "_UserMenu";
-            List<TreeItem<ViewMenu>> lstTreeItem = new List<TreeItem<ViewMenu>>(); ;
+            List<TreeItem<ViewMenu>> lstTreeItem = new List<TreeItem<ViewMenu>>();
             if (RedisHelper.Exists(sUserTreeItemMenuKey))
             {
                 lstTreeItem = RedisHelper.Get<List<TreeItem<ViewMenu>>>(sUserTreeItemMenuKey);
@@ -92,6 +92,7 @@ namespace Message.UI.Areas.Admin.Controllers
                     });
                 }
                 lstTreeItem = lstViewMenu.GenerateTree(x => x.Id, x => x.ParentId).ToList();
+                RedisHelper.Set(sUserTreeItemMenuKey, lstTreeItem);
             }
             return JsonHelper.ObjectToJSON(lstTreeItem);
         }

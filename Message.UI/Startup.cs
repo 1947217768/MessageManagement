@@ -29,6 +29,7 @@ namespace Message.UI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
         [Obsolete]
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
@@ -39,8 +40,9 @@ namespace Message.UI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             var connection = Configuration.GetConnectionString("DefaultSqlServer");
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<MessageManagementContext>(options => options.UseSqlServer(connection));
+            //注入服务
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //初始化Redis
             var csredis = new CSRedis.CSRedisClient(Configuration.GetSection("RedisConnectionStrins")["DefaultRedis"]);
             RedisHelper.Initialization(csredis);
@@ -73,13 +75,12 @@ namespace Message.UI
             });
             var builder = new ContainerBuilder();
             builder.Populate(services);
-
             builder.RegisterAssemblyTypes(typeof(MenuRepository).Assembly).Where(x => x.Name.EndsWith("Repository")).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(MenuService).Assembly).Where(x => x.Name.EndsWith("Service")).AsImplementedInterfaces();
             return new AutofacServiceProvider(builder.Build());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //运行时调用此方法。使用此方法配置HTTP请求管道。
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -108,6 +109,7 @@ namespace Message.UI
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            AppDependencyResolver.Init(app.ApplicationServices);
         }
     }
 }

@@ -14,6 +14,6 @@ namespace Message.Entity.ViewEntity.Menu
         public int Isort { get; set; }
         public bool? Bdisplay { get; set; }
         public string Sremarks { get; set; }
-        public List<int> lstRoleId { get; set; }
+        public List<int> lstRoleId { get; set; } = new List<int>();
     }
 }

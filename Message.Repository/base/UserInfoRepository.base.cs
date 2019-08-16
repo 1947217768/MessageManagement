@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public sealed partial class UserInfoRepository : BaseRepository<UserInfo>, IUserInfoRepository
+    public sealed partial class UserInfoRepository : MessageManagementDBRepository<UserInfo>, IUserInfoRepository
     {
-        public UserInfoRepository(MessageManagementContext messagemanagementcontext) : base(messagemanagementcontext) { }
+        //  public UserInfoRepository(MessageManagementContext messagemanagementcontext) : base(messagemanagementcontext) { }
         //public UserInfoRepository(MessageManagementContext messagemanagementcontext)
         //{
         //    _dbContext = messagemanagementcontext;

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public partial class MenuRepository : BaseRepository<Menu>, IMenuRepository
+    public partial class MenuRepository : MessageManagementDBRepository<Menu>, IMenuRepository
     {
         protected override IQueryable<Menu> ExistsFilter(out string sErrorMessage, Menu entity, IQueryable<Menu> query)
         {

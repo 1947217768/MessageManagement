@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public sealed partial class MenuRepository : BaseRepository<Menu>, IMenuRepository
+    public sealed partial class MenuRepository : MessageManagementDBRepository<Menu>, IMenuRepository
     {
-        public MenuRepository(MessageManagementContext messagemanagementcontext) : base(messagemanagementcontext) { }
+        //public MenuRepository(MessageManagementContext messagemanagementcontext) : base(messagemanagementcontext) { }
         //public MenuRepository(MessageManagementContext messagemanagementcontext)
         //{
         //    _dbContext = messagemanagementcontext;

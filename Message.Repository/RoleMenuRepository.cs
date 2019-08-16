@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Message.Repository
 {
-    public partial class RoleMenuRepository : BaseRepository<RoleMenu>, IRoleMenuRepository
+    public partial class RoleMenuRepository : MessageManagementDBRepository<RoleMenu>, IRoleMenuRepository
     {
 
         protected override IQueryable<RoleMenu> ExistsFilter(out string sErrorMessage, RoleMenu entity, IQueryable<RoleMenu> query)

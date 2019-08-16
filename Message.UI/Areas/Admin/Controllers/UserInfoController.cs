@@ -23,7 +23,7 @@ namespace Message.UI.Areas.Admin.Controllers
         private readonly IUploadFileInfoService _uploadFileInfoService;
         private readonly IMapper _mapper;
 
-        public UserInfoController(IUserInfoService userInfoService, IUserRoleService userRoleService, IUploadFileInfoService uploadFileInfoService, IMenuService menuService, IMapper mapper) : base(menuService)
+        public UserInfoController(IUserInfoService userInfoService, IUserRoleService userRoleService, IUploadFileInfoService uploadFileInfoService, IMapper mapper)
         {
             _userInfoService = userInfoService;
             _userRoleService = userRoleService;
@@ -173,7 +173,7 @@ namespace Message.UI.Areas.Admin.Controllers
                                 entityUserInfo.SuserPhone = model.SuserPhone;
                                 if (!string.IsNullOrWhiteSpace(model.Uid.ToString()))
                                 {
-                                    UploadFileInfo entityUploadFileInfo = await _uploadFileInfoService.GetFileInfoAsync(model.Uid);
+                                    UploadFileInfo entityUploadFileInfo = await _uploadFileInfoService.GetFileInfoAsync(new UploadFileInfo() { Uid = model.Uid });
                                     if (entityUploadFileInfo != null)
                                     {
                                         entityUserInfo.IfileInfoId = entityUploadFileInfo.Id;

@@ -20,6 +20,9 @@ namespace Message.Entity.Mapping
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<UploadFileInfo> UploadFileInfo { get; set; }
+        public virtual DbSet<SystemController> SystemController { get; set; }
+        public virtual DbSet<SystemAction> SystemAction { get; set; }
+        public virtual DbSet<MenuAction> MenuAction { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DataBase>(entity =>
@@ -114,6 +117,7 @@ namespace Message.Entity.Mapping
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.TmodifyTime).HasColumnType("datetime");
+                entity.HasIndex(e => new { e.IroleId, e.ImenuId });
             });
 
             modelBuilder.Entity<UserInfo>(entity =>
@@ -136,8 +140,10 @@ namespace Message.Entity.Mapping
             });
 
             modelBuilder.Entity<Roles>();
-            modelBuilder.Entity<UserRole>();
-            modelBuilder.Entity<UploadFileInfo>();
+            modelBuilder.Entity<UserRole>().HasIndex(e => new { e.IroleId, e.IuserId });
+            modelBuilder.Entity<UploadFileInfo>().HasIndex(e => new { e.Uid });
+            modelBuilder.Entity<MenuAction>().HasIndex(e => new { e.ImenuId, e.IactionId });
+            modelBuilder.Entity<SystemAction>().HasIndex(e => new { e.IcontrollerId });
         }
     }
 }

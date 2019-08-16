@@ -48,10 +48,7 @@ namespace Message.Service
                 }
             }
             //添加菜单角色
-            if (model.lstRoleId?.Count > 0 && entityMenu.Id > 0)
-            {
-                await _roleMenuRepository.AddOrDeleteMenuRoleAsync(entityMenu.Id, model.lstRoleId, sOperator);
-            }
+            await _roleMenuRepository.AddOrDeleteMenuRoleAsync(entityMenu.Id, model.lstRoleId, sOperator);
             return entityMenu;
         }
 
@@ -64,6 +61,10 @@ namespace Message.Service
                 if (entityMenu != null)
                 {
                     entityMenu = _mapper.Map(model, entityMenu);
+                    if (entityMenu.Sname == "菜单管理")
+                    {
+                        throw new System.Exception("此菜单不能隐藏!");
+                    }
                     _menuRepository.Update(entityMenu, sOperator);
                 }
             }
@@ -88,12 +89,19 @@ namespace Message.Service
             }
             return false;
         }
-        public async Task<bool> CheckMenuActionAsync(string sControllerName, string sActionName, int iMenuId)
+        public async Task<bool> CheckMenuActionAsync(string sAreaName, string sControllerName, string sActionName, int iMenuId)
         {
             Menu entityMenu = await _menuRepository.SelectAsync(iMenuId);
             if (entityMenu != null)
             {
-                string[] arrMenu = entityMenu.SlinkUrl.Split('/');
+                string[] arrMenu = entityMenu.SlinkUrl.Split('?')[0].Split('/');
+                if (arrMenu.Length == 4)
+                {
+                    if (arrMenu[1] == sAreaName && arrMenu[2] == sControllerName && arrMenu[3] == sActionName)
+                    {
+                        return true;
+                    }
+                }
             }
             return false;
         }

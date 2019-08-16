@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public partial class RolesRepository : BaseRepository<Roles>, IRolesRepository
+    public partial class RolesRepository : MessageManagementDBRepository<Roles>, IRolesRepository
     {
         protected override IQueryable<Roles> ExistsFilter(out string sErrorMessage, Roles entity, IQueryable<Roles> query)
         {

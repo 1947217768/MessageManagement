@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public sealed partial class UploadFileInfoRepository : BaseRepository<UploadFileInfo>, IUploadFileInfoRepository
+    public sealed partial class UploadFileInfoRepository : MessageManagementDBRepository<UploadFileInfo>, IUploadFileInfoRepository
     {
-        public UploadFileInfoRepository(MessageManagementContext messagemanagementcontext) : base(messagemanagementcontext) { }
+        // public UploadFileInfoRepository(MessageManagementContext messagemanagementcontext) : base(messagemanagementcontext) { }
         //public UploadFileInfoRepository(MessageManagementContext messagemanagementcontext)
         //{
         //    _dbContext = messagemanagementcontext;

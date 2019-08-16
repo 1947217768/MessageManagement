@@ -16,11 +16,6 @@ namespace Message.IService
         /// <param name="sOperator">操作人</param>
         /// <returns></returns>
         Task<List<Menu>> GetRoleMenuListAnyncAsync(int iUserId, string sOperator = null);
-        /// <summary>
-        /// 获取父级菜单列表
-        /// </summary>
-        /// <returns></returns>
-        //List<Menu> GetParentMenuList();
 
         Task<Menu> AddOrModifyMenuAsync(AddOrModifyMenu model, string sOperator);
 
@@ -35,7 +30,7 @@ namespace Message.IService
         /// <param name="sActionName">Action名称</param>
         /// <param name="iMenuId">菜单Id</param>
         /// <returns></returns>
-        Task<bool> CheckMenuActionAsync(string sControllerName, string sActionName, int iMenuId);
+        Task<bool> CheckMenuActionAsync(string sAreaName, string sControllerName, string sActionName, int iMenuId);
         /// <summary>
         /// 检查用户菜单权限
         /// </summary>

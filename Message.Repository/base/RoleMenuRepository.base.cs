@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public sealed partial class RoleMenuRepository : BaseRepository<RoleMenu>, IRoleMenuRepository
+    public sealed partial class RoleMenuRepository : MessageManagementDBRepository<RoleMenu>, IRoleMenuRepository
     {
         //public RoleMenuRepository(MessageManagementContext messagemanagementcontext)
         //{
@@ -18,7 +18,7 @@ namespace Message.Repository
 
         private readonly IUserRoleRepository _userRoleRepository;
         private readonly IUserInfoRepository _userInfoRepository;
-        public RoleMenuRepository(MessageManagementContext messagemanagementcontext, IUserRoleRepository userRoleRepository, IUserInfoRepository userInfoRepository) : base(messagemanagementcontext)
+        public RoleMenuRepository(MessageManagementContext messagemanagementcontext, IUserRoleRepository userRoleRepository, IUserInfoRepository userInfoRepository) //: base(messagemanagementcontext)
         {
             _userRoleRepository = userRoleRepository;
             _userInfoRepository = userInfoRepository;
