@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Message.IRepository
 {
-    public interface IRoleMenuRepository : IBaseRepository<RoleMenu>
+    public interface IRoleMenuRepository : IMessageManagementRepository<RoleMenu>
     {
 
         /// <summary>

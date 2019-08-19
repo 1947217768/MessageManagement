@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Message.IService
 {
-    public interface ISystemControllerService
+    public interface ISystemActionService
     {
-        PageInfo<SystemController> GetPageList(PageInfo<SystemController> pageInfo, SystemController oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
+        PageInfo<SystemAction> GetPageList(PageInfo<SystemAction> pageInfo, SystemAction oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
         bool DeleteRange(int[] arrId, string sOperator);
     }
 }

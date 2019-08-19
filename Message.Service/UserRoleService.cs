@@ -18,7 +18,6 @@ namespace Message.Service
         {
             _UserRoleRepository = UserRoleRepository;
         }
-
         public PageInfo<UserRole> GetPageList(PageInfo<UserRole> pageInfo, UserRole oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
             return _UserRoleRepository.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder);

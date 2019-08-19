@@ -4,14 +4,16 @@ using Message.Entity.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Message.Entity.Migrations
 {
     [DbContext(typeof(MessageManagementContext))]
-    partial class MessageManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20190816064815_UpdateSystemController")]
+    partial class UpdateSystemController
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,8 +243,6 @@ namespace Message.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Bvalid");
-
                     b.Property<int>("IcontrollerId");
 
                     b.Property<string>("SactionName")
@@ -277,6 +277,8 @@ namespace Message.Entity.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Bvalid");
 
                     b.Property<string>("ScontrollerName")
                         .HasMaxLength(100);

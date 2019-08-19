@@ -14,11 +14,9 @@ namespace Message.Service
     public class RoleMenuService : IRoleMenuService
     {
         private readonly IRoleMenuRepository _RoleMenuRepository;
-        private readonly IMenuRepository _menuRepository;
-        public RoleMenuService(IRoleMenuRepository RoleMenuRepository, IMenuRepository menuRepository)
+        public RoleMenuService(IRoleMenuRepository RoleMenuRepository)
         {
             _RoleMenuRepository = RoleMenuRepository;
-            _menuRepository = menuRepository;
         }
         public PageInfo<RoleMenu> GetPageList(PageInfo<RoleMenu> pageInfo, RoleMenu oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {

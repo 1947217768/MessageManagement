@@ -63,7 +63,7 @@ namespace Message.Core.Repository
         }
         protected abstract IQueryable<TEntity> ExistsFilter(out string sErrorMessage, TEntity entity, IQueryable<TEntity> query);
         protected abstract IQueryable<TEntity> OrderBy(IQueryable<TEntity> query, int iOrderGroup = 0);
-        public int Insert(TEntity entity, string sOperator)
+        public int Append(TEntity entity, string sOperator)
         {
             int iResult = 0;
             if (!BeforeAppend(_dbContext, entity, sOperator))
@@ -331,7 +331,7 @@ namespace Message.Core.Repository
             iMaxCount = iMaxCount == 0 ? query.Count() : iMaxCount;
             return await query.Take(iMaxCount).ToListAsync();
         }
-
+    
         public virtual void ChangeDataDeleteKey(TEntity entity, string sOperator)
         {
 

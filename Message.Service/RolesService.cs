@@ -59,14 +59,6 @@ namespace Message.Service
         {
             if (_RolesRepository.DeleteRange(arrId, sOperator) > 0)
             {
-                if (arrId?.Length > 0)
-                {
-                    foreach (int id in arrId)
-                    {
-                        _roleMenuRepository.Delete(new RoleMenu() { IroleId = id }, sOperator);
-                        _userRoleRepository.Delete(new UserRole() { IroleId = id }, sOperator);
-                    }
-                }
                 return true;
             }
             return false;

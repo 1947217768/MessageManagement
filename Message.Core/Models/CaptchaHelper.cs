@@ -11,7 +11,6 @@ namespace Message.Core.Models
     public static class CaptchaHelper
     {
 
-        public static RedisHelper redis;
         public static string Letters { get; set; } = "2346789ABCDEFGHJKLMNPRTUVWXYZ";
         public static int CodeLength { get; set; } = 4;
 

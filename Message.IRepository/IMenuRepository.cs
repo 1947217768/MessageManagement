@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Message.IRepository
 {
-    public interface IMenuRepository : IBaseRepository<Menu>
+    public interface IMenuRepository : IMessageManagementRepository<Menu>
     {
     }
 }

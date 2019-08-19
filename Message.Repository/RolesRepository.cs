@@ -11,6 +11,14 @@ namespace Message.Repository
 {
     public partial class RolesRepository : MessageManagementDBRepository<Roles>, IRolesRepository
     {
+
+        private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IRoleMenuRepository _roleMenuRepository;
+        public RolesRepository(IUserRoleRepository userRoleRepository, IRoleMenuRepository roleMenuRepository)
+        {
+            _userRoleRepository = userRoleRepository;
+            _roleMenuRepository = roleMenuRepository;
+        }
         protected override IQueryable<Roles> ExistsFilter(out string sErrorMessage, Roles entity, IQueryable<Roles> query)
         {
             query = query.Where(x => x.Id != entity.Id && x.SroleName == entity.SroleName);
@@ -33,6 +41,12 @@ namespace Message.Repository
                 RedisHelper.Del(sRolesKey);
             }
             base.ChangeDataDeleteKey(entity, sOperator);
+        }
+        public override void AfterDelete(DbContext DB, Roles entity, string sOperator)
+        {
+            _roleMenuRepository.DeleteRange(_roleMenuRepository.SelectALL(new RoleMenu() { IroleId = entity.Id }), sOperator);
+            _userRoleRepository.DeleteRange(_userRoleRepository.SelectALL(new UserRole() { IroleId = entity.Id }), sOperator);
+            base.AfterDelete(DB, entity, sOperator);
         }
     }
 }

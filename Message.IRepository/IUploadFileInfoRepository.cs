@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Message.IRepository
 {
-    public interface IUploadFileInfoRepository : IBaseRepository<UploadFileInfo>
+    public interface IUploadFileInfoRepository : IMessageManagementRepository<UploadFileInfo>
     {
 
     }

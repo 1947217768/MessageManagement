@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Message.IRepository
 {
-    public interface IUserRoleRepository : IBaseRepository<UserRole>
+    public interface IUserRoleRepository : IMessageManagementRepository<UserRole>
     {
         /// <summary>
         /// 根据角色Id添加用户

@@ -16,7 +16,7 @@ namespace Message.Core.Repository
         /// <param name="entity">实体</param>
         /// <param name="sOperator">操作人</param>
         /// <returns></returns>
-        int Insert(TEntity entity, string sOperator);
+        int Append(TEntity entity, string sOperator);
         /// <summary>
         /// 插入实体前
         /// </summary>

@@ -12,7 +12,13 @@ namespace Message.Repository
 {
     public partial class RoleMenuRepository : MessageManagementDBRepository<RoleMenu>, IRoleMenuRepository
     {
-
+        private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IUserInfoRepository _userInfoRepository;
+        public RoleMenuRepository(IUserRoleRepository userRoleRepository, IUserInfoRepository userInfoRepository)
+        {
+            _userRoleRepository = userRoleRepository;
+            _userInfoRepository = userInfoRepository;
+        }
         protected override IQueryable<RoleMenu> ExistsFilter(out string sErrorMessage, RoleMenu entity, IQueryable<RoleMenu> query)
         {
             query = query.Where(x => x.Id != entity.Id && x.ImenuId == entity.ImenuId && x.IroleId == entity.IroleId);
@@ -27,8 +33,6 @@ namespace Message.Repository
                     return query = query.OrderByDescending(x => x.TmodifyTime).ThenBy(x => x.Id);
             }
         }
-
-
         public async Task<List<RoleMenu>> AddOrDeleteMenuRoleAsync(int iMneuId, List<int> lstRoleId, string sOperator)
         {
             List<RoleMenu> lstRoleMenu = new List<RoleMenu>();
@@ -142,10 +146,11 @@ namespace Message.Repository
                 {
                     UserInfo entityUserInfo = _userInfoRepository.Select(entityUserRole.IuserId);
                     //用户菜树Redis Key
-                    string sUserTreeItemMenuKey = entityUserInfo.SloginName + "_UserTreeItemMenu";
-                    if (RedisHelper.Exists(entityUserInfo.SloginName + "_UserMenu"))
+                    string sUserTreeItemMenuKey = "UserTreeItemMenu_" + entityUserInfo.Id;
+                    string sUserMenuKey = "UserMenu_" + entityUserInfo.Id;
+                    if (RedisHelper.Exists(sUserMenuKey))
                     {
-                        RedisHelper.Del(entityUserInfo.SloginName + "_UserMenu");
+                        RedisHelper.Del(sUserMenuKey);
                     }
                     if (RedisHelper.Exists(sUserTreeItemMenuKey))
                     {

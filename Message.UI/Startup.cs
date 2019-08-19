@@ -77,6 +77,9 @@ namespace Message.UI
             builder.Populate(services);
             builder.RegisterAssemblyTypes(typeof(MenuRepository).Assembly).Where(x => x.Name.EndsWith("Repository")).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(MenuService).Assembly).Where(x => x.Name.EndsWith("Service")).AsImplementedInterfaces();
+            builder.RegisterType<UserInfoService>().InstancePerRequest();
+            builder.RegisterType<UserRoleRepository>().InstancePerRequest();
+
             return new AutofacServiceProvider(builder.Build());
         }
 

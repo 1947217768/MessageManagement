@@ -9,17 +9,16 @@ using System.Text;
 
 namespace Message.Repository
 {
-    public sealed partial class UserRoleRepository : MessageManagementDBRepository<UserRole>, IUserRoleRepository
+    public sealed partial class MenuActionRepository : MessageManagementDBRepository<MenuAction>, IMenuActionRepository
     {
-       
-        protected override IQueryable<UserRole> SearchFilterB(DbContext DB, UserRole oSearchEntity, IQueryable<UserRole> query, string sOperator = null)
+        //  public MenuActionRepository(MessageManagementContext messagemanagementcontext) : base(messagemanagementcontext) { }
+        protected override IQueryable<MenuAction> SearchFilterB(DbContext DB, MenuAction oSearchEntity, IQueryable<MenuAction> query, string sOperator = null)
         {
             if (oSearchEntity != null)
             {
                 if (oSearchEntity.Id != 0) { query = query.Where(x => x.Id == oSearchEntity.Id); }
-                if (oSearchEntity.IuserId != 0) { query = query.Where(x => x.IuserId == oSearchEntity.IuserId); }
-                if (oSearchEntity.IroleId != 0) { query = query.Where(x => x.IroleId == oSearchEntity.IroleId); }
-
+                if (oSearchEntity.IactionId != 0) { query = query.Where(x => x.IactionId == oSearchEntity.IactionId); }
+                if (oSearchEntity.ImenuId != 0) { query = query.Where(x => x.ImenuId == oSearchEntity.ImenuId); }
 
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Sremarks)) { query = query.Where(x => x.Sremarks.Contains(oSearchEntity.Sremarks)); }
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Screater)) { query = query.Where(x => x.Screater == oSearchEntity.Screater); }
@@ -29,14 +28,13 @@ namespace Message.Repository
             }
             return query;
         }
-        protected override IQueryable<UserRole> SelectFilterB(DbContext DB, UserRole oSearchEntity, IQueryable<UserRole> query, string sOperator = null)
+        protected override IQueryable<MenuAction> SelectFilterB(DbContext DB, MenuAction oSearchEntity, IQueryable<MenuAction> query, string sOperator = null)
         {
             if (oSearchEntity != null)
             {
                 if (oSearchEntity.Id != 0) { query = query.Where(x => x.Id == oSearchEntity.Id); }
-                if (oSearchEntity.IuserId != 0) { query = query.Where(x => x.IuserId == oSearchEntity.IuserId); }
-                if (oSearchEntity.IroleId != 0) { query = query.Where(x => x.IroleId == oSearchEntity.IroleId); }
-
+                if (oSearchEntity.IactionId != 0) { query = query.Where(x => x.IactionId == oSearchEntity.IactionId); }
+                if (oSearchEntity.ImenuId != 0) { query = query.Where(x => x.ImenuId == oSearchEntity.ImenuId); }
 
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Sremarks)) { query = query.Where(x => x.Sremarks == oSearchEntity.Sremarks); }
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Screater)) { query = query.Where(x => x.Screater == oSearchEntity.Screater); }
@@ -46,14 +44,13 @@ namespace Message.Repository
             }
             return query;
         }
-        protected override IQueryable<UserRole> OrderBySingleField(IQueryable<UserRole> query, string sSortName = null, string sSortOrder = null)
+        protected override IQueryable<MenuAction> OrderBySingleField(IQueryable<MenuAction> query, string sSortName = null, string sSortOrder = null)
         {
             if (sSortOrder == "desc")
             {
                 switch (sSortName)
                 {
                     case "Id": return query.OrderByDescending(x => x.Id).ThenBy(x => x.Id);
-                    case "Smodifier": return query.OrderByDescending(x => x.Smodifier).ThenBy(x => x.Id);
                     case "Sremarks": return query.OrderByDescending(x => x.Sremarks).ThenBy(x => x.Id);
                     case "Screater": return query.OrderByDescending(x => x.Screater).ThenBy(x => x.Id);
                     case "TcreateTime": return query.OrderByDescending(x => x.TcreateTime).ThenBy(x => x.Id);
@@ -65,7 +62,6 @@ namespace Message.Repository
                 switch (sSortName)
                 {
                     case "Id": return query.OrderBy(x => x.Id).ThenBy(x => x.Id);
-                    case "Smodifier": return query.OrderBy(x => x.Smodifier).ThenBy(x => x.Id);
                     case "Sremarks": return query.OrderBy(x => x.Sremarks).ThenBy(x => x.Id);
                     case "Screater": return query.OrderBy(x => x.Screater).ThenBy(x => x.Id);
                     case "TcreateTime": return query.OrderBy(x => x.TcreateTime).ThenBy(x => x.Id);

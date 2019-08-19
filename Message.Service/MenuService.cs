@@ -36,7 +36,7 @@ namespace Message.Service
             if (model.Id == 0)
             {
                 entityMenu = _mapper.Map<Menu>(model);
-                _menuRepository.Insert(entityMenu, sOperator);
+                _menuRepository.Append(entityMenu, sOperator);
             }
             else
             {
@@ -78,13 +78,6 @@ namespace Message.Service
         {
             if (_menuRepository.DeleteRange(arrId, sOperator) > 0)
             {
-                if (arrId?.Length > 0)
-                {
-                    foreach (int id in arrId)
-                    {
-                        _roleMenuRepository.DeleteRange(_roleMenuRepository.SelectALL(new RoleMenu() { ImenuId = id }), sOperator);
-                    }
-                }
                 return true;
             }
             return false;
@@ -111,7 +104,7 @@ namespace Message.Service
             Menu entityMenu = await _menuRepository.SelectAsync(iMenuId);
             if (entityUserInfo != null && entityMenu != null)
             {
-                string sUserMenuKey = entityUserInfo.SloginName + "_UserMenu";
+                string sUserMenuKey = "UserMenu_" + entityUserInfo.Id;
                 List<Menu> lstUserMenu = new List<Menu>();
                 //获取用户菜单
                 if (RedisHelper.Exists(sUserMenuKey))

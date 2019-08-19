@@ -11,6 +11,12 @@ namespace Message.Repository
 {
     public partial class SystemControllerRepository : MessageManagementDBRepository<SystemController>, ISystemControllerRepository
     {
+
+        private readonly ISystemActionRepository _systemActionRepository;
+        public SystemControllerRepository(ISystemActionRepository systemActionRepository)
+        {
+            _systemActionRepository = systemActionRepository;
+        }
         protected override IQueryable<SystemController> ExistsFilter(out string sErrorMessage, SystemController entity, IQueryable<SystemController> query)
         {
             query = query.Where(x => x.Id != entity.Id && x.ScontrollerName == entity.ScontrollerName);
@@ -28,6 +34,11 @@ namespace Message.Repository
         public override bool BeforeAppend(DbContext DB, SystemController entity, string sOperator)
         {
             return base.BeforeAppend(DB, entity, sOperator);
+        }
+        public override void AfterDelete(DbContext DB, SystemController entity, string sOperator)
+        {
+            _systemActionRepository.DeleteRange(_systemActionRepository.SelectALL(new SystemAction() { IcontrollerId = entity.Id }), sOperator);
+            base.AfterDelete(DB, entity, sOperator);
         }
     }
 }

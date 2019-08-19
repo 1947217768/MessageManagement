@@ -59,8 +59,9 @@ namespace Message.UI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<string> GetMenuAsync()
         {
-            string sUserTreeItemMenuKey = User.Identity.Name + "_UserTreeItemMenu";
-            string sUserMenuKey = User.Identity.Name + "_UserMenu";
+            int iUserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value);
+            string sUserTreeItemMenuKey = "UserTreeItemMenu_" + iUserId;
+            string sUserMenuKey = "UserMenu_" + iUserId;
             List<TreeItem<ViewMenu>> lstTreeItem = new List<TreeItem<ViewMenu>>();
             if (RedisHelper.Exists(sUserTreeItemMenuKey))
             {
@@ -70,7 +71,6 @@ namespace Message.UI.Areas.Admin.Controllers
             {
                 List<ViewMenu> lstViewMenu = new List<ViewMenu>();
                 List<Menu> lstUserMenu = new List<Menu>();
-                int iUserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value);
                 //查询角色所拥有的菜单集合
                 lstUserMenu = await _MenuService.GetRoleMenuListAnyncAsync(iUserId);
                 if (lstUserMenu?.Count > 0)

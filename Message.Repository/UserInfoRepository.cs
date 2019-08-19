@@ -11,11 +11,12 @@ namespace Message.Repository
 {
     public partial class UserInfoRepository : MessageManagementDBRepository<UserInfo>, IUserInfoRepository
     {
-        //private readonly IUserRoleRepository _userRoleRepository;
-        //public UserInfoRepository()
-        //{
 
-        //}
+        private readonly IUserRoleRepository _UserRoleRepository;
+        public UserInfoRepository(IUserRoleRepository userRoleRepository)
+        {
+            _UserRoleRepository = userRoleRepository;
+        }
         protected override IQueryable<UserInfo> ExistsFilter(out string sErrorMessage, UserInfo entity, IQueryable<UserInfo> query)
         {
             query = query.Where(x => x.Id != entity.Id && x.SloginName == entity.SloginName);
@@ -34,6 +35,11 @@ namespace Message.Repository
         {
 
             return base.BeforDelete(DB, entity, sOperator);
+        }
+        public override void AfterDelete(DbContext DB, UserInfo entity, string sOperator)
+        {
+            _UserRoleRepository.DeleteRange(_UserRoleRepository.SelectALL(new UserRole() { IuserId = entity.Id }), sOperator);
+            base.AfterDelete(DB, entity, sOperator);
         }
     }
 }

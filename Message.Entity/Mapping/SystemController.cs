@@ -10,7 +10,5 @@ namespace Message.Entity.Mapping
     {
         [MaxLength(100)]
         public string ScontrollerName { get; set; }
-        public string SresultType { get; set; }
-        public bool Bvalid { get; set; }
     }
 }
