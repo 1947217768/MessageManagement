@@ -15,15 +15,15 @@ namespace Message.Service
     public class RolesService : IRolesService
     {
         private readonly IRolesRepository _RolesRepository;
-        private readonly IUserRoleRepository _userRoleRepository;
-        private readonly IRoleMenuRepository _roleMenuRepository;
+        private readonly IUserRoleService _userRoleService;
+        private readonly IRoleMenuService _roleMenuService;
 
         private readonly IMapper _Mapper;
-        public RolesService(IRolesRepository RolesRepository, IUserRoleRepository userRoleRepository, IRoleMenuRepository roleMenuRepository, IMapper mapper)
+        public RolesService(IRolesRepository RolesRepository, IUserRoleService userRoleService, IRoleMenuService roleMenuService, IMapper mapper)
         {
             _RolesRepository = RolesRepository;
-            _userRoleRepository = userRoleRepository;
-            _roleMenuRepository = roleMenuRepository;
+            _userRoleService = userRoleService;
+            _roleMenuService = roleMenuService;
             _Mapper = mapper;
         }
         public PageInfo<Roles> GetPageList(PageInfo<Roles> pageInfo, Roles oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
@@ -41,7 +41,7 @@ namespace Message.Service
             if (model.Id == 0)
             {
                 entityRoles = _Mapper.Map<Roles>(model);
-                await _RolesRepository.InsertAsync(entityRoles, sOperctor);
+                await _RolesRepository.AppendAsync(entityRoles, sOperctor);
             }
             else
             {
@@ -49,8 +49,8 @@ namespace Message.Service
                 entityRoles = _Mapper.Map(model, entityRoles);
                 _RolesRepository.Update(entityRoles, sOperctor);
             }
-            await _userRoleRepository.AddOrDeleteRoleUserAsync(entityRoles.Id, model.lstUserId, sOperctor);
-            await _roleMenuRepository.AddOrDeleteRoleMenuAsync(entityRoles.Id, model.lstMenuId, sOperctor);
+            await _userRoleService.AddOrDeleteRoleUserAsync(entityRoles.Id, model.lstUserId, sOperctor);
+            await _roleMenuService.AddOrDeleteRoleMenuAsync(entityRoles.Id, model.lstMenuId, sOperctor);
             return entityRoles;
 
         }

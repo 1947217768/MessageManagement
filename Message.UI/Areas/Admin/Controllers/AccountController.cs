@@ -70,13 +70,13 @@ namespace Message.UI.Areas.Admin.Controllers
                             else
                             {
                                 List<Claim> lstClaim = new List<Claim>()
-                    {
-                        new Claim(ClaimTypes.Name, entityUserInfo.SloginName),
-                        new Claim("Id",entityUserInfo.Id.ToString()),
-                        new Claim("SuserName",entityUserInfo.SuserName.ToString()),
-                        new Claim("SloginLastIp",entityUserInfo.SloginLastIp.ToString()),
-                        new Claim("TloginLastTime",entityUserInfo.TloginLastTime.ToString())
-                    };
+                                {
+                                    new Claim(ClaimTypes.Name, entityUserInfo.SloginName),
+                                    new Claim("Id",entityUserInfo.Id.ToString()),
+                                    new Claim("SuserName",entityUserInfo.SuserName.ToString()),
+                                    new Claim("SloginLastIp",entityUserInfo.SloginLastIp.ToString()),
+                                    new Claim("TloginLastTime",entityUserInfo.TloginLastTime.ToString())
+                                };
                                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(lstClaim, CookieAuthenticationDefaults.AuthenticationScheme);
                                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                                 _httpContextAccessor.HttpContext.Session.SetInt32("Id", entityUserInfo.Id);

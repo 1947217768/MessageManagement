@@ -11,11 +11,12 @@ namespace Message.Repository
 {
     public partial class UserInfoRepository : MessageManagementDBRepository<UserInfo>, IUserInfoRepository
     {
-
-        private readonly IUserRoleRepository _UserRoleRepository;
-        public UserInfoRepository(IUserRoleRepository userRoleRepository)
+        private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IUploadFileInfoRepository _uploadFileInfoRepository;
+        public UserInfoRepository(IUserRoleRepository userRoleRepository, IUploadFileInfoRepository uploadFileInfoRepository)
         {
-            _UserRoleRepository = userRoleRepository;
+            _userRoleRepository = userRoleRepository;
+            _uploadFileInfoRepository = uploadFileInfoRepository;
         }
         protected override IQueryable<UserInfo> ExistsFilter(out string sErrorMessage, UserInfo entity, IQueryable<UserInfo> query)
         {
@@ -25,6 +26,7 @@ namespace Message.Repository
         }
         protected override IQueryable<UserInfo> OrderBy(IQueryable<UserInfo> query, int iOrderGroup = 0)
         {
+
             switch (iOrderGroup)
             {
                 default:
@@ -38,7 +40,8 @@ namespace Message.Repository
         }
         public override void AfterDelete(DbContext DB, UserInfo entity, string sOperator)
         {
-            _UserRoleRepository.DeleteRange(_UserRoleRepository.SelectALL(new UserRole() { IuserId = entity.Id }), sOperator);
+            _userRoleRepository.DeleteRange(_userRoleRepository.SelectALL(new UserRole() { IuserId = entity.Id }), sOperator);
+            _uploadFileInfoRepository.Delete(_uploadFileInfoRepository.Select(entity.IfileInfoId), sOperator);
             base.AfterDelete(DB, entity, sOperator);
         }
     }

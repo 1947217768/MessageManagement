@@ -11,7 +11,6 @@ namespace Message.Repository
 {
     public partial class RolesRepository : MessageManagementDBRepository<Roles>, IRolesRepository
     {
-
         private readonly IUserRoleRepository _userRoleRepository;
         private readonly IRoleMenuRepository _roleMenuRepository;
         public RolesRepository(IUserRoleRepository userRoleRepository, IRoleMenuRepository roleMenuRepository)

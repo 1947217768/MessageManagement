@@ -46,5 +46,38 @@ namespace Message.IService
         UserInfo ChangeUserPassWord(UserInfo entity, string sOperator);
 
         bool DeleteRange(int[] arrUserId, string sOperator);
+
+        UserInfo Select(int id, string sOperator = null);
+        UserInfo Select(UserInfo entityUserInfo = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
+
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="entityUserInfo">条件</param>
+        /// <param name="sOperator">操作人</param>
+        /// <param name="iOrderGroup">排序</param>
+        /// <param name="iMaxCount">最大返回数据条数</param>
+        /// <param name="sSortName">排序名称</param>
+        /// <param name="sSortOrder">排序方式</param>
+        /// <returns></returns>
+        Task<List<UserInfo>> SelectALLAsync(UserInfo entityUserInfo = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null);
+        /// <summary>
+        /// 根据ID查询实体
+        /// </summary>
+        /// <param name="id">实体id</param>
+        /// <param name="sOperator">操作人</param>
+        /// <returns>返回实体</returns>
+        Task<UserInfo> SelectAsync(int id, string sOperator = null);
+        /// <summary>
+        /// 查询实体
+        /// </summary>
+        /// <param name="entityUserInfo">实体</param>
+        /// <param name="sOperator">操作人</param>
+        /// <param name="iOrderGroup"></param>
+        /// <param name="sSortName"></param>
+        /// <param name="sSortOrder"></param>
+        /// <returns></returns>
+        Task<UserInfo> SelectAsync(UserInfo entityUserInfo = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
+
     }
 }

@@ -145,9 +145,9 @@ namespace Message.Core.Repository
         void ChangeDataDeleteKey(TEntity entity, string sOperator);
         PageInfo<TEntity> GetPageList<Tkey>(PageInfo<TEntity> pageInfo, Expression<Func<TEntity, bool>> whereLambda = null, Func<TEntity, Tkey> orderbyLambda = null, bool isAsc = true);
 
-        Task<int> InsertAsync(TEntity entity, string sOperator);
+        Task<int> AppendAsync(TEntity entity, string sOperator);
         Task<TEntity> SelectAsync(int id, string sOperator = null);
-        Task<TEntity> SelectAsync(TEntity oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null);
+        Task<TEntity> SelectAsync(TEntity oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
 
         Task<List<TEntity>> SelectALLAsync(TEntity oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null);
         Task<PageInfo<TEntity>> GetPageListAsync(PageInfo<TEntity> pageInfo, int iOrderGroup = 0, string sOperator = null);

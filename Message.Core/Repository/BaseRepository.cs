@@ -279,7 +279,7 @@ namespace Message.Core.Repository
             }
             return pageInfo;
         }
-        public async Task<int> InsertAsync(TEntity entity, string sOperator)
+        public async Task<int> AppendAsync(TEntity entity, string sOperator)
         {
             if (!BeforeAppend(_dbContext, entity, sOperator))
             {
@@ -308,7 +308,7 @@ namespace Message.Core.Repository
         {
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
-        public async Task<TEntity> SelectAsync(TEntity oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        public async Task<TEntity> SelectAsync(TEntity oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
             IQueryable<TEntity> query = _dbContext.Set<TEntity>().AsQueryable();
             if (oSearchEntity != null)

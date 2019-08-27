@@ -15,12 +15,12 @@ namespace Message.Service
     public class UserInfoService : IUserInfoService
     {
         private readonly IUserInfoRepository _userInfoRepository;
-        private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IUserRoleService _userRoleService;
         private readonly IMapper _mapper;
-        public UserInfoService(IUserInfoRepository userInfoRepository, IUserRoleRepository userRoleRepository, IMapper mapper)
+        public UserInfoService(IUserInfoRepository userInfoRepository, IUserRoleService userRoleService, IMapper mapper)
         {
             _userInfoRepository = userInfoRepository;
-            _userRoleRepository = userRoleRepository;
+            _userRoleService = userRoleService;
             _mapper = mapper;
         }
         public PageInfo<UserInfo> GetPageList(PageInfo<UserInfo> pageInfo, UserInfo oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
@@ -58,7 +58,7 @@ namespace Message.Service
         {
             if (entityUserRole != null)
             {
-                List<UserRole> lstUserRole = await _userRoleRepository.SelectALLAsync(entityUserRole);
+                List<UserRole> lstUserRole = await _userRoleService.SelectALLAsync(entityUserRole);
                 return lstUserRole;
             }
             return null;
@@ -72,7 +72,7 @@ namespace Message.Service
                 entityUserInfo = _mapper.Map<UserInfo>(model);
                 //加密  使用默认密码
                 entityUserInfo.SloginPwd = EncryptHelper.EncryptPasswordMd5(EncryptHelper.Encode(entityUserInfo.SloginPwd, EncryptHelper.AesEncryptKeys));
-                await _userInfoRepository.InsertAsync(entityUserInfo, sOperator);
+                await _userInfoRepository.AppendAsync(entityUserInfo, sOperator);
             }
             else
             {
@@ -84,7 +84,7 @@ namespace Message.Service
                     _userInfoRepository.Update(entityUserInfo, sOperator);
                 }
             }
-            await _userRoleRepository.AddOrDeleteUserRoleAsync(entityUserInfo.Id, model.lstRoleId, sOperator);
+            await _userRoleService.AddOrDeleteUserRoleAsync(entityUserInfo.Id, model.lstRoleId, sOperator);
             return entityUserInfo;
         }
         public async Task<bool> ChangeUserLockStatusAsync(ChangeUserStatus entity, string sOperator)
@@ -124,22 +124,34 @@ namespace Message.Service
         {
             return await _userInfoRepository.SelectALLAsync(entityUserInfo);
         }
-        //public void Redis(int iUserId)
-        //{
-        //    UserInfo entityUserInfo = _userInfoRepository.Select(iUserId);
-        //    if (entityUserInfo != null)
-        //    {
-        //        if (RedisHelper.Exists(entityUserInfo.SloginName + "_UserMenu"))
-        //        {
-        //            RedisHelper.Del(entityUserInfo.SloginName + "_UserMenu");
-        //        }
-        //        //用户菜树Redis Key
-        //        string sUserTreeItemMenuKey = entityUserInfo.SloginName + "_UserTreeItemMenu";
-        //        if (RedisHelper.Exists(sUserTreeItemMenuKey))
-        //        {
-        //            RedisHelper.Del(sUserTreeItemMenuKey);
-        //        }
-        //    }
-        //}
+
+
+        public async Task<List<UserInfo>> SelectALLAsync(UserInfo entityUserInfo = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return await _userInfoRepository.SelectALLAsync(entityUserInfo, sOperator, iOrderGroup, iMaxCount, sSortName, sSortOrder);
+        }
+        public async Task<UserInfo> SelectAsync(int id, string sOperator = null)
+        {
+            return await _userInfoRepository.SelectAsync(id, sOperator);
+        }
+        public async Task<UserInfo> SelectAsync(UserInfo entityUserInfo = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return await _userInfoRepository.SelectAsync(entityUserInfo, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+        public List<UserInfo> SelectALL(UserInfo entityUserInfo = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return _userInfoRepository.SelectALL(entityUserInfo, sOperator, iOrderGroup, iMaxCount, sSortName, sSortOrder);
+        }
+
+        public UserInfo Select(int id, string sOperator = null)
+        {
+            return _userInfoRepository.Select(id, sOperator);
+        }
+
+        public UserInfo Select(UserInfo entityUserInfo = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return _userInfoRepository.Select(entityUserInfo, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+
     }
 }

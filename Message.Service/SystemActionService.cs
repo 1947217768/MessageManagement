@@ -13,7 +13,6 @@ namespace Message.Service
     public class SystemActionService : ISystemActionService
     {
         private readonly ISystemActionRepository _systemActionRepository;
-        private readonly IMenuActionRepository _menuActionRepository;
 
         public SystemActionService(ISystemActionRepository systemActionRepository)
         {

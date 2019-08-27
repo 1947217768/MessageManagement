@@ -64,7 +64,7 @@ namespace Message.Service
 
                     Stream stream = new FileStream(sFullPath, FileMode.Create);
                     file.CopyTo(stream);
-                    await _UploadFileInfoRepository.InsertAsync(uploadFileInfo, sOperator);
+                    await _UploadFileInfoRepository.AppendAsync(uploadFileInfo, sOperator);
                     await file.CopyToAsync(stream);
                     stream.Dispose();
                 }

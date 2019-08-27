@@ -13,17 +13,17 @@ namespace Message.Service
     public class MenuService : IMenuService
     {
         private readonly IMenuRepository _menuRepository;
-        private readonly IUserRoleRepository _userRoleRepository;
-        private readonly IUserInfoRepository _userInfoRepository;
-        private readonly IRoleMenuRepository _roleMenuRepository;
+        private readonly IUserRoleService _userRoleService;
+        private readonly IUserInfoService _userInfoService;
+        private readonly IRoleMenuService _roleMenuService;
         private readonly IMapper _mapper;
 
-        public MenuService(IMenuRepository menuRepository, IUserRoleRepository userRoleRepository, IRoleMenuRepository roleMenuRepository, IUserInfoRepository userInfoRepository, IMapper mapper)
+        public MenuService(IMenuRepository menuRepository, IUserRoleService userRoleService, IRoleMenuService roleMenuService, IUserInfoService userInfoService, IMapper mapper)
         {
             _menuRepository = menuRepository;
-            _roleMenuRepository = roleMenuRepository;
-            _userRoleRepository = userRoleRepository;
-            _userInfoRepository = userInfoRepository;
+            _roleMenuService = roleMenuService;
+            _userRoleService = userRoleService;
+            _userInfoService = userInfoService;
             _mapper = mapper;
         }
         public PageInfo<Menu> GetPageList(PageInfo<Menu> pageInfo, Menu oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
@@ -48,7 +48,7 @@ namespace Message.Service
                 }
             }
             //添加菜单角色
-            await _roleMenuRepository.AddOrDeleteMenuRoleAsync(entityMenu.Id, model.lstRoleId, sOperator);
+            await _roleMenuService.AddOrDeleteMenuRoleAsync(entityMenu.Id, model.lstRoleId, sOperator);
             return entityMenu;
         }
 
@@ -100,7 +100,7 @@ namespace Message.Service
         }
         public async Task<bool> CheckUserMenuPowerAsync(int iUserId, int iMenuId)
         {
-            UserInfo entityUserInfo = await _userInfoRepository.SelectAsync(iUserId);
+            UserInfo entityUserInfo = await _userInfoService.SelectAsync(iUserId);
             Menu entityMenu = await _menuRepository.SelectAsync(iMenuId);
             if (entityUserInfo != null && entityMenu != null)
             {
@@ -129,18 +129,18 @@ namespace Message.Service
         public async Task<List<Menu>> GetRoleMenuListAnyncAsync(int iUserId, string sOperator = null)
         {
             List<Menu> lstMenu = new List<Menu>();
-            UserInfo entityUserInfo = await _userInfoRepository.SelectAsync(iUserId);
+            UserInfo entityUserInfo = await _userInfoService.SelectAsync(iUserId);
             if (entityUserInfo != null)
             {
                 //查询用户拥有角色集合
-                List<UserRole> lstUserRoleList = await _userRoleRepository.SelectALLAsync(new UserRole() { IuserId = iUserId });
+                List<UserRole> lstUserRoleList = await _userRoleService.SelectALLAsync(new UserRole() { IuserId = iUserId });
                 List<RoleMenu> lstRoleMenu = new List<RoleMenu>();
                 //查询角色所拥有的菜单集合
                 if (lstUserRoleList?.Count > 0)
                 {
                     foreach (UserRole entityUserRole in lstUserRoleList)
                     {
-                        List<RoleMenu> lstRoleMenuList = await _roleMenuRepository.SelectALLAsync(new RoleMenu() { IroleId = entityUserRole.IroleId });
+                        List<RoleMenu> lstRoleMenuList = await _roleMenuService.SelectALLAsync(new RoleMenu() { IroleId = entityUserRole.IroleId });
                         if (lstRoleMenuList?.Count > 0)
                         {
                             lstRoleMenu.AddRange(lstRoleMenuList);

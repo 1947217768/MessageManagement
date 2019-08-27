@@ -13,12 +13,10 @@ namespace Message.Service
     public class SystemControllerService : ISystemControllerService
     {
         private readonly ISystemControllerRepository _systemControllerRepository;
-        private readonly ISystemActionRepository _systemActionRepository;
 
-        public SystemControllerService(ISystemControllerRepository systemControllerRepository, ISystemActionRepository systemActionRepository)
+        public SystemControllerService(ISystemControllerRepository systemControllerRepository)
         {
             _systemControllerRepository = systemControllerRepository;
-            _systemActionRepository = systemActionRepository;
         }
         public PageInfo<SystemController> GetPageList(PageInfo<SystemController> pageInfo, SystemController oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
