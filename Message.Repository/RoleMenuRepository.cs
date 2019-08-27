@@ -1,5 +1,6 @@
 ﻿using Message.Core.Repository;
 using Message.Entity.Mapping;
+using Message.Entity.Redis;
 using Message.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -41,17 +42,8 @@ namespace Message.Repository
                 foreach (UserRole entityUserRole in lstUserRole)
                 {
                     UserInfo entityUserInfo = _userInfoRepository.Select(entityUserRole.IuserId);
-                    //用户菜树Redis Key
-                    string sUserTreeItemMenuKey = "UserTreeItemMenu_" + entityUserInfo.Id;
-                    string sUserMenuKey = "UserMenu_" + entityUserInfo.Id;
-                    if (RedisHelper.Exists(sUserMenuKey))
-                    {
-                        RedisHelper.Del(sUserMenuKey);
-                    }
-                    if (RedisHelper.Exists(sUserTreeItemMenuKey))
-                    {
-                        RedisHelper.Del(sUserTreeItemMenuKey);
-                    }
+                    RedisMethod.DeleteUserTreeMenu(entityUserInfo.Id);
+                    RedisMethod.DeleteUserMenu(entityUserInfo.Id);
                 }
             }
             base.ChangeDataDeleteKey(entity, sOperator);

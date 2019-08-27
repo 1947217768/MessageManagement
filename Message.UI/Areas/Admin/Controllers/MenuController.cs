@@ -1,6 +1,7 @@
 ﻿using FluentValidation.Results;
 using Message.Core.Models;
 using Message.Entity.Mapping;
+using Message.Entity.ViewEntity;
 using Message.Entity.ViewEntity.Menu;
 using Message.IService;
 using Message.UI.Areas.Admin.Validation.Menu;

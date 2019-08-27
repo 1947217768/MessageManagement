@@ -1,6 +1,7 @@
 ﻿using Message.Core.Models;
 using Message.Core.Repository;
 using Message.Entity.Mapping;
+using Message.Entity.Redis;
 using Message.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,17 +30,8 @@ namespace Message.Repository
         }
         public override void ChangeDataDeleteKey(UserRole entity, string sOperator)
         {
-            string sUserMenuKey = "UserMenu_" + entity.IuserId;
-            if (RedisHelper.Exists(sUserMenuKey))
-            {
-                RedisHelper.Del(sUserMenuKey);
-            }
-            //用户菜树Redis Key
-            string sUserTreeItemMenuKey = "UserTreeItemMenu_" + entity.IuserId;
-            if (RedisHelper.Exists(sUserTreeItemMenuKey))
-            {
-                RedisHelper.Del(sUserTreeItemMenuKey);
-            }
+            RedisMethod.DeleteUserMenu(entity.Id);
+            RedisMethod.DeleteUserTreeMenu(entity.IuserId);
             base.ChangeDataDeleteKey(entity, sOperator);
         }
     }

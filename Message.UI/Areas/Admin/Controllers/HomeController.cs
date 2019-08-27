@@ -10,6 +10,7 @@ using System.Linq;
 using Message.Core.Extensions;
 using System.Threading.Tasks;
 using Message.Entity.ViewEntity.Home;
+using Message.Entity.Redis;
 
 namespace Message.UI.Areas.Admin.Controllers
 {
@@ -60,42 +61,36 @@ namespace Message.UI.Areas.Admin.Controllers
         public async Task<string> GetMenuAsync()
         {
             int iUserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value);
-            string sUserTreeItemMenuKey = "UserTreeItemMenu_" + iUserId;
-            string sUserMenuKey = "UserMenu_" + iUserId;
-            List<TreeItem<ViewMenu>> lstTreeItem = new List<TreeItem<ViewMenu>>();
-            if (RedisHelper.Exists(sUserTreeItemMenuKey))
-            {
-                lstTreeItem = RedisHelper.Get<List<TreeItem<ViewMenu>>>(sUserTreeItemMenuKey);
-            }
-            else
-            {
-                List<ViewMenu> lstViewMenu = new List<ViewMenu>();
-                List<Menu> lstUserMenu = new List<Menu>();
-                //查询角色所拥有的菜单集合
-                lstUserMenu = await _MenuService.GetRoleMenuListAnyncAsync(iUserId);
-                if (lstUserMenu?.Count > 0)
-                {
-                    //排序
-                    lstUserMenu = lstUserMenu.OrderBy(x => x.Isort).ToList();
-                    //设置用户菜单Redis
-                    RedisHelper.Set(sUserMenuKey, lstUserMenu);
-                    lstUserMenu.ForEach(entityMenu =>
-                    {
-                        ViewMenu entityViewMenu = new ViewMenu();
-                        entityViewMenu.Id = entityMenu.Id;
-                        entityViewMenu.ParentId = entityMenu.IparentId == -1 ? 0 : entityMenu.IparentId;
-                        entityViewMenu.DisplayName = entityMenu.Sname;
-                        entityViewMenu.IconUrl = entityMenu.SiconUrl;
-                        entityViewMenu.LinkUrl = entityMenu.SlinkUrl;
-                        entityViewMenu.Target = "";
-                        lstViewMenu.Add(entityViewMenu);
-                    });
-                }
-                lstTreeItem = lstViewMenu.GenerateTree(x => x.Id, x => x.ParentId).ToList();
-                RedisHelper.Set(sUserTreeItemMenuKey, lstTreeItem);
-            }
+            List<TreeItem<ViewMenu>> lstTreeItem = await RedisMethod.GetUserTreeMenuAsync(iUserId, -1, () => GetUserTreeMenuAsync(iUserId));
             return JsonHelper.ObjectToJSON(lstTreeItem);
         }
+
+        public async Task<List<TreeItem<ViewMenu>>> GetUserTreeMenuAsync(int iUserId)
+        {
+            List<ViewMenu> lstViewMenu = new List<ViewMenu>();
+            List<Menu> lstUserMenu = new List<Menu>();
+            //查询角色所拥有的菜单集合
+            lstUserMenu = await RedisMethod.GetUserMenuAsync(iUserId, -1, () => _MenuService.GetRoleMenuListAsync(iUserId));
+            if (lstUserMenu?.Count > 0)
+            {
+                //排序
+                lstUserMenu = lstUserMenu.OrderBy(x => x.Isort).ToList();
+                lstUserMenu.ForEach(entityMenu =>
+                {
+                    ViewMenu entityViewMenu = new ViewMenu();
+                    entityViewMenu.Id = entityMenu.Id;
+                    entityViewMenu.ParentId = entityMenu.IparentId == -1 ? 0 : entityMenu.IparentId;
+                    entityViewMenu.DisplayName = entityMenu.Sname;
+                    entityViewMenu.IconUrl = entityMenu.SiconUrl;
+                    entityViewMenu.LinkUrl = entityMenu.SlinkUrl;
+                    entityViewMenu.Target = "";
+                    lstViewMenu.Add(entityViewMenu);
+                });
+            }
+            return lstViewMenu.GenerateTree(x => x.Id, x => x.ParentId).ToList();
+        }
+
+
         public IActionResult Main()
         {
             return View();

@@ -1,4 +1,5 @@
 ﻿using Message.Core.Models;
+using Message.Entity.ViewEntity.Home;
 using System;
 using System.Collections;
 using System.Collections.Generic;

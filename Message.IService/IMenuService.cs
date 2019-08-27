@@ -15,7 +15,7 @@ namespace Message.IService
         /// <param name="iUserId">用户ID</param>
         /// <param name="sOperator">操作人</param>
         /// <returns></returns>
-        Task<List<Menu>> GetRoleMenuListAnyncAsync(int iUserId, string sOperator = null);
+        Task<List<Menu>> GetRoleMenuListAsync(int iUserId, string sOperator = null);
 
         Task<Menu> AddOrModifyMenuAsync(AddOrModifyMenu model, string sOperator);
 

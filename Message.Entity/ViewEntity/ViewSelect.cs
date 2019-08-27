@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Message.Core.Models
+namespace Message.Entity.ViewEntity
 {
     public class ViewSelect
     {

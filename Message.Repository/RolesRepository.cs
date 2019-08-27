@@ -1,5 +1,6 @@
 ﻿using Message.Core.Repository;
 using Message.Entity.Mapping;
+using Message.Entity.Redis;
 using Message.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,11 +35,7 @@ namespace Message.Repository
         }
         public override void ChangeDataDeleteKey(Roles entity, string sOperator)
         {
-            string sRolesKey = "System_Roles";
-            if (RedisHelper.Exists(sRolesKey))
-            {
-                RedisHelper.Del(sRolesKey);
-            }
+            RedisMethod.DeleteSystemRoles();
             base.ChangeDataDeleteKey(entity, sOperator);
         }
         public override void AfterDelete(DbContext DB, Roles entity, string sOperator)

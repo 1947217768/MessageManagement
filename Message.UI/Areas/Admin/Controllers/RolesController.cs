@@ -1,6 +1,8 @@
 ﻿using FluentValidation.Results;
 using Message.Core.Models;
 using Message.Entity.Mapping;
+using Message.Entity.Redis;
+using Message.Entity.ViewEntity;
 using Message.Entity.ViewEntity.Roles;
 using Message.IService;
 using Message.UI.Areas.Admin.Validation.Roles;
@@ -13,7 +15,7 @@ namespace Message.UI.Areas.Admin.Controllers
     public class RolesController : BaseAdminController
     {
         private readonly IRolesService _rolesService;
-        public RolesController(IRolesService rolesService) 
+        public RolesController(IRolesService rolesService)
         {
             _rolesService = rolesService;
         }
@@ -32,30 +34,18 @@ namespace Message.UI.Areas.Admin.Controllers
         public string GetRoleList()
         {
             List<ViewSelect> lstViewSelect = new List<ViewSelect>();
-            string sRoleKey = "System_Roles";
-            if (RedisHelper.Exists(sRoleKey))
+            List<Roles> lstRoles = RedisMethod.GetSystemRoles(-1, () => _rolesService.GetRolesList());
+            if (lstRoles?.Count > 0)
             {
-                //读取Redis
-                lstViewSelect = RedisHelper.Get<List<ViewSelect>>(sRoleKey);
-                return JsonHelper.ObjectToJSON(lstViewSelect);
-            }
-            else
-            {
-                List<Roles> lstRoles = _rolesService.GetRolesList();
-                if (lstRoles?.Count > 0)
+                foreach (Roles entityRoles in lstRoles)
                 {
-                    foreach (Roles entityRoles in lstRoles)
-                    {
-                        ViewSelect entity = new ViewSelect();
-                        entity.id = entityRoles.Id;
-                        entity.name = entityRoles.SroleName;
-                        lstViewSelect.Add(entity);
-                    }
+                    ViewSelect entity = new ViewSelect();
+                    entity.id = entityRoles.Id;
+                    entity.name = entityRoles.SroleName;
+                    lstViewSelect.Add(entity);
                 }
-                //设置Redis
-                RedisHelper.Set(sRoleKey, lstViewSelect);
-                return JsonHelper.ObjectToJSON(lstViewSelect);
             }
+            return JsonHelper.ObjectToJSON(lstViewSelect);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

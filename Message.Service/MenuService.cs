@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Message.Core.Models;
 using Message.Entity.Mapping;
+using Message.Entity.Redis;
 using Message.Entity.ViewEntity.Menu;
 using Message.IRepository;
 using Message.IService;
@@ -104,18 +105,7 @@ namespace Message.Service
             Menu entityMenu = await _menuRepository.SelectAsync(iMenuId);
             if (entityUserInfo != null && entityMenu != null)
             {
-                string sUserMenuKey = "UserMenu_" + entityUserInfo.Id;
-                List<Menu> lstUserMenu = new List<Menu>();
-                //获取用户菜单
-                if (RedisHelper.Exists(sUserMenuKey))
-                {
-                    lstUserMenu = RedisHelper.Get<List<Menu>>(sUserMenuKey);
-                }
-                else
-                {
-                    lstUserMenu = await GetRoleMenuListAnyncAsync(entityUserInfo.Id);
-                    RedisHelper.Set(sUserMenuKey, lstUserMenu);
-                }
+                List<Menu> lstUserMenu = await RedisMethod.GetUserMenuAsync(entityUserInfo.Id, -1, () => GetRoleMenuListAsync(iUserId));
                 if (lstUserMenu?.Count > 0)
                 {
                     if (lstUserMenu.Any(x => x.Id == entityMenu.Id))
@@ -126,7 +116,7 @@ namespace Message.Service
             }
             return false;
         }
-        public async Task<List<Menu>> GetRoleMenuListAnyncAsync(int iUserId, string sOperator = null)
+        public async Task<List<Menu>> GetRoleMenuListAsync(int iUserId, string sOperator = null)
         {
             List<Menu> lstMenu = new List<Menu>();
             UserInfo entityUserInfo = await _userInfoService.SelectAsync(iUserId);
