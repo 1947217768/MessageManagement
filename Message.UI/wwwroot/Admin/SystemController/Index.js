@@ -131,6 +131,7 @@
     });
     //反射控制器
     $("#btnRef").click(function () {
+        layer.load();
         $.ajax({
             type: 'POST',
             url: '/Admin/SystemController/ReflectionController/',
@@ -140,6 +141,7 @@
                 "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
             },
             success: function (data) {//res为相应体,function为回调函数
+                layer.closeAll('loading'); //关闭loading
                 layer.msg(data.msg, {
                     time: 2000 //20s后自动关闭
                 }, function () {
@@ -147,30 +149,9 @@
                 });
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.closeAll('loading'); //关闭loading
                 layer.alert('操作失败！！！' + XMLHttpRequest.status + "|" + XMLHttpRequest.readyState + "|" + textStatus, { icon: 5 });
             }
-        });
-    });
-    form.on('switch(IsLock)', function (data) {
-        var tipText = '确定锁定当前用户吗？';
-        if (!data.elem.checked) {
-            tipText = '确定启用当前用户吗？';
-        }
-        layer.confirm(tipText, {
-            icon: 3,
-            title: '系统提示',
-            cancel: function (index) {
-                data.elem.checked = !data.elem.checked;
-                form.render();
-                layer.close(index);
-            }
-        }, function (index) {
-            changeLockStatus(data.value, data.elem.checked);
-            layer.close(index);
-        }, function (index) {
-            data.elem.checked = !data.elem.checked;
-            form.render();
-            layer.close(index);
         });
     });
 

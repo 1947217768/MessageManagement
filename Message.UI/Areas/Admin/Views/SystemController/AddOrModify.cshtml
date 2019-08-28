@@ -1,44 +1,12 @@
 ﻿@using Message.Entity.Mapping
 @{
     ViewData["Title"] = "编辑控制器";
-    List<Menu> lstParentMenu = ViewBag.lstParentMenu;
 }
 <tr>
-    <td style="width:130px">菜单名称:</td>
-    <td style="width:250px"><input type="text" id="Sname" name="Sname" lay-verify="required" class="layui-input"></td>
-    <td style="width:130px">URL:</td>
-    <td style="width:250px"><input type="text" id="SlinkUrl" name="SlinkUrl" class="layui-input"></td>
-</tr>
-<tr>
-    <td>父级菜单:</td>
-    <td>
-        <select name="IparentId" id="IparentId" lay-verify="required" lay-search="">
-            <option value="-1" selected="selected">无</option>
-            @if (lstParentMenu?.Count > 0)
-            {
-                foreach (Menu entityMenu in lstParentMenu)
-                {
-                    <option value="@entityMenu.Id">@entityMenu.Sname</option>
-                }
-            }
-        </select>
-    </td>
-    <td>所属角色:</td>
-    <td>
-        <div style="text-align:left" id="roles"></div>
-    </td>
-</tr>
-<tr>
-    <td>排序</td>
-    <td><input type="number" id="Isort" name="Isort" class="layui-input"></td>
-    <td>图标:</td>
-    <td><input type="text" id="SiconUrl" name="SiconUrl" class="layui-input"></td>
-</tr>
-<tr>
-    <td>是否隐藏:</td>
-    <td style="text-align:left">
-        <input type="checkbox" name="Bdisplay" id="Bdisplay" lay-filter="Bdisplay" lay-skin="switch" lay-text="是|否" value="1" />
-    </td>
+    <td style="width:130px">控制器:</td>
+    <td style="width:250px"><input type="text" id="ScontrollerName" name="ScontrollerName" lay-verify="required" class="layui-input"></td>
+    <td style="width:130px"></td>
+    <td style="width:250px"></td>
 </tr>
 <tr>
     <td>备注:</td>
@@ -46,7 +14,7 @@
 </tr>
 @section Scripts{
     <script type="text/javascript" src="~/layui/layui.js"></script>
-    <script type="text/javascript" src="~/Admin/Menu/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+    <script type="text/javascript" src="~/Admin/SystemController/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
 }
 
 

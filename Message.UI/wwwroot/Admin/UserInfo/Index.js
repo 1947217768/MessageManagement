@@ -179,9 +179,4 @@
             }
         });
     }
-    //监听折叠
-    element.on('collapse(test)', function (data) {
-
-    });
-
 });

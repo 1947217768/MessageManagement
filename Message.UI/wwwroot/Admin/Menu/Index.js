@@ -132,6 +132,28 @@
         }
     });
 
+    function changeState(iMenuId, bDisplpy) {
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/Menu/ChangeMenuState/',
+            data: { Id: iMenuId, Bdisplay: bDisplpy },
+            dataType: "json",
+            headers: {
+                "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
+            },
+            success: function (data) {
+                layer.msg(data.msg, {
+                    time: 2000 //2s后自动关闭
+                }, function () {
+                    tableIns.reload();
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.alert('操作失败！！！' + XMLHttpRequest.status + "|" + XMLHttpRequest.readyState + "|" + textStatus, { icon: 5 });
+            }
+        });
+    }
+
     form.on('switch(BdisplayTmp)', function (data) {
         var tipText = '确定隐藏当前菜单吗？';
         if (!data.elem.checked) {
@@ -154,32 +176,4 @@
             layer.close(index);
         });
     });
-
-
-    function changeState(iMenuId, bDisplpy) {
-        $.ajax({
-            type: 'POST',
-            url: '/Admin/Menu/ChangeMenuState/',
-            data: { Id: iMenuId, Bdisplay: bDisplpy },
-            dataType: "json",
-            headers: {
-                "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
-            },
-            success: function (data) {
-                layer.msg(data.msg, {
-                    time: 2000 //2s后自动关闭
-                }, function () {
-                    tableIns.reload();
-                });
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.alert('操作失败！！！' + XMLHttpRequest.status + "|" + XMLHttpRequest.readyState + "|" + textStatus, { icon: 5 });
-            }
-        });
-    }
-    //监听折叠
-    element.on('collapse(test)', function (data) {
-
-    });
-
 });

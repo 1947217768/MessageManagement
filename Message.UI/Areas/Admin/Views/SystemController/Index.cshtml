@@ -2,22 +2,22 @@
     ViewData["Title"] = "控制器管理";
 }
 @section Search{
-<tr>
-    <td style="width:200px">控制器名称:</td>
-    <td style="width:400px"><input type="text" id="ScontrollerName" name="ScontrollerName" class="layui-input"></td>
-    <td style="width:200px">备注:</td>
-    <td style="width:400px"><input type="text" id="Sremarks" name="Sremarks" class="layui-input"></td>
-    <td style="width:200px"></td>
-    <td style="width:400px"></td>
-</tr>
+    <tr>
+        <td style="width:200px">控制器名称:</td>
+        <td style="width:400px"><input type="text" id="ScontrollerName" name="ScontrollerName" class="layui-input"></td>
+        <td style="width:200px">备注:</td>
+        <td style="width:400px"><input type="text" id="Sremarks" name="Sremarks" class="layui-input"></td>
+        <td style="width:200px"></td>
+        <td style="width:400px"></td>
+    </tr>
 }
 @section Button{
     @*按钮扩展*@
-<div class="layui-inline">
-    <a id="btnRef" class="layui-btn"><i class="layui-icon layui-icon-add-1">&#xe654;</i>反射控制器</a>
-</div>
+    <div class="layui-inline">
+        <a id="btnRef" class="layui-btn"><i class="layui-icon layui-icon-add-1">&#xe654;</i>反射控制器</a>
+    </div>
 }
 @section Scripts{
-<script type="text/javascript" src="~/layui/layui.js"></script>
-<script src="~/Admin/SystemController/Index.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script src="~/Admin/SystemController/Index.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
 }

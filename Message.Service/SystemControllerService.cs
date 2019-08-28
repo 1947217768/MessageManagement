@@ -5,6 +5,7 @@ using Message.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -29,6 +30,45 @@ namespace Message.Service
                 return true;
             }
             return false;
+        }
+
+        public List<SystemController> SelectALL(SystemController entitySystemController = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return _systemControllerRepository.SelectALL(entitySystemController, sOperator, iOrderGroup, iMaxCount, sSortName, sSortOrder);
+        }
+
+        public SystemController Select(int id, string sOperator = null)
+        {
+            return _systemControllerRepository.Select(id, sOperator);
+        }
+
+        public SystemController Select(SystemController entitySystemController = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return _systemControllerRepository.Select(entitySystemController, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+
+        public async Task<List<SystemController>> SelectALLAsync(SystemController entitySystemController = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return await _systemControllerRepository.SelectALLAsync(entitySystemController, sOperator, iOrderGroup, iMaxCount, sSortName, sSortOrder);
+        }
+
+        public async Task<SystemController> SelectAsync(int id, string sOperator = null)
+        {
+            return await _systemControllerRepository.SelectAsync(id, sOperator);
+        }
+
+        public async Task<SystemController> SelectAsync(SystemController entitySystemController = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return await _systemControllerRepository.SelectAsync(entitySystemController, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+
+        public async Task<int> AppendAsync(SystemController entitySystemController, string sOperator)
+        {
+            return await _systemControllerRepository.AppendAsync(entitySystemController, sOperator);
+        }
+        public int Append(SystemController entitySystemController, string sOperator)
+        {
+            return _systemControllerRepository.Append(entitySystemController, sOperator);
         }
     }
 }

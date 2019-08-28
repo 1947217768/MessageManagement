@@ -6,36 +6,7 @@
 layui.use(['form', 'layer', 'selectM'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
-        $ = layui.jquery, selectM = layui.selectM;
-    var iMenuId = $("#Id").val();
-    var arrUserRoleId = new Array();
-    if (iMenuId > 0) {
-        $.ajax({
-            type: 'Get',
-            async: false,
-            url: '/Admin/RoleMenu/GetMenuRole?iMenuId=' + iMenuId,
-            dataType: "json",
-            success: function (res) {
-                arrUserRoleId = res;
-                console.log(arrUserRoleId);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.alert('操作失败！' + XMLHttpRequest.status + "|" + XMLHttpRequest.readyState + "|" + textStatus, { icon: 5 });
-            }
-        });
-    }
-    //选择角色下拉框
-    var tagIns1 = selectM({
-        //元素容器【必填】
-        elem: '#roles'
-        //候选数据【必填】
-        , data: "/Admin/Roles/GetRoleList/"
-        , max: 1000
-        , selected: arrUserRoleId
-        , width: 250
-        //添加验证
-        // , verify: 'required'
-    });
+        $ = layui.jquery, 
     form.on("submit(btnSubmit)", function (data) {
         layer.load();
         //获取防伪标记
@@ -44,14 +15,8 @@ layui.use(['form', 'layer', 'selectM'], function () {
             url: '/Admin/Menu/AddOrModify',
             data: {
                 Id: $("#Id").val(),  //主键
-                Sname: $("#Sname").val(),
-                SlinkUrl: $("#SlinkUrl").val(),
-                Isort: $("#Isort").val(),
-                SiconUrl: $("#SiconUrl").val(),
-                IparentId: $("#IparentId").val(),
-                Bdisplay: $("#Bdisplay").get(0).checked,
-                Sremarks: $("#Sremarks").val(),
-                lstRoleId: tagIns1.values
+                ScontrollerName: $("#ScontrollerName").val(),
+                Sremarks: $("#Sremarks").val()
             },
             dataType: "json",
             headers: {

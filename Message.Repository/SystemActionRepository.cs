@@ -19,8 +19,8 @@ namespace Message.Repository
         }
         protected override IQueryable<SystemAction> ExistsFilter(out string sErrorMessage, SystemAction entity, IQueryable<SystemAction> query)
         {
-            query = query.Where(x => false);
-            sErrorMessage = "";
+            query = query.Where(x => x.SactionName == entity.SactionName && x.IcontrollerId == entity.IcontrollerId && x.SresultType == entity.SresultType);
+            sErrorMessage = "此Action方法已存在";
             return query;
         }
         protected override IQueryable<SystemAction> OrderBy(IQueryable<SystemAction> query, int iOrderGroup = 0)

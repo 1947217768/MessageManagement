@@ -89,8 +89,6 @@ namespace Message.UI.Areas.Admin.Controllers
             }
             return lstViewMenu.GenerateTree(x => x.Id, x => x.ParentId).ToList();
         }
-
-
         public IActionResult Main()
         {
             return View();

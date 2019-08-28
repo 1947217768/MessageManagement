@@ -37,6 +37,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
        // , verify: 'required'
     });
     form.on("submit(btnSubmit)", function (data) {
+        layer.load();
         //获取防伪标记
         $.ajax({
             type: 'POST',
@@ -56,6 +57,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
                 "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
             },
             success: function (res) {//res为相应体,function为回调函数
+                layer.closeAll('loading');
                 var alertIndex;
                 if (res.Code === 0) {
                     alertIndex = layer.alert(res.Msg, { icon: 1 }, function () {
@@ -76,6 +78,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.closeAll('loading');
                 layer.alert('操作失败！' + XMLHttpRequest.status + "|" + XMLHttpRequest.readyState + "|" + textStatus, { icon: 5 });
             }
         });
