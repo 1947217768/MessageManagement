@@ -19,7 +19,7 @@ namespace Message.Repository
         }
         protected override IQueryable<SystemAction> ExistsFilter(out string sErrorMessage, SystemAction entity, IQueryable<SystemAction> query)
         {
-            query = query.Where(x => x.SactionName == entity.SactionName && x.IcontrollerId == entity.IcontrollerId && x.SresultType == entity.SresultType);
+            query = query.Where(x => x.SactionName == entity.SactionName && x.IcontrollerId == entity.IcontrollerId);
             sErrorMessage = "此Action方法已存在";
             return query;
         }

@@ -45,9 +45,9 @@
     });
     //添加用户
     function addManager(edit) {
-        var tit = "添加用户";
+        var tit = "添加";
         if (edit) {
-            tit = "编辑用户";
+            tit = "编辑";
         }
         var index = layui.layer.open({
             title: tit,
@@ -117,7 +117,7 @@
                         "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
                     },
                     success: function (data) {//res为相应体,function为回调函数
-                        layer.msg(data.msg, {
+                        layer.msg(data.Msg, {
                             time: 2000 //20s后自动关闭
                         }, function () {
                             tableIns.reload();

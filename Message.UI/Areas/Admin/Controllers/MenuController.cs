@@ -5,6 +5,7 @@ using Message.Entity.ViewEntity;
 using Message.Entity.ViewEntity.Menu;
 using Message.IService;
 using Message.UI.Areas.Admin.Validation.Menu;
+using Message.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Message.UI.Areas.Admin.Controllers
 {
+
     public class MenuController : BaseAdminController
     {
         private readonly IMenuService _menuService;
@@ -35,6 +37,7 @@ namespace Message.UI.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CrossSiteScript]
         public async Task<string> AddOrModifyAsync([FromForm]AddOrModifyMenu model)
         {
             BaseResult baseResult = new BaseResult();
@@ -115,6 +118,8 @@ namespace Message.UI.Areas.Admin.Controllers
             }
             return JsonHelper.ObjectToJSON(lstViewSelect);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public string DeleteRange(int[] arrId)
         {
             BaseResult baseResult = new BaseResult();

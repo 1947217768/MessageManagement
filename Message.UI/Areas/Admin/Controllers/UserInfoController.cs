@@ -6,6 +6,7 @@ using Message.Entity.ViewEntity;
 using Message.Entity.ViewEntity.UserInfo;
 using Message.IService;
 using Message.UI.Areas.Admin.Validation.UserInfo;
+using Message.UI.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
@@ -51,6 +52,7 @@ namespace Message.UI.Areas.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CrossSiteScript]
         public async Task<string> AddOrModifyAsync([FromForm]AddOrModifyUserInfo model)
         {
             BaseResult baseResult = new BaseResult();
@@ -152,6 +154,7 @@ namespace Message.UI.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CrossSiteScript]
         public async Task<string> PersonalInfo([FromForm] PersonalInfo model)
         {
             BaseResult baseResult = new BaseResult();

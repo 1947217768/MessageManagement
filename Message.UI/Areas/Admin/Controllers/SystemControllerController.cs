@@ -2,6 +2,7 @@
 using Message.Core.Models;
 using Message.Entity.Mapping;
 using Message.IService;
+using Message.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,14 +30,50 @@ namespace Message.UI.Areas.Admin.Controllers
         {
             return List();
         }
-        public async Task<IActionResult> AddOrModifyAsync()
+        public IActionResult AddOrModify()
         {
-            return base.Edit();
+            return Edit();
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [CrossSiteScript]
+        public async Task<string> AddOrModifyAsync([FromForm]SystemController model)
+        {
+            BaseResult baseResult = new BaseResult();
+            try
+            {
+                if (model != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(model.ScontrollerName))
+                    {
+                        if (await _SystemControllerService.AddOrModifySystemControllerAsync(model, User.Identity.Name) != null)
+                        {
+                            baseResult.Code = 0;
+                            baseResult.Msg = "操作成功!";
+                        }
+                        else
+                        {
+                            baseResult.Code = 1;
+                            baseResult.Msg = "操作失败!";
+                        }
+                    }
+                    else
+                    {
+                        baseResult.Code = 3;
+                        baseResult.Msg = "控制器名称不能为空!";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                baseResult.Code = 3;
+                baseResult.Msg = ex.Message;
+            }
+            return JsonHelper.ObjectToJSON(baseResult);
+        }
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<BaseResult> ReflectionController()
+        public async Task<string> ReflectionController()
         {
             BaseResult baseResult = new BaseResult();
             try
@@ -117,7 +154,7 @@ namespace Message.UI.Areas.Admin.Controllers
                 baseResult.Msg = ex.Message;
                 throw;
             }
-            return baseResult;
+            return JsonHelper.ObjectToJSON(baseResult);
         }
         //[HttpPost]
         //[ValidateAntiForgeryToken]
@@ -159,6 +196,9 @@ namespace Message.UI.Areas.Admin.Controllers
         //    }
         //    return JsonHelper.ObjectToJSON(baseResult);
         //}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public string DeleteRange(int[] arrId)
         {
             BaseResult baseResult = new BaseResult();

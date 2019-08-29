@@ -1,0 +1,36 @@
+﻿@using Message.Entity.Mapping
+@{
+    ViewData["Title"] = "编辑控制器";
+    List<SystemController> lstSystemController = ViewBag.lstSystemController;
+}
+<tr>
+    <td style="width:130px">控制器:</td>
+    <td style="width:250px">
+        <select name="IcontrollerId" id="IcontrollerId" lay-verify="required" lay-search="">
+            @if (lstSystemController?.Count > 0)
+            {
+                foreach (SystemController entityMenu in lstSystemController)
+                {
+                    <option value="@entityMenu.Id">@entityMenu.ScontrollerName</option>
+                }
+            }
+        </select>
+    </td>
+    <td style="width:130px">Action名称:</td>
+    <td style="width:250px"><input type="text" id="SactionName" name="SactionName" lay-verify="required" class="layui-input"></td>
+</tr>
+<tr>
+    <td>返回类型:</td>
+    <td><input type="text" id="SresultType" name="SresultType" lay-verify="required" class="layui-input"></td>
+</tr>
+<tr>
+    <td>备注:</td>
+    <td colspan="3"><textarea id="Sremarks" name="Sremarks" class="layui-textarea"></textarea></td>
+</tr>
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Admin/SystemAction/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}
+
+
+

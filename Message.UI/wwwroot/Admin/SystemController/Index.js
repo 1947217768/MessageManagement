@@ -30,20 +30,16 @@
                 curr: 1
             },
             where: {
-                SloginName: $("#SloginName").val(),
-                SuserName: $("#SuserName").val(),
-                SuserEmail: $("#SuserEmail").val(),
-                SuserPhone: $("#SuserPhone").val(),
-                Sremarks: $("#Sremarks").val(),
-                BisLock: $("#BisLock").get(0).checked
+                ScontrollerName: $("#ScontrollerName").val(),
+                Sremarks: $("#Sremarks").val()
             }
         });
     });
     //添加用户
     function addManager(edit) {
-        var tit = "添加用户";
+        var tit = "添加";
         if (edit) {
-            tit = "编辑用户";
+            tit = "编辑";
         }
         var index = layui.layer.open({
             title: tit,
@@ -55,12 +51,7 @@
                 var body = layui.layer.getChildFrame('body', index);
                 if (edit) {
                     body.find("#Id").val(edit.Id);
-                    body.find("#SloginName").val(edit.SloginName);
-                    body.find("#SuserName").val(edit.SuserName);
-                    body.find("#SuserEmail").val(edit.SuserEmail);
-                    body.find("#SuserPhone").val(edit.SuserPhone);
-                    body.find("#SuserEmail").val(edit.SuserEmail);
-                    body.find("input:checkbox[id='BisLock']").prop("checked", edit.BisLock);
+                    body.find("#ScontrollerName").val(edit.ScontrollerName);
                     body.find("#Sremarks").text(edit.Sremarks === null ? "" : edit.Sremarks);
                     form.render();
                 }
@@ -98,16 +89,16 @@
     $("#btnDelete").click(function () {
         var checkStatus = table.checkStatus('dataTable'),
             data = checkStatus.data,
-            arrUserId = [];
+            arrId = [];
         if (data.length > 0) {
             for (var i in data) {
-                arrUserId.push(data[i].Id);
+                arrId.push(data[i].Id);
             }
-            layer.confirm('确定删除选中的用户？', { icon: 3, title: '提示信息' }, function (index) {
+            layer.confirm('确定删除选中的控制器？', { icon: 3, title: '提示信息' }, function (index) {
                 $.ajax({
                     type: 'POST',
                     url: '/Admin/SystemController/DeleteRange/',
-                    data: { arrUserId: arrUserId },
+                    data: { arrId: arrId },
                     dataType: "json",
                     headers: {
                         "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
@@ -142,7 +133,7 @@
             },
             success: function (data) {//res为相应体,function为回调函数
                 layer.closeAll('loading'); //关闭loading
-                layer.msg(data.msg, {
+                layer.msg(data.Msg, {
                     time: 2000 //20s后自动关闭
                 }, function () {
                     tableIns.reload();
@@ -153,33 +144,6 @@
                 layer.alert('操作失败！！！' + XMLHttpRequest.status + "|" + XMLHttpRequest.readyState + "|" + textStatus, { icon: 5 });
             }
         });
-    });
-
-    function changeLockStatus(iUserId, bIsLock) {
-        $.ajax({
-            type: 'POST',
-            url: '/Admin/SystemController/ChangeUserLockStates/',
-            data: { Id: iUserId, BisLock: bIsLock },
-            dataType: "json",
-            headers: {
-                "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
-            },
-            success: function (data) {
-                layer.msg(data.Msg, {
-                    time: 2000 //2s后自动关闭
-                }, function () {
-                    tableIns.reload();
-                    layer.close(index);
-                });
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.alert('操作失败！！！' + XMLHttpRequest.status + "|" + XMLHttpRequest.readyState + "|" + textStatus, { icon: 5 });
-            }
-        });
-    }
-    //监听折叠
-    element.on('collapse(test)', function (data) {
-
     });
 
 });

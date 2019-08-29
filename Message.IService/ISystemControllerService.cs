@@ -46,6 +46,7 @@ namespace Message.IService
         /// <returns></returns>
         Task<SystemController> SelectAsync(SystemController entitySystemController = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
 
+        Task<SystemController> AddOrModifySystemControllerAsync(SystemController model, string sOperator);
         Task<int> AppendAsync(SystemController entitySystemController, string sOperator);
         int Append(SystemController entitySystemController, string sOperator);
         bool DeleteRange(int[] arrId, string sOperator);

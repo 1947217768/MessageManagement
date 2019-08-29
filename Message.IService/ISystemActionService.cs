@@ -1,5 +1,6 @@
 ﻿using Message.Core.Models;
 using Message.Entity.Mapping;
+using Message.Entity.ViewEntity.SystemAction;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Message.IService
 {
     public interface ISystemActionService
     {
-        PageInfo<SystemAction> GetPageList(PageInfo<SystemAction> pageInfo, SystemAction oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
+        PageInfo<ViewSystemAction> GetPageList(PageInfo<ViewSystemAction> pageInfo, ViewSystemAction oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
         bool DeleteRange(int[] arrId, string sOperator);
 
 
@@ -48,6 +49,7 @@ namespace Message.IService
         /// <returns></returns>
         Task<SystemAction> SelectAsync(SystemAction entitySystemAction = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
 
+        Task<SystemAction> AddOrModifySystemActionAsync(SystemAction model, string sOperator);
         Task<int> AppendAsync(SystemAction entitySystemAction, string sOperator);
         int Append(SystemAction entitySystemAction, string sOperator);
     }

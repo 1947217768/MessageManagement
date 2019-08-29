@@ -1,4 +1,5 @@
-﻿using Message.Core.Models;
+﻿using AutoMapper;
+using Message.Core.Models;
 using Message.Entity.Mapping;
 using Message.IRepository;
 using Message.IService;
@@ -14,10 +15,12 @@ namespace Message.Service
     public class SystemControllerService : ISystemControllerService
     {
         private readonly ISystemControllerRepository _systemControllerRepository;
+        private readonly IMapper _mapper;
 
-        public SystemControllerService(ISystemControllerRepository systemControllerRepository)
+        public SystemControllerService(ISystemControllerRepository systemControllerRepository, IMapper mapper)
         {
             _systemControllerRepository = systemControllerRepository;
+            _mapper = mapper;
         }
         public PageInfo<SystemController> GetPageList(PageInfo<SystemController> pageInfo, SystemController oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
@@ -69,6 +72,27 @@ namespace Message.Service
         public int Append(SystemController entitySystemController, string sOperator)
         {
             return _systemControllerRepository.Append(entitySystemController, sOperator);
+        }
+
+        public async Task<SystemController> AddOrModifySystemControllerAsync(SystemController model, string sOperator)
+        {
+            SystemController entitySystemController;
+            if (model.Id == 0)
+            {
+                entitySystemController = _mapper.Map<SystemController>(model);
+                await _systemControllerRepository.AppendAsync(entitySystemController, sOperator);
+            }
+            else
+            {
+                entitySystemController = await _systemControllerRepository.SelectAsync(model.Id);
+                if (entitySystemController != null)
+                {
+                    //_mapper.Map(model, entitySystemController);
+                    entitySystemController.ScontrollerName = model.ScontrollerName;
+                    _systemControllerRepository.Update(entitySystemController, sOperator);
+                }
+            }
+            return entitySystemController;
         }
     }
 }

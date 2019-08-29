@@ -6,6 +6,7 @@ using Message.Entity.ViewEntity;
 using Message.Entity.ViewEntity.Roles;
 using Message.IService;
 using Message.UI.Areas.Admin.Validation.Roles;
+using Message.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -49,6 +50,7 @@ namespace Message.UI.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CrossSiteScript]
         public async Task<string> AddOrModifyAsync(AddOrModifyRoles model)
         {
             BaseResult baseResult = new BaseResult();
@@ -87,6 +89,8 @@ namespace Message.UI.Areas.Admin.Controllers
             return JsonHelper.ObjectToJSON(baseResult);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public string DeleteRange(int[] arrId)
         {
             BaseResult baseResult = new BaseResult();

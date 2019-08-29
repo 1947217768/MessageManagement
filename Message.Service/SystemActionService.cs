@@ -1,5 +1,7 @@
-﻿using Message.Core.Models;
+﻿using AutoMapper;
+using Message.Core.Models;
 using Message.Entity.Mapping;
+using Message.Entity.ViewEntity.SystemAction;
 using Message.IRepository;
 using Message.IService;
 using Microsoft.AspNetCore.Http;
@@ -13,15 +15,43 @@ namespace Message.Service
 {
     public class SystemActionService : ISystemActionService
     {
+        private readonly IMapper _mapper;
         private readonly ISystemActionRepository _systemActionRepository;
+        private readonly ISystemControllerService _systemControllerService;
 
-        public SystemActionService(ISystemActionRepository systemActionRepository)
+        public SystemActionService(ISystemActionRepository systemActionRepository, ISystemControllerService systemControllerService, IMapper mapper)
         {
             _systemActionRepository = systemActionRepository;
+            _systemControllerService = systemControllerService;
+            _mapper = mapper;
         }
-        public PageInfo<SystemAction> GetPageList(PageInfo<SystemAction> pageInfo, SystemAction oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        public PageInfo<ViewSystemAction> GetPageList(PageInfo<ViewSystemAction> pageInfo, ViewSystemAction oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
-            return _systemActionRepository.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder);
+            if (!string.IsNullOrWhiteSpace(oSearchEntity.ScontrollerName))
+            {
+                SystemController entitySystemController = _systemControllerService.Select(new SystemController() { ScontrollerName = oSearchEntity.ScontrollerName });
+                if (entitySystemController != null)
+                {
+                    oSearchEntity.IcontrollerId = entitySystemController.Id;
+                    pageInfo = _mapper.Map<PageInfo<ViewSystemAction>>(_systemActionRepository.GetPageList(_mapper.Map<PageInfo<SystemAction>>(pageInfo), _mapper.Map<SystemAction>(oSearchEntity), sOperator, iOrderGroup, sSortName, sSortOrder));
+                }
+            }
+            else
+            {
+                pageInfo = _mapper.Map<PageInfo<ViewSystemAction>>(_systemActionRepository.GetPageList(_mapper.Map<PageInfo<SystemAction>>(pageInfo), _mapper.Map<SystemAction>(oSearchEntity), sOperator, iOrderGroup, sSortName, sSortOrder));
+            }
+            if (pageInfo.data?.Count > 0)
+            {
+                foreach (var entity in pageInfo.data)
+                {
+                    SystemController entitySystemController = _systemControllerService.Select(entity.IcontrollerId);
+                    if (entitySystemController != null)
+                    {
+                        entity.ScontrollerName = entitySystemController.ScontrollerName;
+                    }
+                }
+            }
+            return pageInfo;
         }
         public bool DeleteRange(int[] arrId, string sOperator)
         {
@@ -69,6 +99,28 @@ namespace Message.Service
         public int Append(SystemAction entitySystemAction, string sOperator)
         {
             return _systemActionRepository.Append(entitySystemAction, sOperator);
+        }
+
+        public async Task<SystemAction> AddOrModifySystemActionAsync(SystemAction model, string sOperator)
+        {
+            SystemAction entitySystemAction;
+            if (model.Id == 0)
+            {
+                entitySystemAction = model;
+                await _systemActionRepository.AppendAsync(entitySystemAction, sOperator);
+            }
+            else
+            {
+                entitySystemAction = await _systemActionRepository.SelectAsync(model.Id);
+                if (entitySystemAction != null)
+                {
+                    entitySystemAction.SactionName = model.SactionName;
+                    entitySystemAction.IcontrollerId = model.IcontrollerId;
+                    entitySystemAction.SresultType = model.SresultType;
+                    _systemActionRepository.Update(entitySystemAction, sOperator);
+                }
+            }
+            return entitySystemAction;
         }
     }
 }

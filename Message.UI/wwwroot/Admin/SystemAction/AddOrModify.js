@@ -12,10 +12,13 @@ layui.use(['form', 'layer', 'selectM'], function () {
         //获取防伪标记
         $.ajax({
             type: 'POST',
-            url: '/Admin/SystemController/AddOrModify',
+            url: '/Admin/SystemAction/AddOrModify',
             data: {
                 Id: $("#Id").val(),  //主键
                 ScontrollerName: $("#ScontrollerName").val(),
+                SactionName: $("#SactionName").val(),
+                IcontrollerId: $("#IcontrollerId").val(),
+                SresultType: $("#SresultType").val(),
                 Sremarks: $("#Sremarks").val()
             },
             dataType: "json",
