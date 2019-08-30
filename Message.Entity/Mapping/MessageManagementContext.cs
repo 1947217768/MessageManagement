@@ -13,7 +13,7 @@ namespace Message.Entity.Mapping
         {
         }
         public virtual DbSet<DataBase> DataBase { get; set; }
-        public virtual DbSet<DataTables> DataTables { get; set; }
+        public virtual DbSet<DataTable> DataTable { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<RoleMenu> RoleMenu { get; set; }
         public virtual DbSet<UserInfo> UserInfo { get; set; }
@@ -23,6 +23,10 @@ namespace Message.Entity.Mapping
         public virtual DbSet<SystemController> SystemController { get; set; }
         public virtual DbSet<SystemAction> SystemAction { get; set; }
         public virtual DbSet<MenuAction> MenuAction { get; set; }
+        public virtual DbSet<DataType> DataType { get; set; }
+        public virtual DbSet<TableFiled> TableFiled { get; set; }
+        public virtual DbSet<FieldRelation> FieldRelation { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DataBase>(entity =>
@@ -48,7 +52,7 @@ namespace Message.Entity.Mapping
                 entity.Property(e => e.TmodifyTime).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<DataTables>(entity =>
+            modelBuilder.Entity<DataTable>(entity =>
             {
                 entity.Property(e => e.Screater)
                     .IsRequired()
@@ -144,6 +148,9 @@ namespace Message.Entity.Mapping
             modelBuilder.Entity<UploadFileInfo>().HasIndex(e => new { e.Uid });
             modelBuilder.Entity<MenuAction>().HasIndex(e => new { e.ImenuId, e.IactionId });
             modelBuilder.Entity<SystemAction>().HasIndex(e => new { e.IcontrollerId });
+            modelBuilder.Entity<TableFiled>().HasIndex(e => new { e.IdataTableId, e.IdataTypeId });
+            modelBuilder.Entity<DataTable>().HasIndex(e => new { e.IdataBaseId });
+            modelBuilder.Entity<FieldRelation>().HasIndex(e => new { e.IforeignkeyId, e.IprimarykeyId });
         }
     }
 }

@@ -4,14 +4,16 @@ using Message.Entity.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Message.Entity.Migrations
 {
     [DbContext(typeof(MessageManagementContext))]
-    partial class MessageManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20190829052302_addFieldRelation")]
+    partial class addFieldRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,13 +371,9 @@ namespace Message.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("BisEmpty");
-
                     b.Property<int>("IdataTableId");
 
                     b.Property<int>("IdataTypeId");
-
-                    b.Property<int>("ImaxLength");
 
                     b.Property<string>("Screater")
                         .IsRequired()

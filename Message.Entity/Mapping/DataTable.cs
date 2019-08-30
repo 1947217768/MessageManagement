@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Message.Entity.Mapping
 {
-    public partial class DataTables
+    public partial class DataTable
     {
         public int Id { get; set; }
         public int IdataBaseId { get; set; }

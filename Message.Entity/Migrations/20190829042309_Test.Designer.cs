@@ -4,14 +4,16 @@ using Message.Entity.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Message.Entity.Migrations
 {
     [DbContext(typeof(MessageManagementContext))]
-    partial class MessageManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20190829042309_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,38 +119,6 @@ namespace Message.Entity.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DataType");
-                });
-
-            modelBuilder.Entity("Message.Entity.Mapping.FieldRelation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IforeignkeyId");
-
-                    b.Property<int>("IprimarykeyId");
-
-                    b.Property<string>("Screater")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Smodifier")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Sremarks")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime?>("TcreateTime");
-
-                    b.Property<DateTime?>("TmodifyTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IforeignkeyId", "IprimarykeyId");
-
-                    b.ToTable("FieldRelation");
                 });
 
             modelBuilder.Entity("Message.Entity.Mapping.Menu", b =>
@@ -369,13 +339,9 @@ namespace Message.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("BisEmpty");
-
                     b.Property<int>("IdataTableId");
 
                     b.Property<int>("IdataTypeId");
-
-                    b.Property<int>("ImaxLength");
 
                     b.Property<string>("Screater")
                         .IsRequired()

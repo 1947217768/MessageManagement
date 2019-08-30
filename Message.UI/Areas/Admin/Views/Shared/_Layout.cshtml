@@ -73,6 +73,11 @@
             </form>
             @RenderSection("Scripts", false)
             break;
+        case 2:
+            @Html.AntiForgeryToken()
+            @RenderBody()
+            @RenderSection("Scripts", false)
+            break;
     }
 </body>
 </html>

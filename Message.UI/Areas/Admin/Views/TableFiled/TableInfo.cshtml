@@ -1,0 +1,84 @@
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled;
+
+@{
+    ViewData["Title"] = "详情";
+    List<ViewTableFiled>
+    lstViewTableFiled = ViewBag.lstTableFiled;
+    DataBase entityDatabase = ViewBag.entityDataBase;
+    DataTable entityDataTable = ViewBag.entityDataTable;
+}
+<div>
+    @if (entityDatabase != null && entityDataTable != null)
+    {
+        <h1>数据库:@entityDatabase.SdataBaseName</h1>
+        <h1>表名:@entityDataTable.StableName</h1>
+    }
+</div>
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title">
+        <li class="layui-this">列</li>
+        <li>Mapping</li>
+        <li>Repository</li>
+        <li>Service</li>
+        <li>Controller</li>
+        <li>View</li>
+        <li>JS</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col width="200">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>列名</th>
+                        <th>类型</th>
+                        <th>是否为空</th>
+                        <th>长度</th>
+                        <th>备注</th>
+                        <th>创建人</th>
+                        <th>创建时间</th>
+                        <th>修改人</th>
+                        <th>修改时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (lstViewTableFiled.Any())
+                    {
+                        foreach (ViewTableFiled entityViewTableFiled in lstViewTableFiled)
+                        {
+                            <tr>
+                                <td>@entityViewTableFiled.SfiledName</td>
+                                <td>@entityViewTableFiled.StypeName</td>
+                                <td>@entityViewTableFiled.BisEmpty</td>
+                                <td>@entityViewTableFiled.ImaxLength</td>
+                                <td>@entityViewTableFiled.Sremarks</td>
+                                <td>@entityViewTableFiled.Screater</td>
+                                <td>@entityViewTableFiled.TcreateTime.ToString()</td>
+                                <td>@entityViewTableFiled.Smodifier</td>
+                                <td>@entityViewTableFiled.TmodifyTime.ToString()</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:@(entityDataTable.StableName + ".cs")</h3>
+                <textarea class="layui-textarea" style="height:800px">
+                </textarea>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Admin/TableFiled/TableInfo.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}
+

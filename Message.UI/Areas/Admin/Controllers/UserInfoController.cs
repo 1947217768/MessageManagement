@@ -147,10 +147,10 @@ namespace Message.UI.Areas.Admin.Controllers
                     {
                         entityPersonalInfo.sAvatar = "/Images/login_tx.jpg";
                     }
-                    return View(entityPersonalInfo);
+                    return base.Empty(entityPersonalInfo);
                 }
             }
-            return View();
+            return base.Empty();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

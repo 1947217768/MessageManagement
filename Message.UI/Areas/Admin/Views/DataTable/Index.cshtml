@@ -1,0 +1,43 @@
+﻿@using Message.Entity.Mapping
+@{
+    ViewData["Title"] = "数据库管理";
+    List<DataBase>
+    lstDataBase = ViewBag.lstDataBase;
+}
+@section Search{
+    <tr>
+        <td style="width:200px">数据库名称:</td>
+        <td style="width:400px">
+            <select name="IdataBaseId" id="IdataBaseId" lay-verify="required" lay-search="">
+                @if (lstDataBase.Any())
+                {
+
+                    <option value="0">请选择</option>
+                    @foreach (DataBase entityDataBase in lstDataBase)
+                    {
+                        <option value="@entityDataBase.Id">@entityDataBase.SdataBaseName</option>
+                    }
+                }
+            </select>
+        </td>
+        <td style="width:200px">数据表名称:</td>
+        <td style="width:400px"><input type="text" id="StableName" name="StableName" class="layui-input"></td>
+        <td style="width:200px">备注:</td>
+        <td style="width:400px"><input type="text" id="Sremarks" name="Sremarks" class="layui-input"></td>
+    </tr>
+}
+@section Button{
+    @*按钮扩展*@
+    @*<div class="layui-inline">
+            <a id="btnRef" class="layui-btn"><i class="layui-icon layui-icon-add-1">&#xe654;</i>反射控制器</a>
+        </div>*@
+}
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script src="~/Admin/DataTable/Index.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+    <script type="text/html" id="Operation">
+        {{#  if(d.Id>0){ }}
+        <a class="layui-btn layui-btn-xs" href="/Admin/TableFiled/TableInfo?iTableId={{d.Id}}" target="view_window" name="btnTableInfo" id="btnTableInfo">详情</a>
+        {{#  } }}
+    </script>
+}

@@ -1,0 +1,25 @@
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled;
+@model DataTable
+@{
+    List<ViewTableFiled> lstTableFiled = ViewBag.lstTableFiled;
+}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace Message.Entity.Mapping
+{
+    public class <var>@Model.StableName</var>
+    {
+    @if (lstTableFiled.Any())
+    {
+        foreach (ViewTableFiled entityViewTableFiled in lstTableFiled)
+        {
+            <var>public @(entityViewTableFiled.StypeName) @(entityViewTableFiled.SfiledName) { get; set; }</var>
+        }
+    }
+
+    }
+    }

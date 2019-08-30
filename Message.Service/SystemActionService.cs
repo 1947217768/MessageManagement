@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Message.Service
@@ -40,7 +41,7 @@ namespace Message.Service
             {
                 pageInfo = _mapper.Map<PageInfo<ViewSystemAction>>(_systemActionRepository.GetPageList(_mapper.Map<PageInfo<SystemAction>>(pageInfo), _mapper.Map<SystemAction>(oSearchEntity), sOperator, iOrderGroup, sSortName, sSortOrder));
             }
-            if (pageInfo.data?.Count > 0)
+            if (pageInfo.data.Any())
             {
                 foreach (var entity in pageInfo.data)
                 {

@@ -7,7 +7,7 @@
     <td style="width:130px">控制器:</td>
     <td style="width:250px">
         <select name="IcontrollerId" id="IcontrollerId" lay-verify="required" lay-search="">
-            @if (lstSystemController?.Count > 0)
+            @if (lstSystemController.Any())
             {
                 foreach (SystemController entityMenu in lstSystemController)
                 {

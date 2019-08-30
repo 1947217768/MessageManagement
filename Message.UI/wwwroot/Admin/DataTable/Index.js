@@ -1,14 +1,13 @@
-﻿layui.use(['form', 'element', 'layer', 'table', 'laytpl'], function () {
+﻿layui.use(['form', 'element', 'layer', 'table'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
-        laytpl = layui.laytpl,
         table = layui.table;
     element = layui.element;
     //用户列表
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/Admin/SystemController/LoadData/',
+        url: '/Admin/DataTable/LoadData/',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -17,20 +16,23 @@
         id: "dataTable",
         cols: [[
             { type: "checkbox", fixed: "left", width: 50 },
-            { field: "Id", title: 'Id', width: 50, align: "center" },
-            { field: 'ScontrollerName', title: '控制器', minWidth: 50, align: "center" },
-            { field: 'Sremarks', title: '备注', align: 'center' }
+            { field: "Id", title: 'Id', width: 70, align: "center" },
+            { field: 'SdataBaseName', title: '数据库名', minWidth: 50, align: "center" },
+            { field: 'StableName', title: '表名', minWidth: 50, align: "center" },
+            { field: 'Sremarks', title: '备注', align: 'center' },
+            { field: 'Id', title: '操作', minWidth: 30, fixed: "right", align: "center", templet: '#Operation' }
         ]]
     });
 
     $("#btnSearch").click(function () {
         table.reload("dataTable", {
-            url: '/Admin/SystemController/LoadData/',
+            url: '/Admin/DataTable/LoadData/',
             page: {
                 curr: 1
             },
             where: {
-                ScontrollerName: $("#ScontrollerName").val(),
+                StableName: $("#StableName").val(),
+                IdataBaseId: $("#IdataBaseId").val(),
                 Sremarks: $("#Sremarks").val()
             }
         });
@@ -46,12 +48,13 @@
             type: 2,
             anim: 1,
             area: ['800px', '90%'],
-            content: "/Admin/SystemController/AddOrModify/",
+            content: "/Admin/DataTable/AddOrModify/",
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (edit) {
                     body.find("#Id").val(edit.Id);
-                    body.find("#ScontrollerName").val(edit.ScontrollerName);
+                    body.find("#IdataBaseId").val(edit.IdataBaseId);
+                    body.find("#StableName").val(edit.StableName);
                     body.find("#Sremarks").text(edit.Sremarks === null ? "" : edit.Sremarks);
                     form.render();
                 }
@@ -94,10 +97,10 @@
             for (var i in data) {
                 arrId.push(data[i].Id);
             }
-            layer.confirm('确定删除选中的控制器？', { icon: 3, title: '提示信息' }, function (index) {
+            layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/SystemController/DeleteRange/',
+                    url: '/Admin/DataTable/DeleteRange/',
                     data: { arrId: arrId },
                     dataType: "json",
                     headers: {
@@ -125,7 +128,7 @@
         layer.load();
         $.ajax({
             type: 'POST',
-            url: '/Admin/SystemController/ReflectionController/',
+            url: '/Admin/DataTable/ReflectionController/',
             //data: { arrUserId: arrUserId },
             dataType: "json",
             headers: {

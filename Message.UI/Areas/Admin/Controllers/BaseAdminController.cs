@@ -81,5 +81,10 @@ namespace Message.UI.Areas.Admin.Controllers
             ViewData["iPageType"] = 1;
             return View();
         }
+        public IActionResult Empty(object model = null)
+        {
+            ViewData["iPageType"] = 2;
+            return View(model);
+        }
     }
 }

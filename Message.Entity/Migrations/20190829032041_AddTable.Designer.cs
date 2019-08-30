@@ -4,14 +4,16 @@ using Message.Entity.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Message.Entity.Migrations
 {
     [DbContext(typeof(MessageManagementContext))]
-    partial class MessageManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20190829032041_AddTable")]
+    partial class AddTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,69 +88,7 @@ namespace Message.Entity.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdataBaseId");
-
-                    b.ToTable("DataTable");
-                });
-
-            modelBuilder.Entity("Message.Entity.Mapping.DataType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Screater")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Smodifier")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Sremarks")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("StypeName");
-
-                    b.Property<DateTime?>("TcreateTime");
-
-                    b.Property<DateTime?>("TmodifyTime");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DataType");
-                });
-
-            modelBuilder.Entity("Message.Entity.Mapping.FieldRelation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IforeignkeyId");
-
-                    b.Property<int>("IprimarykeyId");
-
-                    b.Property<string>("Screater")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Smodifier")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Sremarks")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime?>("TcreateTime");
-
-                    b.Property<DateTime?>("TmodifyTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IforeignkeyId", "IprimarykeyId");
-
-                    b.ToTable("FieldRelation");
+                    b.ToTable("DataTables");
                 });
 
             modelBuilder.Entity("Message.Entity.Mapping.Menu", b =>
@@ -361,44 +301,6 @@ namespace Message.Entity.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SystemController");
-                });
-
-            modelBuilder.Entity("Message.Entity.Mapping.TableFiled", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("BisEmpty");
-
-                    b.Property<int>("IdataTableId");
-
-                    b.Property<int>("IdataTypeId");
-
-                    b.Property<int>("ImaxLength");
-
-                    b.Property<string>("Screater")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("SfiledName");
-
-                    b.Property<string>("Smodifier")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Sremarks")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime?>("TcreateTime");
-
-                    b.Property<DateTime?>("TmodifyTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdataTableId", "IdataTypeId");
-
-                    b.ToTable("TableFiled");
                 });
 
             modelBuilder.Entity("Message.Entity.Mapping.UploadFileInfo", b =>

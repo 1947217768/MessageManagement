@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "编辑角色";
+}
+<tr>
+    <td style="width:130px">数据类型:</td>
+    <td style="width:250px"><input type="text" id="StypeName" name="StypeName" lay-verify="required" class="layui-input"></td>
+    <td style="width:130px"></td>
+    <td style="width:250px"></td>
+</tr>
+<tr>
+    <td>备注:</td>
+    <td colspan="3"><textarea id="Sremarks" name="Sremarks" class="layui-textarea"></textarea></td>
+</tr>
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Admin/DataType/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}
+
+
+

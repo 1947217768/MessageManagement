@@ -1,0 +1,57 @@
+﻿@using Message.Entity.Mapping
+@{
+    ViewData["Title"] = "编辑控制器";
+    List<DataTable> lstDataTable = ViewBag.lstDataTable;
+    List<DataType> lstDataType = ViewBag.lstDataType;
+}
+<tr>
+    <td style="width:130px">表名:</td>
+    <td style="width:250px">
+        <select name="IdataTableId" id="IdataTableId" lay-verify="required" lay-search="">
+            @if (lstDataTable.Any())
+            {
+                foreach (DataTable entityDataTable in lstDataTable)
+                {
+                    <option value="@entityDataTable.Id">@entityDataTable.StableName</option>
+                }
+            }
+        </select>
+    </td>
+    <td style="width:130px">列名:</td>
+    <td style="width:250px"><input type="text" id="SfiledName" name="SfiledName" lay-verify="required" class="layui-input"></td>
+</tr>
+<tr>
+    <td>数据类型:</td>
+    <td>
+        <select name="IdataTypeId" id="IdataTypeId" lay-verify="required" lay-search="">
+            @if (lstDataType.Any())
+            {
+                foreach (DataType entityDataType in lstDataType)
+                {
+                    <option value="@entityDataType.Id">@entityDataType.StypeName</option>
+                }
+            }
+        </select>
+    </td>
+    <td>长度:</td>
+    <td style="text-align:left">
+        <input type="number" id="ImaxLength" name="ImaxLength" class="layui-input">
+    </td>
+</tr>
+<tr>
+    <td>是否允许为空:</td>
+    <td style="text-align:left">
+        <input type="checkbox" lay-skin="primary" id="BisEmpty" name="BisEmpty">
+    </td>
+</tr>
+<tr>
+    <td>备注:</td>
+    <td colspan="3"><textarea id="Sremarks" name="Sremarks" class="layui-textarea"></textarea></td>
+</tr>
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Admin/TableFiled/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}
+
+
+

@@ -8,7 +8,7 @@
     //用户列表
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/Admin/SystemController/LoadData/',
+        url: '/Admin/DataBase/LoadData/',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -18,19 +18,19 @@
         cols: [[
             { type: "checkbox", fixed: "left", width: 50 },
             { field: "Id", title: 'Id', width: 50, align: "center" },
-            { field: 'ScontrollerName', title: '控制器', minWidth: 50, align: "center" },
-            { field: 'Sremarks', title: '备注', align: 'center' }
+            { field: 'SdataBaseName', title: '数据库名称', minWidth: 50, align: "center" },
+            { field: 'Sremarks', title: '备注', align: 'center' },
         ]]
     });
 
     $("#btnSearch").click(function () {
         table.reload("dataTable", {
-            url: '/Admin/SystemController/LoadData/',
+            url: '/Admin/DataBase/LoadData/',
             page: {
                 curr: 1
             },
             where: {
-                ScontrollerName: $("#ScontrollerName").val(),
+                SdataBaseName: $("#SdataBaseName").val(),
                 Sremarks: $("#Sremarks").val()
             }
         });
@@ -46,12 +46,12 @@
             type: 2,
             anim: 1,
             area: ['800px', '90%'],
-            content: "/Admin/SystemController/AddOrModify/",
+            content: "/Admin/DataBase/AddOrModify/",
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (edit) {
                     body.find("#Id").val(edit.Id);
-                    body.find("#ScontrollerName").val(edit.ScontrollerName);
+                    body.find("#SdataBaseName").val(edit.SdataBaseName);
                     body.find("#Sremarks").text(edit.Sremarks === null ? "" : edit.Sremarks);
                     form.render();
                 }
@@ -94,10 +94,10 @@
             for (var i in data) {
                 arrId.push(data[i].Id);
             }
-            layer.confirm('确定删除选中的控制器？', { icon: 3, title: '提示信息' }, function (index) {
+            layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/SystemController/DeleteRange/',
+                    url: '/Admin/DataBase/DeleteRange/',
                     data: { arrId: arrId },
                     dataType: "json",
                     headers: {
@@ -125,7 +125,7 @@
         layer.load();
         $.ajax({
             type: 'POST',
-            url: '/Admin/SystemController/ReflectionController/',
+            url: '/Admin/DataBase/ReflectionController/',
             //data: { arrUserId: arrUserId },
             dataType: "json",
             headers: {

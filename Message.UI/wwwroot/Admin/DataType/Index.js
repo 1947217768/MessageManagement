@@ -8,7 +8,7 @@
     //用户列表
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/Admin/SystemController/LoadData/',
+        url: '/Admin/DataType/LoadData/',
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -18,20 +18,20 @@
         cols: [[
             { type: "checkbox", fixed: "left", width: 50 },
             { field: "Id", title: 'Id', width: 50, align: "center" },
-            { field: 'ScontrollerName', title: '控制器', minWidth: 50, align: "center" },
+            { field: 'StypeName', title: '数据类型', minWidth: 50, align: "center" },
             { field: 'Sremarks', title: '备注', align: 'center' }
         ]]
     });
 
     $("#btnSearch").click(function () {
         table.reload("dataTable", {
-            url: '/Admin/SystemController/LoadData/',
+            url: '/Admin/DataType/LoadData/',
             page: {
                 curr: 1
             },
             where: {
-                ScontrollerName: $("#ScontrollerName").val(),
-                Sremarks: $("#Sremarks").val()
+                StypeName: $("#StypeName").val(),
+                Sremarks: $("#Sremarks").val(),
             }
         });
     });
@@ -46,12 +46,12 @@
             type: 2,
             anim: 1,
             area: ['800px', '90%'],
-            content: "/Admin/SystemController/AddOrModify/",
+            content: "/Admin/DataType/AddOrModify/",
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (edit) {
                     body.find("#Id").val(edit.Id);
-                    body.find("#ScontrollerName").val(edit.ScontrollerName);
+                    body.find("#StypeName").val(edit.StypeName);
                     body.find("#Sremarks").text(edit.Sremarks === null ? "" : edit.Sremarks);
                     form.render();
                 }
@@ -94,10 +94,10 @@
             for (var i in data) {
                 arrId.push(data[i].Id);
             }
-            layer.confirm('确定删除选中的控制器？', { icon: 3, title: '提示信息' }, function (index) {
+            layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/SystemController/DeleteRange/',
+                    url: '/Admin/DataType/DeleteRange/',
                     data: { arrId: arrId },
                     dataType: "json",
                     headers: {
@@ -108,6 +108,7 @@
                             time: 2000 //20s后自动关闭
                         }, function () {
                             tableIns.reload();
+                            layer.close(index);
                         });
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -119,31 +120,6 @@
         } else {
             layer.msg("请选择需要删除的数据");
         }
-    });
-    //反射控制器
-    $("#btnRef").click(function () {
-        layer.load();
-        $.ajax({
-            type: 'POST',
-            url: '/Admin/SystemController/ReflectionController/',
-            //data: { arrUserId: arrUserId },
-            dataType: "json",
-            headers: {
-                "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
-            },
-            success: function (data) {//res为相应体,function为回调函数
-                layer.closeAll('loading'); //关闭loading
-                layer.msg(data.Msg, {
-                    time: 2000 //20s后自动关闭
-                }, function () {
-                    tableIns.reload();
-                });
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.closeAll('loading'); //关闭loading
-                layer.alert('操作失败！！！' + XMLHttpRequest.status + "|" + XMLHttpRequest.readyState + "|" + textStatus, { icon: 5 });
-            }
-        });
     });
 
 });

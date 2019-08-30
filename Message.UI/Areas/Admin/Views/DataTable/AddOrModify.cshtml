@@ -1,0 +1,32 @@
+﻿@using Message.Entity.Mapping
+@{
+    ViewData["Title"] = "编辑数据库";
+    List<DataBase> lstDataBase = ViewBag.lstDataBase;
+}
+<tr>
+    <td style="width:130px">数据库名称:</td>
+    <td style="width:250px">
+        <select name="IdataBaseId" id="IdataBaseId" lay-verify="required" lay-search="">
+            @if (lstDataBase.Any())
+            {
+                @foreach (DataBase entityDataBase in lstDataBase)
+                {
+                    <option value="@entityDataBase.Id">@entityDataBase.SdataBaseName</option>
+                }
+            }
+        </select>
+    </td>
+    <td style="width:130px">数据表名称</td>
+    <td style="width:250px"><input type="text" id="StableName" name="StableName" lay-verify="required" class="layui-input"></td>
+</tr>
+<tr>
+    <td>备注:</td>
+    <td colspan="3"><textarea id="Sremarks" name="Sremarks" class="layui-textarea"></textarea></td>
+</tr>
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Admin/DataTable/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}
+
+
+

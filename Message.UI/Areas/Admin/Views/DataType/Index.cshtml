@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "数据类型管理";
+}
+@section Search{
+    <tr>
+        <td style="width:200px">数据类型:</td>
+        <td style="width:400px"><input type="text" id="StypeName" name="StypeName" class="layui-input"></td>
+        <td style="width:200px;">备注:</td>
+        <td style="width:400px"><input type="text" id="Sremarks" name="Sremarks" class="layui-input"></td>
+    </tr>
+}
+@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script src="~/Admin/DataType/Index.js?_=@DateTime.Now.ToString("yyyyMMddHHmmss")"></script>
+}
