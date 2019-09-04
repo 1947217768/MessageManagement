@@ -1,0 +1,15 @@
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled;
+@model DataTable;
+@{
+    DataBase entityDataBase = ViewBag.entityDataBase;
+}
+using Message.Core.Repository;
+using Message.Entity.Mapping;
+
+namespace Message.IRepository
+{
+    public interface I<var>@Model.StableName</var>Repository : I<var>@entityDataBase.SdataBaseName</var>Repository<<var>@Model.StableName</var>>
+    {
+    }
+    }

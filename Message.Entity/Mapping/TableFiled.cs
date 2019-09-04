@@ -11,6 +11,10 @@ namespace Message.Entity.Mapping
         /// </summary>
         public string SfiledName { get; set; }
         /// <summary>
+        /// 说明
+        /// </summary>
+        public string Sexplain { get; set; }
+        /// <summary>
         /// 表Id
         /// </summary>
         public int IdataTableId { get; set; }

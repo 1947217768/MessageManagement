@@ -1,9 +1,6 @@
 ﻿@using Message.Entity.Mapping
 @using Message.Entity.ViewEntity.TableFiled;
-@model DataTable
-@{
-    List<ViewTableFiled> lstTableFiled = ViewBag.lstTableFiled;
-}
+@model List<ViewTableFiled>;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,15 +8,15 @@ using System.Text;
 
 namespace Message.Entity.Mapping
 {
-    public class <var>@Model.StableName</var>
-    {
-    @if (lstTableFiled.Any())
-    {
-        foreach (ViewTableFiled entityViewTableFiled in lstTableFiled)
-        {
-            <var>public @(entityViewTableFiled.StypeName) @(entityViewTableFiled.SfiledName) { get; set; }</var>
-        }
-    }
+@if (Model.Any())
+{
 
+    <var>public class @Model[0].StableName</var>
+    <var>{</var>
+    foreach (ViewTableFiled entityViewTableFiled in Model)
+    {
+        <var>public @(entityViewTableFiled.StypeName) @(entityViewTableFiled.SfiledName) { get; set; }</var>
     }
-    }
+    <var>}</var>
+}
+}

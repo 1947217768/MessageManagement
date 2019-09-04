@@ -1,4 +1,11 @@
-﻿using Message.Core.Models;
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled;
+@model DataTable;
+@{
+    string sServiceName = "_" + Model.StableName.Substring(0, 1).ToLower() + Model.StableName.Substring(1);
+}
+using Message.Entity.ViewEntity.<var>@Model.StableName</var>;
+using Message.Core.Models;
 using Message.Entity.Mapping;
 using Message.IService;
 using Message.UI.Models;
@@ -8,17 +15,17 @@ using System.Threading.Tasks;
 
 namespace Message.UI.Areas.Admin.Controllers
 {
-    public class DataTypeController : BaseAdminController
+    public class <var>@Model.StableName</var>Controller : BaseAdminController
     {
-        private readonly IDataTypeService _dataTypeService;
+        private readonly I<var>@Model.StableName</var>Service <var>@(Model.StableName.Substring(0, 1).ToLower() + Model.StableName.Substring(1))</var>Service;
 
-        public DataTypeController(IDataTypeService DataTypeService)
+        public <var>@Model.StableName</var>Controller(I<var>@Model.StableName</var>Service <var>@Model.StableName</var>Service)
         {
-            _dataTypeService = DataTypeService;
+            <var>@sServiceName</var>Service = <var>@(Model.StableName.Substring(0,1).ToLower()+Model.StableName.Substring(1))</var>Service;
         }
-        public string LoadData(PageInfo<DataType> pageInfo, DataType oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        public string LoadData(PageInfo<<var>@Model.StableName</var>>pageInfo, <var>@Model.StableName</var> oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
-            return JsonHelper.ObjectToJSON(_dataTypeService.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
+            return JsonHelper.ObjectToJSON(<var>@sServiceName</var>Service.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
         }
         public IActionResult Index()
         {
@@ -31,16 +38,17 @@ namespace Message.UI.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CrossSiteScript]
-        public async Task<string> AddOrModifyAsync([FromForm]DataType model)
+        public async Task<string>AddOrModifyAsync([FromForm]AddOrModify<var>@Model.StableName</var> model)
         {
             BaseResult baseResult = new BaseResult();
             try
             {
                 if (model != null)
                 {
-                    if (!string.IsNullOrWhiteSpace(model.StypeName))
-                    {
-                        if (await _dataTypeService.AddOrModifyDataTypeAsync(model, User.Identity.Name) != null)
+                   //验证规则  Validation
+                   //if (!string.IsNullOrWhiteSpace(model.StypeName))
+                   //{
+                        if (await <var>@sServiceName</var>Service.AddOrModify<var>@Model.StableName</var>Async(model, User.Identity.Name) != null)
                         {
                             baseResult.Code = 0;
                             baseResult.Msg = "操作成功!";
@@ -50,12 +58,7 @@ namespace Message.UI.Areas.Admin.Controllers
                             baseResult.Code = 1;
                             baseResult.Msg = "操作失败!";
                         }
-                    }
-                    else
-                    {
-                        baseResult.Code = 3;
-                        baseResult.Msg = "数据类型不能为空!";
-                    }
+                    //}
                 }
             }
             catch (Exception ex)
@@ -70,7 +73,7 @@ namespace Message.UI.Areas.Admin.Controllers
         public string DeleteRange(int[] arrId)
         {
             BaseResult baseResult = new BaseResult();
-            if (_dataTypeService.DeleteRange(arrId, User.Identity.Name))
+            if (<var>@sServiceName</var>Service.DeleteRange(arrId, User.Identity.Name))
             {
                 baseResult.Code = 0;
                 baseResult.Msg = "删除成功!";
@@ -82,5 +85,5 @@ namespace Message.UI.Areas.Admin.Controllers
             }
             return JsonHelper.ObjectToJSON(baseResult);
         }
-    }
+  }
 }

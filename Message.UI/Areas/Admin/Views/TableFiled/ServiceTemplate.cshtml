@@ -1,0 +1,104 @@
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled;
+@model DataTable
+@{
+    string sRepositoryName = "_" +Model.StableName.Substring(0, 1).ToLower() + Model.StableName.Substring(1);
+}
+using AutoMapper;
+using Message.Core.Models;
+using Message.Entity.Mapping;
+using Message.IRepository;
+using Message.IService;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
+using Message.Entity.ViewEntity.<var>@Model.StableName</var>;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace Message.Service
+{
+    public class <var>@Model.StableName</var>Service : I<var>@Model.StableName</var>Service
+    {
+        private readonly I<var>@Model.StableName</var>Repository <var>@sRepositoryName</var>Repository;
+        private readonly IMapper _mapper;
+
+        public <var>@Model.StableName</var>Service(I<var>@Model.StableName</var>Repository <var>@sRepositoryName</var>Repository, IMapper mapper)
+        {
+            <var>@sRepositoryName</var>Repository = <var>@sRepositoryName</var>Repository;
+            _mapper = mapper;
+        }
+        public PageInfo<<var>@Model.StableName</var>> GetPageList(PageInfo<<var>@Model.StableName</var>>pageInfo, <var>@Model.StableName</var> oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return <var>@sRepositoryName</var>Repository.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+        public bool DeleteRange(int[] arrId, string sOperator)
+        {
+            if (<var>@sRepositoryName</var>Repository.DeleteRange(arrId, sOperator) > 0)
+            {
+                 return true;
+            }
+            return false;
+         }
+
+        public List<<var>@Model.StableName</var>> SelectALL(<var>@Model.StableName</var> entity<var>@Model.StableName</var> = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return <var>@sRepositoryName</var>Repository.SelectALL(entity<var>@Model.StableName</var>, sOperator, iOrderGroup, iMaxCount, sSortName, sSortOrder);
+        }
+
+        public <var>@Model.StableName</var> Select(int id, string sOperator = null)
+        {
+            return <var>@sRepositoryName</var>Repository.Select(id, sOperator);
+        }
+
+        public <var><var>@Model.StableName</var></var> Select(<var><var>@Model.StableName</var></var> entity<var><var>@Model.StableName</var></var> = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return <var>@sRepositoryName</var>Repository.Select(entity<var><var>@Model.StableName</var></var>, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+
+        public async Task<<var>List<<var>@Model.StableName</var>></var>> SelectALLAsync(<var><var>@Model.StableName</var></var> entity<var><var>@Model.StableName</var></var> = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return await <var>@sRepositoryName</var>Repository.SelectALLAsync(entity<var><var>@Model.StableName</var></var>, sOperator, iOrderGroup, iMaxCount, sSortName, sSortOrder);
+        }
+
+        public async Task<<var><var>@Model.StableName</var></var>> SelectAsync(int id, string sOperator = null)
+        {
+            return await <var>@sRepositoryName</var>Repository.SelectAsync(id, sOperator);
+        }
+
+        public async Task<<var><var>@Model.StableName</var></var>> SelectAsync(<var><var>@Model.StableName</var></var> entity<var><var>@Model.StableName</var></var> = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return await <var>@sRepositoryName</var>Repository.SelectAsync(entity<var><var>@Model.StableName</var></var>, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+
+        public async Task<int>AppendAsync(<var><var>@Model.StableName</var></var> entity<var><var>@Model.StableName</var></var>, string sOperator)
+        {
+            return await <var>@sRepositoryName</var>Repository.AppendAsync(entity<var><var>@Model.StableName</var></var>, sOperator);
+        }
+        public int Append(<var><var>@Model.StableName</var></var> entity<var><var>@Model.StableName</var></var>, string sOperator)
+        {
+            return <var>@sRepositoryName</var>Repository.Append(entity<var><var>@Model.StableName</var></var>, sOperator);
+        }
+
+        public async Task<<var><var>@Model.StableName</var></var>> AddOrModify<var><var>@Model.StableName</var></var>Async(AddOrModify<var>@Model.StableName</var> model, string sOperator)
+        {
+            <var><var>@Model.StableName</var></var> entity<var><var>@Model.StableName</var></var>;
+            if (model.Id == 0)
+            {
+                entity<var><var>@Model.StableName</var></var> = _mapper.Map<<var><var>@Model.StableName</var></var>>(model);
+                await <var>@sRepositoryName</var>Repository.AppendAsync(entity<var><var>@Model.StableName</var></var>, sOperator);
+            }
+            else
+            {
+                entity<var><var>@Model.StableName</var></var> = await <var>@sRepositoryName</var>Repository.SelectAsync(model.Id);
+                if (entity<var><var>@Model.StableName</var></var> != null)
+                {
+                    _mapper.Map(model,entity<var><var>@Model.StableName</var></var>);
+                    <var>@sRepositoryName</var>Repository.Update(entity<var><var>@Model.StableName</var></var>, sOperator);
+                }
+            }
+            return entity<var><var>@Model.StableName</var></var>;
+        }
+  }
+}

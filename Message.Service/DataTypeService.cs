@@ -87,7 +87,7 @@ namespace Message.Service
                 entityDataType = await _DataTypeRepository.SelectAsync(model.Id);
                 if (entityDataType != null)
                 {
-                    //_mapper.Map(model, entityDataType);
+                    //_mapper.Map(entityDataType, model);
                     entityDataType.StypeName = model.StypeName;
                     _DataTypeRepository.Update(entityDataType, sOperator);
                 }

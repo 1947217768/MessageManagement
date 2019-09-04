@@ -115,24 +115,10 @@ namespace Message.UI.Areas.Admin.Controllers
                 }
                 List<ViewTableFiled> lstViewTableFiled = await _tableFiledService.GetViewTableInfoAsync(entityDataTable.Id);
                 //生成Mapping映射类
-                StringBuilder sbMapping = new StringBuilder();
-                sbMapping.Append("");
                 ViewBag.lstTableFiled = lstViewTableFiled;
                 ViewBag.entityDataTable = entityDataTable;
             }
             return Empty();
-        }
-
-        public async Task<PartialViewResult> MappingTemplate(int iTableId)
-        {
-            DataTable entityDataTable = await _dataTableService.SelectAsync(iTableId);
-            List<ViewTableFiled> lstTableFiled = new List<ViewTableFiled>();
-            if (entityDataTable != null)
-            {
-                lstTableFiled = await _tableFiledService.GetViewTableInfoAsync(entityDataTable.Id);
-            }
-            ViewBag.lstTableFiled = lstTableFiled;
-            return PartialView(entityDataTable);
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿layui.use(['form', 'element', 'layer', 'table', 'laytpl'], function () {
+﻿layui.use(['form', 'element', 'layer', 'table'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
-        laytpl = layui.laytpl,
         table = layui.table;
     element = layui.element;
     //用户列表

@@ -1,0 +1,34 @@
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled;
+@model DataTable;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Message.IService
+{
+    public interface I<var>@Model.StableName</var>Service
+    {
+        PageInfo<<var>@Model.StableName</var>> GetPageList(PageInfo<<var>@Model.StableName</var>> pageInfo, <var>@Model.StableName</var> oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
+
+        bool DeleteRange(int[] arrId, string sOperator);
+
+        List<<var>@Model.StableName</var>> SelectALL(<var>@Model.StableName</var> entity<var>@Model.StableName</var> = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null);
+
+        <var>@Model.StableName</var> Select(int id, string sOperator = null);
+
+        <var>@Model.StableName</var> Select(<var>@Model.StableName</var> entity<var>@Model.StableName</var> = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
+
+        Task<<var>List<<var>@Model.StableName</var>></var>> SelectALLAsync(<var>@Model.StableName</var> entity<var>@Model.StableName</var> = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null);
+
+        Task<<var>@Model.StableName</var>> SelectAsync(int id, string sOperator = null);
+
+        Task<<var>@Model.StableName</var>> SelectAsync(<var>@Model.StableName</var> entity<var>@Model.StableName</var> = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
+
+        Task<<var>@Model.StableName</var>> AddOrModify<var>@Model.StableName</var>Async(<var>@Model.StableName</var> model, string sOperator);
+
+        Task<int> AppendAsync(<var>@Model.StableName</var> entity<var>@Model.StableName</var>, string sOperator);
+
+        int Append(<var>@Model.StableName</var> entity<var>@Model.StableName</var>, string sOperator);
+    }
+}

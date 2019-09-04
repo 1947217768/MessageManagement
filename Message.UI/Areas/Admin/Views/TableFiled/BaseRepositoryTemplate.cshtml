@@ -1,0 +1,112 @@
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled;
+@model List<ViewTableFiled>;
+@{
+    DataBase entityDataBase = ViewBag.entityDataBase;
+}
+using Message.Core.Repository;
+using Message.Entity.Mapping;
+using Message.IRepository;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
+namespace Message.Repository
+{
+    public sealed partial class <var>@Model[0].StableName</var>Repository : <var>@entityDataBase.SdataBaseName</var>DBRepository<<var>@Model[0].StableName</var>>,I<var>@Model[0].StableName</var>Repository
+    {
+        protected override IQueryable<<var>@Model[0].StableName</var>> SearchFilterB(DbContext DB, <var>@Model[0].StableName</var> oSearchEntity, IQueryable<<var>@Model[0].StableName</var>> query, string sOperator = null)
+        {
+            if (oSearchEntity != null)
+            {
+            @foreach (ViewTableFiled entityViewTableFiled in Model)
+                {
+                    switch (entityViewTableFiled.IdataTypeId)
+                    {
+                        case 1:
+                            <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>.HasValue) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>.Value); }</var>
+                            break;
+                        case 2:
+                            <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var> != 0) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                            break;
+                        case 3:
+                            <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var> != 0) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                            break;
+                        case 4:
+                            <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var> != 0) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                            break;
+                        case 5:
+                            <var>if (!string.IsNullOrWhiteSpace(oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>)) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var>.Contains(oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>)); }</var>
+                            break;
+                        case 6:
+                            <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var> != null) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                            break;
+                        case 7:
+                            <var>if (!string.IsNullOrWhiteSpace(oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>.ToString())) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                            break;
+                    }
+                }
+            }
+            return query;
+        }
+    protected override IQueryable<<var>@Model[0].StableName</var>> SelectFilterB(DbContext DB, <var>@Model[0].StableName</var> oSearchEntity, IQueryable<<var>@Model[0].StableName</var>> query, string sOperator = null)
+    {
+        if (oSearchEntity != null)
+        {
+        @foreach (ViewTableFiled entityViewTableFiled in Model)
+            {
+                switch (entityViewTableFiled.IdataTypeId)
+                {
+                    case 1:
+                        <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>.HasValue) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>.Value); }</var>
+                        break;
+                    case 2:
+                        <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var> != 0) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                        break;
+                    case 3:
+                        <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var> != 0) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                        break;
+                    case 4:
+                        <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var> != 0) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                        break;
+                    case 5:
+                        <var>if (!string.IsNullOrWhiteSpace(oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>)) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                        break;
+                    case 6:
+                        <var>if (oSearchEntity.<var>@entityViewTableFiled.SfiledName</var> != null) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                        break;
+                    case 7:
+                        <var>if (!string.IsNullOrWhiteSpace(oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>.ToString())) { query = query.Where(x => x.<var>@entityViewTableFiled.SfiledName</var> == oSearchEntity.<var>@entityViewTableFiled.SfiledName</var>); }</var>
+                        break;
+                }
+            }
+        }
+        return query;
+    }
+    protected override IQueryable<<var>@Model[0].StableName</var>> OrderBySingleField(IQueryable<<var>@Model[0].StableName</var>> query, string sSortName = null, string sSortOrder = null)
+    {
+        if (sSortOrder == "desc")
+        {
+            switch (sSortName)
+            {
+             @foreach (ViewTableFiled entityViewTableFiled in @Model)
+                {
+                    <var>case "<var>@entityViewTableFiled.SfiledName</var>": return query.OrderByDescending(x => x.<var>@entityViewTableFiled.SfiledName</var>).ThenBy(x => x.Id);</var>
+                }
+                default: return query.OrderByDescending(x => x.TmodifyTime).ThenBy(x => x.Id);
+            }
+        }
+        else
+        {
+            switch (sSortName)
+            {
+             @foreach (ViewTableFiled entityViewTableFiled in @Model)
+                {
+                    <var>case "<var>@entityViewTableFiled.SfiledName</var>": return query.OrderBy(x => x.<var>@entityViewTableFiled.SfiledName</var>).ThenBy(x => x.Id);</var>
+                }
+                default: return query.OrderBy(x => x.TmodifyTime).ThenBy(x => x.Id);
+            }
+        }
+     }
+
+   }
+}

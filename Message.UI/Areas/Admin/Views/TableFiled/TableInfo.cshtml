@@ -19,11 +19,16 @@
     <ul class="layui-tab-title">
         <li class="layui-this">列</li>
         <li>Mapping</li>
+        <li>AddOrModify</li>
+        <li>IRepository</li>
         <li>Repository</li>
+        <li>baseRepository</li>
+        <li>IService</li>
         <li>Service</li>
         <li>Controller</li>
-        <li>View</li>
-        <li>JS</li>
+        <li>Index</li>
+        <li>Index.js</li>
+        <li>AddOrModify.js</li>
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
@@ -36,6 +41,7 @@
                 <thead>
                     <tr>
                         <th>列名</th>
+                        <th>说明</th>
                         <th>类型</th>
                         <th>是否为空</th>
                         <th>长度</th>
@@ -53,6 +59,7 @@
                         {
                             <tr>
                                 <td>@entityViewTableFiled.SfiledName</td>
+                                <td>@entityViewTableFiled.Sexplain</td>
                                 <td>@entityViewTableFiled.StypeName</td>
                                 <td>@entityViewTableFiled.BisEmpty</td>
                                 <td>@entityViewTableFiled.ImaxLength</td>
@@ -70,15 +77,85 @@
         <div class="layui-tab-item">
             @if (entityDataTable != null)
             {
-                <h3>文件名:@(entityDataTable.StableName + ".cs")</h3>
-                <textarea class="layui-textarea" style="height:800px">
-                </textarea>
+                <h3>文件名:@(entityDataTable.StableName + ".cs")</h3><button type="button" id="btnCopyMapingCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="MappingCode">@await Html.PartialAsync("MappingTemplate",lstViewTableFiled)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:@("AddOrModify" + entityDataTable.StableName + ".cs")</h3><button type="button" id="btnCopyAddOrModifyCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="AddOrModifyCode">@await Html.PartialAsync("AddOrModifyTemplate",lstViewTableFiled)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:@("I" + entityDataTable.StableName + "Repository.cs")</h3><button type="button" id="btnCopyIRepositoryCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="IRepositoryCode">@await Html.PartialAsync("IRepositoryTemplate",entityDataTable)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:@(entityDataTable.StableName + "Repository.cs")</h3><button type="button" id="btnCopyRepositoryCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="RepositoryCode">@await Html.PartialAsync("RepositoryTemplate",entityDataTable)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:@(entityDataTable.StableName + "Repository.base.cs")</h3><button type="button" id="btnCopyBaseRepositoryCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="BaseRepositoryCode">@await Html.PartialAsync("BaseRepositoryTemplate",lstViewTableFiled)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:@("I" + entityDataTable.StableName + "Service.cs")</h3><button type="button" id="btnCopyIServiceCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="IServiceCode">@await Html.PartialAsync("IServiceTemplate",entityDataTable)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:@(entityDataTable.StableName + "Service.cs")</h3><button type="button" id="btnCopyServiceCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="ServiceCode">@await Html.PartialAsync("ServiceTemplate",entityDataTable)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:@(entityDataTable.StableName + "Controller.cs")</h3><button type="button" id="btnCopyControllerCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="ControllerCode">@await Html.PartialAsync("ControllerTemplate",entityDataTable)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:Index.cshtml</h3><button type="button" id="btnCopyIndex_HtmlCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="Index_HtmlCode">@await Html.PartialAsync("Index_HtmlTemplate",lstViewTableFiled)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:Index.js</h3><button type="button" id="btnCopyIndex_JsCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="Index_JsCode">@await Html.PartialAsync("Index_JsTemplate",lstViewTableFiled)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:Index.js</h3><button type="button" id="btnCopyAddOrModifyjsCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="AddOrModifyjsCode">@await Html.PartialAsync("AddOrModifyjsTemplate",lstViewTableFiled)</textarea>
             }
         </div>
     </div>
 </div>
 @section Scripts{
     <script type="text/javascript" src="~/layui/layui.js"></script>
-    <script type="text/javascript" src="~/Admin/TableFiled/TableInfo.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+    @*<script type="text/javascript" src="~/Admin/TableFiled/TableInfo.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>*@
+    <script src="~/Admin/TableFiled/TableInfo.js"></script>
 }
 

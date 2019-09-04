@@ -1,0 +1,22 @@
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled
+@model List<ViewTableFiled>
+@{
+    DataBase entityDataBase = ViewBag.entityDataBase;
+}
+using System.Collections.Generic;
+
+namespace Message.Entity.ViewEntity.<var>@Model[0].StableName</var>
+{
+    public class AddOrModify<var>@Model[0].StableName</var>
+    {
+    @foreach (ViewTableFiled entityViewTableFiled in Model)
+    {
+        List<string> lstFileName = new List<string>() { "Screater", "TcreateTime", "Smodifier", "TmodifyTime" };
+        if (!lstFileName.Any(x => x == entityViewTableFiled.SfiledName))
+        {
+        <var>public <var>@entityViewTableFiled.StypeName</var> <var>@entityViewTableFiled.SfiledName</var> { get; set; }</var>
+        }
+    }
+    }
+}

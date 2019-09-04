@@ -4,14 +4,16 @@ using Message.Entity.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Message.Entity.Migrations
 {
     [DbContext(typeof(MessageManagementContext))]
-    partial class MessageManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20190831073620_UpdateTableFiled_SExplain")]
+    partial class UpdateTableFiled_SExplain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

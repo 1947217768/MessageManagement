@@ -1,0 +1,30 @@
+﻿@using Message.Entity.Mapping
+@model DataTable;
+@{
+    DataBase entityDataBase = ViewBag.entityDataBase;
+}
+using Message.Core.Repository;
+using Message.Entity.Mapping;
+using Message.IRepository;
+using System.Linq;
+
+namespace Message.Repository
+{
+    public partial class <var>@Model.StableName</var>Repository : <var>@entityDataBase.SdataBaseName</var>DBRepository<<var>@Model.StableName</var>>,I<var>@Model.StableName</var>Repository
+    {
+        protected override IQueryable<<var>@Model.StableName</var>> ExistsFilter(out string sErrorMessage, <var>@Model.StableName</var> entity, IQueryable<<var>@Model.StableName</var>> query)
+        {
+            query = query.Where(x => x.Id != entity.Id && x.AAA == entity.AAA);
+            sErrorMessage = $"数据类型[{entity.AAA}]已经存在!";
+            return query;
+        }
+        protected override IQueryable<<var>@Model.StableName</var>> OrderBy(IQueryable<<var>@Model.StableName</var>> query, int iOrderGroup = 0)
+        {
+            switch (iOrderGroup)
+            {
+                default:
+                return query = query.OrderByDescending(x => x.TmodifyTime).ThenBy(x => x.Id);
+            }
+         }
+    }
+}

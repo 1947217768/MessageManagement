@@ -131,6 +131,7 @@ namespace Message.Service
                     entityTableFiled.SfiledName = model.SfiledName;
                     entityTableFiled.BisEmpty = model.BisEmpty;
                     entityTableFiled.Sremarks = model.Sremarks;
+                    entityTableFiled.Sexplain = model.Sexplain;
                     _tableFiledRepository.Update(entityTableFiled, sOperator);
                 }
             }
@@ -153,9 +154,14 @@ namespace Message.Service
             foreach (ViewTableFiled entityTableFiled in lstViewTableFiled)
             {
                 DataType entityDataType = await _dataTypeService.SelectAsync(entityTableFiled.IdataTypeId);
+                DataTable entityDataTable = await _dataTableService.SelectAsync(entityTableFiled.IdataTableId);
                 if (entityDataType != null)
                 {
                     entityTableFiled.StypeName = entityDataType.StypeName;
+                }
+                if (entityDataTable != null)
+                {
+                    entityTableFiled.StableName = entityDataTable.StableName;
                 }
             }
             return lstViewTableFiled;

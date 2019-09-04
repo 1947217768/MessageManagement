@@ -19,6 +19,7 @@
             { field: "Id", title: 'Id', width: 70, align: "center" },
             { field: 'StableName', title: '表名', minWidth: 50, align: "center" },
             { field: 'SfiledName', title: '列名', minWidth: 50, align: "center" },
+            { field: 'Sexplain', title: '说明', minWidth: 50, align: "center" },
             { field: 'StypeName', title: '类型', minWidth: 50, align: "center" },
             { field: 'BisEmpty', title: '允许为空', minWidth: 50, align: "center" },
             { field: 'ImaxLength', title: '长度', minWidth: 50, align: "center" },
@@ -36,6 +37,7 @@
                 StableName: $("#StableName").val(),
                 SfiledName: $("#SfiledName").val(),
                 StypeName: $("#StypeName").val(),
+                Sexplain: $("#Sexplain").val(),
                 Sremarks: $("#Sremarks").val()
             }
         });
@@ -59,6 +61,7 @@
                     body.find("#IdataTableId").val(edit.IdataTableId);
                     body.find("#ImaxLength").val(edit.ImaxLength);
                     body.find("#SfiledName").val(edit.SfiledName);
+                    body.find("#Sexplain").val(edit.Sexplain);
                     body.find("#BisEmpty").val(edit.BisEmpty);
                     body.find("#IdataTypeId").val(edit.IdataTypeId);
                     body.find("#Sremarks").text(edit.Sremarks === null ? "" : edit.Sremarks);

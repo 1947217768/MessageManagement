@@ -1,0 +1,35 @@
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled;
+@model List<ViewTableFiled>
+@{
+    int iCount = Model.Count;
+    int iTrCount = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(iCount)/Convert.ToDecimal(3)));
+    int iIndex = 0;
+    int iNum = 0;
+    int j = 0;
+    string sDateTime = "@DateTime.Now.ToString("+"yyyyMMddHHmmss"+")";
+}
+
+@("@section ")Search{
+    @for (int i = 0; i < iTrCount; i++)
+    {
+        iIndex = 0;
+        <tr>
+            @for (j = iNum; j < iCount; j++)
+            {
+                if (iIndex == 3)
+                {
+                    iNum = j;
+                    break;
+                }
+                <td style="width:200px">@Model[j].Sexplain</td>
+                <td style="width:400px"><input type="text" id="@Model[j].SfiledName" name="@Model[j].SfiledName" class="layui-input"></td>
+                iIndex++;
+            }
+        </tr>
+    }
+}
+@@section Scripts{
+    <script type="text/javascript" src="~/layui/layui.js"></script>
+    <script src="~/Admin/@Model[0].SfiledName/Index.js?_=@sDateTime"></script>
+}

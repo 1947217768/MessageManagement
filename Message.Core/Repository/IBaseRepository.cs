@@ -151,5 +151,7 @@ namespace Message.Core.Repository
 
         Task<List<TEntity>> SelectALLAsync(TEntity oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null);
         Task<PageInfo<TEntity>> GetPageListAsync(PageInfo<TEntity> pageInfo, int iOrderGroup = 0, string sOperator = null);
+
+
     }
 }

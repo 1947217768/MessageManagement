@@ -20,7 +20,6 @@ namespace Message.Repository
                 if (oSearchEntity.IdataTableId != 0) { query = query.Where(x => x.IdataTableId == oSearchEntity.IdataTableId); }
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.SfiledName)) { query = query.Where(x => x.SfiledName.Contains(oSearchEntity.SfiledName)); }
 
-
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Sremarks)) { query = query.Where(x => x.Sremarks.Contains(oSearchEntity.Sremarks)); }
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Screater)) { query = query.Where(x => x.Screater == oSearchEntity.Screater); }
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Smodifier)) { query = query.Where(x => x.Smodifier == oSearchEntity.Smodifier); }

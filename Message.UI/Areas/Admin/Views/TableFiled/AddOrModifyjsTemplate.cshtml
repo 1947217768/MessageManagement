@@ -1,27 +1,34 @@
-﻿layui.use(['form', 'layer'], function () {
+﻿@using Message.Entity.Mapping
+@using Message.Entity.ViewEntity.TableFiled
+@model List<ViewTableFiled>
+@{
+    List<string> lstFileName = new List<string>() { "Screater", "TcreateTime", "Smodifier", "TmodifyTime" };
+
+}
+layui.use(['form', 'layer'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery;
     form.on("submit(btnSubmit)", function (data) {
         layer.load();
+        //获取防伪标记
         $.ajax({
             type: 'POST',
-            url: '/Admin/TableFiled/AddOrModify',
+            url: '/Admin/@Model[0].StableName/AddOrModify',
             data: {
-                Id: $("#Id").val(),
-                IdataTableId: $("#IdataTableId").val(),
-                SfiledName: $("#SfiledName").val(),
-                Sexplain: $("#Sexplain").val(),
-                IdataTypeId: $("#IdataTypeId").val(),
-                BisEmpty: $("#BisEmpty").is(':checked'),
-                ImaxLength: $("#ImaxLength").val(),
-                Sremarks: $("#Sremarks").val()
+            @foreach (ViewTableFiled entityViewTableFiled in Model)
+            {
+            if (!lstFileName.Any(x => x == entityViewTableFiled.SfiledName))
+            {
+                <var>@entityViewTableFiled.SfiledName: $("#@entityViewTableFiled.SfiledName").val(),</var>
+            }
+            }
             },
             dataType: "json",
             headers: {
                 "X-CSRF-TOKEN-Header": $("input[name='AntiforgeryFieldname']").val()
             },
-            success: function (res) {
+            success: function (res) {//res为相应体,function为回调函数
                 layer.closeAll('loading');
                 var alertIndex;
                 if (res.Code === 0) {
@@ -31,6 +38,7 @@
                         parent.location.reload();
                         top.layer.close(alertIndex);
                     });
+                    //$("#res").click();//调用重置按钮将表单数据清空
                 }
                 else {
                     alertIndex = layer.alert(res.Msg, { icon: 5 }, function () {

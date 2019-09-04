@@ -13,12 +13,9 @@ namespace Message.IService
     {
         PageInfo<DataType> GetPageList(PageInfo<DataType> pageInfo, DataType oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
         bool DeleteRange(int[] arrId, string sOperator);
-
-
         List<DataType> SelectALL(DataType entityDataType = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null);
         DataType Select(int id, string sOperator = null);
         DataType Select(DataType entityDataType = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
-
         /// <summary>
         /// 查询
         /// </summary>
