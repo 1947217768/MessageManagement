@@ -26,8 +26,9 @@
         <li>IService</li>
         <li>Service</li>
         <li>Controller</li>
-        <li>Index</li>
+        <li>Index.cshtml</li>
         <li>Index.js</li>
+        <li>AddOrModify.cshtml</li>
         <li>AddOrModify.js</li>
     </ul>
     <div class="layui-tab-content">
@@ -142,6 +143,13 @@
             {
                 <h3>文件名:Index.js</h3><button type="button" id="btnCopyIndex_JsCode" class="layui-btn layui-btn-xs">复制</button>
                 <textarea class="layui-textarea" style="height:800px" id="Index_JsCode">@await Html.PartialAsync("Index_JsTemplate",lstViewTableFiled)</textarea>
+            }
+        </div>
+        <div class="layui-tab-item">
+            @if (entityDataTable != null)
+            {
+                <h3>文件名:AddOrModify.cshtml</h3><button type="button" id="btnCopyAddOrModifyhtmlCode" class="layui-btn layui-btn-xs">复制</button>
+                <textarea class="layui-textarea" style="height:800px" id="AddOrModifyhtmlCode">@await Html.PartialAsync("AddOrModifyhtmlTemplate",lstViewTableFiled)</textarea>
             }
         </div>
         <div class="layui-tab-item">

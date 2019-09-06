@@ -36,5 +36,22 @@ namespace Message.Repository
             _tableFiledRepository.DeleteRange(_tableFiledRepository.SelectALL(new TableFiled() { IdataTableId = entity.Id }), sOperator);
             base.AfterDelete(DB, entity, sOperator);
         }
+        public override void AfterAppend(DbContext DB, DataTable entity, string sOperator)
+        {
+            List<TableFiled> lstTableFiled = new List<TableFiled>() {
+                new TableFiled(){ SfiledName="Id",IdataTableId=entity.Id,IdataTypeId=2,Sexplain="主键ID",BisEmpty=false},
+                new TableFiled(){ SfiledName="Sremarks",IdataTableId=entity.Id,IdataTypeId=5,Sexplain="备注",ImaxLength=200,BisEmpty=true},
+                new TableFiled(){ SfiledName="Screater",IdataTableId=entity.Id,IdataTypeId=5,Sexplain="创建人",ImaxLength=50,BisEmpty=false},
+                new TableFiled(){ SfiledName="TcreateTime",IdataTableId=entity.Id,IdataTypeId=6,Sexplain="创建时间",BisEmpty=true},
+                new TableFiled(){ SfiledName="Smodifier",IdataTableId=entity.Id,IdataTypeId=5,Sexplain="修改人",ImaxLength=50,BisEmpty=false},
+                new TableFiled(){ SfiledName="TmodifyTime",IdataTableId=entity.Id,IdataTypeId=6,Sexplain="修改时间",BisEmpty=true},
+            };
+            _tableFiledRepository.AppendRange(lstTableFiled, sOperator);
+            base.AfterAppend(DB, entity, sOperator);
+        }
+        public override bool BeforeAppend(DbContext DB, DataTable entity, string sOperator)
+        {
+            return base.BeforeAppend(DB, entity, sOperator);
+        }
     }
 }

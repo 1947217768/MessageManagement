@@ -31,18 +31,18 @@ namespace Message.UI.Areas.Admin.Controllers
             _uploadFileInfoService = uploadFileInfoService;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public IActionResult Index(int iPageId)
         {
-            return base.List();
+            return base.List(iPageId);
         }
         public string LoadData(PageInfo<UserInfo> pageInfo, UserInfo oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
             pageInfo = _userInfoService.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder);
             return JsonHelper.ObjectToJSON(pageInfo);
         }
-        public IActionResult AddOrModify()
+        public IActionResult AddOrModify(int iPageId)
         {
-            return base.Edit();
+            return base.Edit(iPageId);
         }
         /// <summary>
         /// 添加或修改用户
@@ -123,7 +123,7 @@ namespace Message.UI.Areas.Admin.Controllers
 
         }
 
-        public async Task<IActionResult> PersonalInfo()
+        public async Task<IActionResult> PersonalInfo(int iPageId)
         {
             int iUserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value);
             if (iUserId > 0)
@@ -146,10 +146,10 @@ namespace Message.UI.Areas.Admin.Controllers
                     {
                         entityPersonalInfo.sAvatar = "/Images/login_tx.jpg";
                     }
-                    return base.Empty(entityPersonalInfo);
+                    return base.Empty(iPageId, entityPersonalInfo);
                 }
             }
-            return base.Empty();
+            return base.Empty(iPageId);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

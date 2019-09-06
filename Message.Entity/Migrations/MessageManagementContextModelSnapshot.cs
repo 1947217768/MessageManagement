@@ -205,6 +205,8 @@ namespace Message.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("BisValid");
+
                     b.Property<int>("IactionId");
 
                     b.Property<int>("ImenuId");
@@ -212,6 +214,9 @@ namespace Message.Entity.Migrations
                     b.Property<string>("Screater")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("Sexplain")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Smodifier")
                         .IsRequired()

@@ -21,38 +21,93 @@ namespace Message.UI.Areas.Admin.Controllers
     [Route("Admin/[controller]/[action]")]
     public abstract class BaseAdminController : Controller
     {
-        private readonly IMenuService _MenuService;
+        private readonly IMenuService _menuService;
+        private readonly IMenuActionService _menuActionService;
+        private readonly ISystemActionService _systemActionService;
         public BaseAdminController()
         {
-            _MenuService = AppDependencyResolver.Current.GetService<IMenuService>();
+            _menuService = AppDependencyResolver.Current.GetService<IMenuService>();
+            _menuActionService = AppDependencyResolver.Current.GetService<IMenuActionService>();
+            _systemActionService = AppDependencyResolver.Current.GetService<ISystemActionService>();
         }
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             int iUserId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value);
             string sAreaName = context.ActionDescriptor.RouteValues["area"].ToString();
             string sControllerName = context.ActionDescriptor.RouteValues["controller"].ToString();
-            string sActionNmae = context.ActionDescriptor.RouteValues["action"].ToString();
-            int iMenuId = Convert.ToInt32(context.HttpContext.Request.Query["Id"]);
-            if (string.IsNullOrWhiteSpace(sAreaName) || string.IsNullOrWhiteSpace(sControllerName) || string.IsNullOrWhiteSpace(sActionNmae) || iMenuId == 0)
+            string sActionName = context.ActionDescriptor.RouteValues["action"].ToString();
+            int iMenuId = Convert.ToInt32(context.HttpContext.Request.Query["iPageId"]);
+            int iActionId = Convert.ToInt32(context.HttpContext.Request.Query["iMethodId"]);
+            if (sAreaName == "Admin" && sActionName == "Index")
             {
-                // context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=1");
+                if (string.IsNullOrWhiteSpace(sAreaName) || string.IsNullOrWhiteSpace(sControllerName) || string.IsNullOrWhiteSpace(sActionName) || iMenuId == 0)
+                {
+                    context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=1");
+                }
+                else
+                {
+                    if (iMenuId > 0 && iActionId == 0 && sAreaName == "Admin" && sActionName == "Index")
+                    {
+                        if (await _menuService.CheckMenuControllerNameActionNameAsync(sAreaName, sControllerName, sActionName, iMenuId))
+                        {
+                            //检查用户菜单权限
+                            if (await _menuService.CheckUserMenuPowerAsync(iUserId, iMenuId))
+                            {
+
+                            }
+                            else
+                            {
+                                context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=3");
+                            }
+                        }
+                        else
+                        {
+                            context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=2");
+                        }
+                    }
+                }
             }
             else
             {
-                if (await _MenuService.CheckMenuActionAsync(sAreaName, sControllerName, sActionNmae, iMenuId))
+                if (iMenuId > 0 && iActionId > 0)
                 {
-                    if (await _MenuService.CheckUserMenuPowerAsync(iUserId, iMenuId))
+                    if (await _systemActionService.CheckControllerNameActionNameAsync(sAreaName, sControllerName, sActionName, iActionId))
                     {
+                        //检查用户菜单权限
+                        if (await _menuService.CheckUserMenuPowerAsync(iUserId, iMenuId))
+                        {
+                            //检查MenuAction权限
+                            MenuAction entityMenuAction = await _menuActionService.CheckMenuActionPowerAsync(iMenuId, iActionId);
+                            if (entityMenuAction != null)
+                            {
+                                if (!entityMenuAction.BisValid.Value)
+                                {
 
+                                }
+                                else
+                                {
+                                    //Action无效
+                                    context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=3");
+                                }
+                            }
+                            else
+                            {
+                                context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=3");
+                            }
+                        }
+                        else
+                        {
+                            context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=3");
+                        }
                     }
                     else
                     {
-                        context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=3");
+                        context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=4");
                     }
                 }
                 else
                 {
-                    context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=2");
+                    context.Result = new RedirectResult("/Admin/Home/Error?iErrorCode=1");
                 }
             }
             await base.OnActionExecutionAsync(context, next);
@@ -71,19 +126,25 @@ namespace Message.UI.Areas.Admin.Controllers
             string sValue = configurationRoot.GetSection(sKey).Value.ToString();
             return sValue;
         }
-        public IActionResult List()
+        public IActionResult List(int iPageId)
         {
             ViewData["iPageType"] = 0;
+            List<MenuAction> lstMenuAction = _menuActionService.SelectALL(new MenuAction() { ImenuId = iPageId });
+            ViewBag.lstMenuAction = lstMenuAction;
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult Edit(int iPageId)
         {
             ViewData["iPageType"] = 1;
+            List<MenuAction> lstMenuAction = _menuActionService.SelectALL(new MenuAction() { ImenuId = iPageId });
+            ViewBag.lstMenuAction = lstMenuAction;
             return View();
         }
-        public IActionResult Empty(object model = null)
+        public IActionResult Empty(int iPageId, object model = null)
         {
             ViewData["iPageType"] = 2;
+            List<MenuAction> lstMenuAction = _menuActionService.SelectALL(new MenuAction() { ImenuId = iPageId });
+            ViewBag.lstMenuAction = lstMenuAction;
             return View(model);
         }
     }

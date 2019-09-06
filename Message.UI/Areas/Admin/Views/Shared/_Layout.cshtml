@@ -1,4 +1,28 @@
-﻿<!DOCTYPE html>
+﻿@using Message.Entity.Mapping
+@{
+    List<MenuAction>
+    lstMenuAction = ViewBag.lstMenuAction;
+    MenuAction entityAddorModify = lstMenuAction.Where(x => x.Sexplain == "编辑").FirstOrDefault();
+    MenuAction entityDelete = lstMenuAction.Where(x => x.Sexplain == "删除").FirstOrDefault();
+    MenuAction entitySelect = lstMenuAction.Where(x => x.Sexplain == "查询").FirstOrDefault();
+    int iAddorModifyMethodeId = 0;
+    int iDeleteMethodeId = 0;
+    int iLoadDataMethodeId = 0;
+
+    if (entityAddorModify != null)
+    {
+        iAddorModifyMethodeId = entityAddorModify.IactionId;
+    }
+    if (entityDelete != null)
+    {
+        iDeleteMethodeId = entityDelete.IactionId;
+    }
+    if (entitySelect != null)
+    {
+        iLoadDataMethodeId = entitySelect.IactionId;
+    }
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,6 +42,9 @@
     {
         //数据页
         case 0:
+            @Html.Hidden("iLoadDataMethodeId", iLoadDataMethodeId)
+            @Html.Hidden("iDeleteMethodeId", iDeleteMethodeId)
+            @Html.Hidden("iAddorModifyMethodeId", iAddorModifyMethodeId)
             <div class="layui-collapse" lay-filter="test">
                 <div class="layui-colla-item">
                     <h2 class="layui-colla-title">展开此面板进行搜索~</h2>
@@ -38,26 +65,46 @@
                 </div>
             </div>
             <blockquote class="layui-elem-quote quoteBox">
-                <div class="layui-inline">
-                    <a id="btnAdd" class="layui-btn"><i class="layui-icon layui-icon-add-1">&#xe654;</i>新增</a>
-                </div>
-                <div class="layui-inline">
-                    <a id="btnUpdate" class="layui-btn"><i class="layui-icon layui-icon-edit">&#xe642;</i>修改</a>
-                </div>
-                <div class="layui-inline">
-                    <a id="btnCopy" class="layui-btn"><i class="layui-icon layui-icon-add-1">&#xe654;</i>复制</a>
-                </div>
-                <div class="layui-inline">
-                    <a id="btnDelete" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除</a>
-                </div>
+                @if (entityAddorModify != null)
+                {
+                    if (entityAddorModify.BisValid.HasValue)
+                    {
+                        if (!entityAddorModify.BisValid.Value)
+                        {
+                            <div class="layui-inline">
+                                <a id="btnAdd" class="layui-btn"><i class="layui-icon">&#xe654;</i>新增</a>
+                            </div>
+                            <div class="layui-inline">
+                                <a id="btnUpdate" class="layui-btn"><i class="layui-icon">&#xe642;</i>修改</a>
+                            </div>
+                            <div class="layui-inline">
+                                <a id="btnCopy" class="layui-btn"><i class="layui-icon">&#xe654;</i>复制</a>
+                            </div>
+                        }
+                    }
+                }
+                @if (entityDelete != null)
+                {
+                    if (entityDelete.BisValid.HasValue)
+                    {
+                        if (!entityDelete.BisValid.Value)
+                        {
+                            <div class="layui-inline">
+                                <a id="btnDelete" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                            </div>
+                        }
+                    }
+                }
                 @RenderSection("Button", false)
             </blockquote>
             <table id="dataTable" lay-filter="dataTable"></table>
             @RenderBody()
+            <script type="text/javascript" src="~/Admin/BaseJs/Common.js"></script>
             @RenderSection("Scripts", false)
             break;
         //新增修改页
         case 1:
+            @Html.Hidden("iAddorModifyMethodeId", iAddorModifyMethodeId)
             <form class="layui-form" id="form1">
                 @Html.Hidden("Id")
                 @Html.AntiForgeryToken()
@@ -65,17 +112,22 @@
                     @RenderBody()
                     <tr>
                         <td colspan="6">
-                            <button class="layui-btn" lay-submit="" lay-filter="btnSubmit" id="btnSubmit"><i class="layui-icon layui-icon-ok">&#xe605;</i>确定</button>
+                            <button class="layui-btn" lay-submit="" lay-filter="btnSubmit" id="btnSubmit"><i class="layui-icon">&#xe605;</i>确定</button>
                             <button type="reset" class="layui-btn"><i class="layui-icon layui-icon-delete"></i>重置</button>
                         </td>
                     </tr>
                 </table>
             </form>
+            <script type="text/javascript" src="~/Admin/BaseJs/Common.js"></script>
             @RenderSection("Scripts", false)
             break;
         case 2:
+            @Html.Hidden("iLoadDataMethodeId", iLoadDataMethodeId)
+            @Html.Hidden("iDeleteMethodeId", iDeleteMethodeId)
+            @Html.Hidden("iAddorModifyMethodeId", iAddorModifyMethodeId)
             @Html.AntiForgeryToken()
             @RenderBody()
+            <script type="text/javascript" src="~/Admin/BaseJs/Common.js"></script>
             @RenderSection("Scripts", false)
             break;
     }

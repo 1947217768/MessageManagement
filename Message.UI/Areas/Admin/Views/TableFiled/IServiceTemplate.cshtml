@@ -1,8 +1,9 @@
 ﻿@using Message.Entity.Mapping
 @using Message.Entity.ViewEntity.TableFiled;
 @model DataTable;
-using System.Linq.Expressions;
-using System.Text;
+using Message.Core.Models;
+using Message.Entity.Mapping;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Message.IService
@@ -25,7 +26,7 @@ namespace Message.IService
 
         Task<<var>@Model.StableName</var>> SelectAsync(<var>@Model.StableName</var> entity<var>@Model.StableName</var> = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null);
 
-        Task<<var>@Model.StableName</var>> AddOrModify<var>@Model.StableName</var>Async(<var>@Model.StableName</var> model, string sOperator);
+        Task<<var>@Model.StableName</var>> AddOrModify<var>@Model.StableName</var>Async(AddOrModify<var>@Model.StableName</var> model, string sOperator);
 
         Task<int> AppendAsync(<var>@Model.StableName</var> entity<var>@Model.StableName</var>, string sOperator);
 

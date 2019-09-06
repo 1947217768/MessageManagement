@@ -100,7 +100,7 @@ layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
                     if (menu[i].icon.split("-")[0] === 'icon') {
                         openTitle += '<i class="seraph ' + menu[i].icon + '"></i>';
                     } else {
-                        openTitle += '<i class="layui-icon">' + menu[i].icon + '</i>';
+                        openTitle += '<i class="layui-icon-ali">' + menu[i].icon + '</i>';
                     }
                 }
                 openTitle += '<cite>' + menu[i].title + '</cite>';

@@ -22,6 +22,8 @@ namespace Message.Repository
         {
             switch (iOrderGroup)
             {
+                case 1:
+                    return query = query.OrderBy(x => x.Id);
                 default:
                     return query = query.OrderByDescending(x => x.TmodifyTime).ThenBy(x => x.Id);
             }

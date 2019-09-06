@@ -39,7 +39,7 @@ layui.define(["element","jquery"],function(exports){
                     if(data[i].Item.IconUrl.indexOf("icon-") !== -1){
                         ulHtml += '<i class="seraph '+data[i].Item.IconUrl+'" data-icon="'+data[i].Item.IconUrl+'"></i>';
                     }else{
-                        ulHtml += '<i class="layui-icon" data-icon="'+data[i].Item.IconUrl+'">'+data[i].Item.IconUrl+'</i>';
+                        ulHtml += '<i class="layui-icon-ali" data-icon="'+data[i].Item.IconUrl+'">'+data[i].Item.IconUrl+'</i>';
                     }
                 }
                 ulHtml += '<cite>'+data[i].Item.DisplayName+'</cite>';

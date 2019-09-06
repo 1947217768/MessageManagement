@@ -8,11 +8,15 @@ layui.use(['form', 'element', 'layer', 'table'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
-        table = layui.table;
+        table = layui.table,
     element = layui.element;
+    var iPageId = GetParameter("iPageId"),
+        iLoadDataMethodeId = $("#iLoadDataMethodeId").val(),
+        iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val(),
+        iDeleteMethodeId = $("#iDeleteMethodeId").val();
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/Admin/<var>@Model[0].StableName</var>/LoadData/',
+        url: '/Admin/<var>@Model[0].StableName</var>/LoadData?iPageId='+ iPageId + '&iMethodId=' + iLoadDataMethodeId,
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -33,7 +37,7 @@ layui.use(['form', 'element', 'layer', 'table'], function () {
 
         $("#btnSearch").click(function () {
         table.reload("dataTable", {
-        url: '/Admin/<var>@Model[0].StableName</var>/LoadData/',
+        url: '/Admin/<var>@Model[0].StableName</var>/LoadData?iPageId='+ iPageId + '&iMethodId=' + iLoadDataMethodeId,
         page: {
         curr: 1
         },
@@ -59,18 +63,23 @@ layui.use(['form', 'element', 'layer', 'table'], function () {
         type: 2,
         anim: 1,
         area: ['800px', '90%'],
-        content: "/Admin/<var>@Model[0].StableName</var>/AddOrModify/",
+        content: '/Admin/<var>@Model[0].StableName</var>/AddOrModify?iPageId='+ iPageId + '&iMethodId='+iAddorModifyMethodeId,
         success: function (layero, index) {
         var body = layui.layer.getChildFrame('body', index);
         if (edit) {
         @foreach (ViewTableFiled entityViewTableFiled in Model)
         {
-            if (entityViewTableFiled.SfiledName == "Sremarks")
+            if (!lstFileName.Any(x => x == entityViewTableFiled.SfiledName))
             {
-                <var>body.find("#Sremarks").text(edit.Sremarks === null ? "" : edit.Sremarks);</var>
-                continue;
+                if (entityViewTableFiled.SfiledName == "Sremarks")
+                {
+                    <var>body.find("#Sremarks").text(edit.Sremarks === null ? "" : edit.Sremarks);</var>
+                }
+                else
+                {
+                    <var>body.find("#@entityViewTableFiled.SfiledName").val(edit.@entityViewTableFiled.SfiledName);</var>
+                }
             }
-            <var>body.find("#@entityViewTableFiled.SfiledName").val(edit.@entityViewTableFiled.SfiledName);</var>
         }
         form.render();
         }
@@ -116,7 +125,7 @@ layui.use(['form', 'element', 'layer', 'table'], function () {
         layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function (index) {
         $.ajax({
         type: 'POST',
-        url: '/Admin/<var>@Model[0].StableName</var>/DeleteRange/',
+        url: '/Admin/<var>@Model[0].StableName</var>/DeleteRange?iPageId='+ iPageId + '&iMethodId='+iDeleteMethodeId,
         data: { arrId: arrId },
         dataType: "json",
         headers: {

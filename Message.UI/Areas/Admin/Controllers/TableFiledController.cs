@@ -8,9 +8,6 @@ using Message.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Message.UI.Areas.Admin.Controllers
@@ -34,17 +31,17 @@ namespace Message.UI.Areas.Admin.Controllers
         {
             return JsonHelper.ObjectToJSON(_tableFiledService.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
         }
-        public IActionResult Index()
+        public IActionResult Index(int iPageId)
         {
-            return List();
+            return List(iPageId);
         }
-        public async Task<IActionResult> AddOrModify()
+        public async Task<IActionResult> AddOrModify(int iPageId)
         {
             List<DataTable> lstDataTable = await _dataTableService.SelectALLAsync();
             List<DataType> lstDataType = await _dataTypeService.SelectALLAsync();
             ViewBag.lstDataTable = lstDataTable;
             ViewBag.lstDataType = lstDataType;
-            return Edit();
+            return Edit(iPageId);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -103,7 +100,7 @@ namespace Message.UI.Areas.Admin.Controllers
             return JsonHelper.ObjectToJSON(baseResult);
         }
 
-        public async Task<IActionResult> TableInfo(int iTableId)
+        public async Task<IActionResult> TableInfo(int iPageId, int iTableId)
         {
             DataTable entityDataTable = await _dataTableService.SelectAsync(iTableId);
             if (entityDataTable != null)
@@ -118,7 +115,7 @@ namespace Message.UI.Areas.Admin.Controllers
                 ViewBag.lstTableFiled = lstViewTableFiled;
                 ViewBag.entityDataTable = entityDataTable;
             }
-            return Empty();
+            return Empty(iPageId);
         }
     }
 }

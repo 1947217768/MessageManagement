@@ -281,13 +281,15 @@ namespace Message.Core.Repository
         }
         public async Task<int> AppendAsync(TEntity entity, string sOperator)
         {
+            int iResult = 0;
             if (!BeforeAppend(_dbContext, entity, sOperator))
             {
-                return await _dbContext.SaveChangesAsync();
+                return iResult;
             }
             await _dbContext.Set<TEntity>().AddAsync(entity);
+            iResult = await _dbContext.SaveChangesAsync();
             AfterAppend(_dbContext, entity, sOperator);
-            return await _dbContext.SaveChangesAsync();
+            return iResult;
         }
         public Task<PageInfo<TEntity>> GetPageListAsync(PageInfo<TEntity> pageInfo, int iOrderGroup = 0, string sOperator = null)
         {
@@ -331,10 +333,47 @@ namespace Message.Core.Repository
             iMaxCount = iMaxCount == 0 ? query.Count() : iMaxCount;
             return await query.Take(iMaxCount).ToListAsync();
         }
-    
+
         public virtual void ChangeDataDeleteKey(TEntity entity, string sOperator)
         {
 
+        }
+        public int AppendRange(List<TEntity> lstEntity, string sOperator)
+        {
+            int iResult = 0;
+            if (lstEntity.Any())
+            {
+                foreach (TEntity entity in lstEntity)
+                {
+                    iResult += Append(entity, sOperator);
+                }
+            }
+            return iResult;
+        }
+        public async Task<int> AppendRangeAsync(List<TEntity> lstEntity, string sOperator)
+        {
+            int iResult = 0;
+            if (lstEntity.Any())
+            {
+                foreach (TEntity entity in lstEntity)
+                {
+                    iResult += await AppendAsync(entity, sOperator);
+                }
+            }
+            return iResult;
+        }
+
+        public int UpdateRange(List<TEntity> lstEntity, string sOperator)
+        {
+            int iResult = 0;
+            if (lstEntity.Any())
+            {
+                foreach (TEntity entity in lstEntity)
+                {
+                    iResult += Update(entity, sOperator);
+                }
+            }
+            return iResult;
         }
     }
 }

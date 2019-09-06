@@ -1,0 +1,12 @@
+@font-face {
+    font-family: layui-icon;
+    src: url('../layui/icon/iconfont.eot');
+    src: url('../layui/icon/iconfont.eot?#iefix') format('embedded-opentype'),url(../layui/icon/iconfont.woff2) format('woff2'),url(../layui/icon/iconfont.woff?v=250) format('woff'),url(../layui/icon/iconfont.ttf?v=250) format('truetype'),url(../layui/icon/iconfont.svg?v=250#layui-icon) format('svg')
+}
+.layui-icon-ali {
+    font-family: layui-icon !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}

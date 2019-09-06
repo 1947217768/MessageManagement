@@ -8,8 +8,6 @@ using Message.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Message.UI.Areas.Admin.Controllers
@@ -29,15 +27,15 @@ namespace Message.UI.Areas.Admin.Controllers
         {
             return JsonHelper.ObjectToJSON(_systemActionService.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
         }
-        public IActionResult Index()
+        public IActionResult Index(int iPageId)
         {
-            return List();
+            return List(iPageId);
         }
-        public async Task<IActionResult> AddOrModifyAsync()
+        public async Task<IActionResult> AddOrModifyAsync(int iPageId)
         {
             List<SystemController> lstSystemController = await _systemControllerService.SelectALLAsync();
             ViewBag.lstSystemController = lstSystemController;
-            return Edit();
+            return Edit(iPageId);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

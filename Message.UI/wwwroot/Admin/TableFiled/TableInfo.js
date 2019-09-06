@@ -23,6 +23,9 @@
         Copy(document.getElementById("AddOrModifyCode"));
     });
 
+    $("#btnCopyIRepositoryCode").bind("click", function () {
+        Copy(document.getElementById("IRepositoryCode"));
+    }); 
     $("#btnCopyRepositoryCode").bind("click", function () {
         Copy(document.getElementById("RepositoryCode"));
     }); 
@@ -46,6 +49,9 @@
         Copy(document.getElementById("Index_JsCode"));
     });
 
+    $("#btnCopyAddOrModifyhtmlCode").bind("click", function () {
+        Copy(document.getElementById("AddOrModifyhtmlCode"));
+    }); 
     $("#btnCopyAddOrModifyjsCode").bind("click", function () {
         Copy(document.getElementById("AddOrModifyjsCode"));
     }); 

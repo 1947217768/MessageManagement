@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using Message.Core.Models;
+﻿using Message.Core.Models;
 using Message.Entity.Mapping;
 using Message.Entity.ViewEntity.DataTable;
 using Message.IService;
@@ -7,8 +6,6 @@ using Message.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Message.UI.Areas.Admin.Controllers
@@ -26,17 +23,17 @@ namespace Message.UI.Areas.Admin.Controllers
         {
             return JsonHelper.ObjectToJSON(_dataTableService.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
         }
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(int iPageId)
         {
             List<DataBase> lstDataBase = await _dataBaseService.SelectALLAsync();
             ViewBag.lstDataBase = lstDataBase;
-            return List();
+            return List(iPageId);
         }
-        public async Task<IActionResult> AddOrModifyAsync()
+        public async Task<IActionResult> AddOrModifyAsync(int iPageId)
         {
             List<DataBase> lstDataBase = await _dataBaseService.SelectALLAsync();
             ViewBag.lstDataBase = lstDataBase;
-            return Edit();
+            return Edit(iPageId);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

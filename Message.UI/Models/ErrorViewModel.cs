@@ -1,5 +1,3 @@
-using System;
-
 namespace Message.UI.Models
 {
     public class ErrorViewModel

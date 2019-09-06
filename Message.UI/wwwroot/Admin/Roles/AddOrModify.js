@@ -7,6 +7,8 @@ layui.use(['form', 'layer', 'selectM'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery, selectM = layui.selectM;
+    var iPageId = GetParameter("iPageId"),
+        iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val();
     var iRoleId = $("#Id").val();
     var arrUserId = new Array();
     var arrMenuId = new Array();
@@ -14,7 +16,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
         $.ajax({
             type: 'Get',
             async: false,
-            url: '/Admin/UserRole/GetRoleUserIdList?iRoleId=' + iRoleId,
+            url: '/Admin/UserRole/GetRoleUserIdList?iRoleId=' + iRoleId + '&iPageId=' + iPageId + '&iMethodId=1352',
             dataType: "json",
             success: function (res) {
                 arrUserId = res;
@@ -26,7 +28,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
         $.ajax({
             type: 'Get',
             async: false,
-            url: '/Admin/RoleMenu/GetRoleMenu?iRoleId=' + iRoleId,
+            url: '/Admin/RoleMenu/GetRoleMenu?iRoleId=' + iRoleId + '&iPageId=' + iPageId + '&iMethodId=1316',
             dataType: "json",
             success: function (res) {
                 arrMenuId = res;
@@ -41,7 +43,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
         //元素容器【必填】
         elem: '#users'
         //候选数据【必填】
-        , data: "/Admin/UserInfo/GetUserList/"
+        , data: '/Admin/UserInfo/GetUserList?iPageId=' + iPageId + '&iMethodId=1347'
         , max: 1000
         , selected: arrUserId
         , width: 250
@@ -53,7 +55,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
         //元素容器【必填】
         elem: '#menus'
         //候选数据【必填】
-        , data: "/Admin/Menu/GetMenuList/"
+        , data: '/Admin/Menu/GetMenuList?iPageId=' + iPageId + '&iMethodId=1310'
         , max: 1000
         , selected: arrMenuId
         , width: 250
@@ -64,7 +66,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
         //获取防伪标记
         $.ajax({
             type: 'POST',
-            url: '/Admin/Roles/AddOrModify',
+            url: '/Admin/Roles/AddOrModify?iPageId=' + iPageId + '&iMethodId=' + iAddorModifyMethodeId,
             data: {
                 Id: $("#Id").val(),  //主键
                 SroleName: $("#SroleName").val(),

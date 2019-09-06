@@ -4,10 +4,14 @@
         $ = layui.jquery,
         table = layui.table;
     element = layui.element;
+    var iPageId = GetParameter("iPageId"),
+        iLoadDataMethodeId = $("#iLoadDataMethodeId").val(),
+        iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val(),
+        iDeleteMethodeId = $("#iDeleteMethodeId").val();
     //用户列表
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/Admin/DataType/LoadData/',
+        url: '/Admin/DataType/LoadData?iPageId=' + iPageId + '&iMethodId=' + iLoadDataMethodeId,
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -24,7 +28,7 @@
 
     $("#btnSearch").click(function () {
         table.reload("dataTable", {
-            url: '/Admin/DataType/LoadData/',
+            url: '/Admin/DataType/LoadData?iPageId=' + iPageId + '&iMethodId=' + iLoadDataMethodeId,
             page: {
                 curr: 1
             },
@@ -45,7 +49,7 @@
             type: 2,
             anim: 1,
             area: ['800px', '90%'],
-            content: "/Admin/DataType/AddOrModify/",
+            content: '/Admin/DataType/AddOrModify?iPageId=' + iPageId + '&iMethodId=' + iAddorModifyMethodeId,
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (edit) {
@@ -96,7 +100,7 @@
             layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/DataType/DeleteRange/',
+                    url: '/Admin/DataType/DeleteRange?iPageId=' + iPageId + '&iMethodId=' + iDeleteMethodeId,
                     data: { arrId: arrId },
                     dataType: "json",
                     headers: {

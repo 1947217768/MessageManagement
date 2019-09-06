@@ -4,11 +4,7 @@ using Message.Entity.Mapping;
 using Message.Entity.ViewEntity.DataTable;
 using Message.IRepository;
 using Message.IService;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Message.Service

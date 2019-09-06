@@ -1,0 +1,45 @@
+﻿@using Message.Entity.ViewEntity.TableFiled;
+@model List<ViewTableFiled>
+@{
+    int iCount = Model.Count;
+    int iTdNum = 2;
+    int iTrCount = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(iCount) / Convert.ToDecimal(iTdNum)));
+    int iIndex = 0;
+    int iNum = 0;
+    int j = 0;
+    string sDateTime = "@DateTime.Now.ToString(\"yyyyMMddHHmmss\")";
+}
+<var>
+    @@{
+    ViewData["Title"] = "编辑";
+    }
+</var>
+@for (int i = 0; i < iTrCount; i++)
+{
+    iIndex = 0;
+    <tr>
+        @for (j = iNum; j < iCount; j++)
+        {
+            if (iIndex == iTdNum)
+            {
+                iNum = j;
+                break;
+            }
+            if (Model[j].SfiledName == "Sremarks")
+            {
+                continue;
+            }
+            <td style="width:130px">@Model[j].Sexplain:</td>
+            <td style="width:250px"><input type="text" id="@Model[j].SfiledName" name="@Model[j].SfiledName" class="layui-input"></td>
+            iIndex++;
+        }
+    </tr>
+    <tr>
+        <td>备注:</td>
+        <td colspan="3"><textarea id="Sremarks" name="Sremarks" class="layui-textarea"></textarea></td>
+    </tr>
+}
+@@section Scripts{
+<script type="text/javascript" src="~/layui/layui.js"></script>
+<script type="text/javascript" src="~/Admin/@Model[0].StableName/AddOrModify.js?_=@sDateTime"></script>
+}

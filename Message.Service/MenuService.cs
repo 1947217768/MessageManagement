@@ -83,7 +83,7 @@ namespace Message.Service
             }
             return false;
         }
-        public async Task<bool> CheckMenuActionAsync(string sAreaName, string sControllerName, string sActionName, int iMenuId)
+        public async Task<bool> CheckMenuControllerNameActionNameAsync(string sAreaName, string sControllerName, string sActionName, int iMenuId)
         {
             Menu entityMenu = await _menuRepository.SelectAsync(iMenuId);
             if (entityMenu != null)
@@ -156,6 +156,45 @@ namespace Message.Service
                 }
             }
             return lstMenu;
+        }
+
+        public List<Menu> SelectALL(Menu entityMenu = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return _menuRepository.SelectALL(entityMenu, sOperator, iOrderGroup, iMaxCount, sSortName, sSortOrder);
+        }
+
+        public Menu Select(int id, string sOperator = null)
+        {
+            return _menuRepository.Select(id, sOperator);
+        }
+
+        public Menu Select(Menu entityMenu = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return _menuRepository.Select(entityMenu, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+
+        public async Task<List<Menu>> SelectALLAsync(Menu entityMenu = null, string sOperator = null, int iOrderGroup = 0, int iMaxCount = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return await _menuRepository.SelectALLAsync(entityMenu, sOperator, iOrderGroup, iMaxCount, sSortName, sSortOrder);
+        }
+
+        public async Task<Menu> SelectAsync(int id, string sOperator = null)
+        {
+            return await _menuRepository.SelectAsync(id, sOperator);
+        }
+
+        public async Task<Menu> SelectAsync(Menu entityMenu = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        {
+            return await _menuRepository.SelectAsync(entityMenu, sOperator, iOrderGroup, sSortName, sSortOrder);
+        }
+
+        public async Task<int> AppendAsync(Menu entityMenu, string sOperator)
+        {
+            return await _menuRepository.AppendAsync(entityMenu, sOperator);
+        }
+        public int Append(Menu entityMenu, string sOperator)
+        {
+            return _menuRepository.Append(entityMenu, sOperator);
         }
     }
 }

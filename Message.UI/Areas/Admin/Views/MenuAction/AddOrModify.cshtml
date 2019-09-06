@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "编辑";
+}
+
+<input type="hidden" id="ImenuId" name="ImenuId" />
+<input type="hidden" id="IactionId" name="IactionId" />
+<tr>
+    <td style="width:130px">菜单</td>
+    <td style="width:250px"><input type="text" id="SmenuName" name="SmenuName" autocomplete="off" lay-verify="required" class="layui-input"></td>
+    <td style="width:130px">Action</td>
+    <td style="width:250px"><input type="text" id="SactionName" name="SactionName" autocomplete="off" lay-verify="required" class="layui-input"></td>
+</tr>
+<tr>
+    <td>说明</td>
+    <td><input type="text" id="Sexplain" name="Sexplain" class="layui-input" lay-verify="required"></td>
+    <td style="width:130px">是否有效</td>
+    <td style="width:250px"><input type="checkbox" lay-skin="primary" id="BisValid" name="BisValid"></td>
+</tr>
+<tr>
+    <td>备注:</td>
+    <td colspan="3"><textarea id="Sremarks" name="Sremarks" class="layui-textarea"></textarea></td>
+</tr>
+@section Scripts{
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <script type="text/javascript" src="/Admin/MenuAction/AddOrModify.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
+}

@@ -1,4 +1,5 @@
-﻿using Message.Core.Extensions;
+﻿using FluentValidation.Results;
+using Message.Core.Extensions;
 using Message.Core.Models;
 using Message.Entity.Mapping;
 using Message.Entity.ViewEntity.Account;
@@ -12,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Claims;
-using FluentValidation.Results;
 using System.Threading.Tasks;
 
 namespace Message.UI.Areas.Admin.Controllers

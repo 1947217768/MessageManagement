@@ -3,10 +3,12 @@ using Message.Core.Models;
 using Message.Entity.Mapping;
 using Message.Entity.ViewEntity.DataTable;
 using Message.Entity.ViewEntity.Menu;
+using Message.Entity.ViewEntity.MenuAction;
 using Message.Entity.ViewEntity.Roles;
 using Message.Entity.ViewEntity.SystemAction;
 using Message.Entity.ViewEntity.TableFiled;
 using Message.Entity.ViewEntity.UserInfo;
+using System.Collections.Generic;
 
 namespace Message.UI.Profiles
 {
@@ -28,6 +30,8 @@ namespace Message.UI.Profiles
             #region SystemAction
             CreateMap<SystemAction, ViewSystemAction>();
             CreateMap<ViewSystemAction, SystemAction>();
+            CreateMap<List<SystemAction>, List<ViewSystemAction>>();
+            CreateMap<List<ViewSystemAction>, List<SystemAction>>();
             CreateMap<PageInfo<SystemAction>, PageInfo<ViewSystemAction>>();
             CreateMap<PageInfo<ViewSystemAction>, PageInfo<SystemAction>>();
             #endregion
@@ -43,6 +47,15 @@ namespace Message.UI.Profiles
             CreateMap<TableFiled, ViewTableFiled>();
             CreateMap<PageInfo<ViewTableFiled>, PageInfo<TableFiled>>();
             CreateMap<PageInfo<TableFiled>, PageInfo<ViewTableFiled>>();
+            #endregion
+
+            #region MenuAction
+            CreateMap<ViewMenuAction, MenuAction>();
+            CreateMap<MenuAction, ViewMenuAction>();
+            CreateMap<MenuAction, AddOrModifyMenuAction>();
+            CreateMap<AddOrModifyMenuAction, MenuAction>();
+            CreateMap<PageInfo<ViewMenuAction>, PageInfo<MenuAction>>();
+            CreateMap<PageInfo<MenuAction>, PageInfo<ViewMenuAction>>();
             #endregion
         }
     }

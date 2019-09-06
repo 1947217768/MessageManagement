@@ -6,7 +6,7 @@
     //上传头像
     upload.render({
         elem: '.userFaceBtn',
-        url: '/Admin/UploadFileInfo/UploadImage/',
+        url: '/Admin/UploadFileInfo/UploadImag',
         size: 1024,
         method: "post",
         before: function (obj) {

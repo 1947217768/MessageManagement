@@ -15,7 +15,35 @@ namespace Message.Entity.Mapping
     <var>{</var>
     foreach (ViewTableFiled entityViewTableFiled in Model)
     {
-        <var>public @(entityViewTableFiled.StypeName) @(entityViewTableFiled.SfiledName) { get; set; }</var>
+        if (entityViewTableFiled.BisEmpty)
+        {
+            if (entityViewTableFiled.IdataTypeId == 5)
+            {
+                <var>[MaxLength(@entityViewTableFiled.ImaxLength)]</var>
+                <var>public @(entityViewTableFiled.StypeName) @(entityViewTableFiled.SfiledName) { get; set; }</var>
+            }
+            else
+            {
+                <var>public @(entityViewTableFiled.StypeName)? @(entityViewTableFiled.SfiledName) { get; set; }</var>
+            }
+        }
+        else
+        {
+            if (entityViewTableFiled.IdataTypeId == 5)
+            {
+                <var>[MaxLength(@entityViewTableFiled.ImaxLength), Required]</var>
+                <var>public @(entityViewTableFiled.StypeName) @(entityViewTableFiled.SfiledName) { get; set; }</var>
+            }
+            else if (entityViewTableFiled.IdataTypeId == 2 && entityViewTableFiled.SfiledName == "Id")
+            {
+                <var>[Key]</var>
+                <var>public @(entityViewTableFiled.StypeName) @(entityViewTableFiled.SfiledName) { get; set; }</var>
+            }
+            else
+            {
+                <var>public @(entityViewTableFiled.StypeName) @(entityViewTableFiled.SfiledName) { get; set; }</var>
+            }
+        }
     }
     <var>}</var>
 }

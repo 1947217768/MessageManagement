@@ -52,5 +52,15 @@ namespace Message.IService
         Task<SystemAction> AddOrModifySystemActionAsync(SystemAction model, string sOperator);
         Task<int> AppendAsync(SystemAction entitySystemAction, string sOperator);
         int Append(SystemAction entitySystemAction, string sOperator);
+
+        /// <summary>
+        /// 检查ActionId是否匹配
+        /// </summary>
+        /// <param name="sAreaName"></param>
+        /// <param name="sControllerName"></param>
+        /// <param name="sActionName"></param>
+        /// <param name="iActionId"></param>
+        /// <returns></returns>
+        Task<bool> CheckControllerNameActionNameAsync(string sAreaName, string sControllerName, string sActionName, int iActionId);
     }
 }

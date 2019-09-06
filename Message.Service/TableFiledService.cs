@@ -27,24 +27,23 @@ namespace Message.Service
         }
         public PageInfo<ViewTableFiled> GetPageList(PageInfo<ViewTableFiled> pageInfo, ViewTableFiled oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
         {
-            if (!string.IsNullOrWhiteSpace(oSearchEntity.StableName) || !string.IsNullOrWhiteSpace(oSearchEntity.StypeName))
+            if (!string.IsNullOrWhiteSpace(oSearchEntity.StableName))
             {
                 DataTable entityDataTable = _dataTableService.Select(new DataTable() { StableName = oSearchEntity.StableName });
                 if (entityDataTable != null)
                 {
                     oSearchEntity.IdataTableId = entityDataTable.Id;
                 }
+            }
+            if (!string.IsNullOrWhiteSpace(oSearchEntity.StypeName))
+            {
                 DataType entityDataType = _dataTypeService.Select(new DataType() { StypeName = oSearchEntity.StypeName });
                 if (entityDataType != null)
                 {
                     oSearchEntity.IdataTypeId = entityDataType.Id;
                 }
-                pageInfo = _mapper.Map<PageInfo<ViewTableFiled>>(_tableFiledRepository.GetPageList(_mapper.Map<PageInfo<TableFiled>>(pageInfo), _mapper.Map<TableFiled>(oSearchEntity), sOperator, iOrderGroup, sSortName, sSortOrder));
             }
-            else
-            {
-                pageInfo = _mapper.Map<PageInfo<ViewTableFiled>>(_tableFiledRepository.GetPageList(_mapper.Map<PageInfo<TableFiled>>(pageInfo), _mapper.Map<TableFiled>(oSearchEntity), sOperator, iOrderGroup, sSortName, sSortOrder));
-            }
+            pageInfo = _mapper.Map<PageInfo<ViewTableFiled>>(_tableFiledRepository.GetPageList(_mapper.Map<PageInfo<TableFiled>>(pageInfo), _mapper.Map<TableFiled>(oSearchEntity), sOperator, iOrderGroup, sSortName, sSortOrder));
             if (pageInfo.data.Any())
             {
                 foreach (ViewTableFiled entityViewTableFiled in pageInfo.data)
@@ -144,7 +143,7 @@ namespace Message.Service
             List<ViewTableFiled> lstViewTableFiled = new List<ViewTableFiled>();
             if (iTableId > 0)
             {
-                lstTableFiled = await _tableFiledRepository.SelectALLAsync(new TableFiled() { IdataTableId = iTableId });
+                lstTableFiled = await _tableFiledRepository.SelectALLAsync(new TableFiled() { IdataTableId = iTableId }, null, 1);
             }
             else
             {

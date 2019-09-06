@@ -4,11 +4,7 @@ using Message.Entity.Mapping;
 using Message.Entity.ViewEntity.SystemAction;
 using Message.IRepository;
 using Message.IService;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,7 +37,7 @@ namespace Message.Service
             {
                 pageInfo = _mapper.Map<PageInfo<ViewSystemAction>>(_systemActionRepository.GetPageList(_mapper.Map<PageInfo<SystemAction>>(pageInfo), _mapper.Map<SystemAction>(oSearchEntity), sOperator, iOrderGroup, sSortName, sSortOrder));
             }
-            if (pageInfo.data.Any())
+            if (pageInfo.data?.Count > 0)
             {
                 foreach (var entity in pageInfo.data)
                 {
@@ -49,6 +45,7 @@ namespace Message.Service
                     if (entitySystemController != null)
                     {
                         entity.ScontrollerName = entitySystemController.ScontrollerName;
+                        entity.SactionName = "/" + entitySystemController.ScontrollerName + "/" + entity.SactionName + "?iMethodId=" + entity.Id;
                     }
                 }
             }
@@ -122,6 +119,23 @@ namespace Message.Service
                 }
             }
             return entitySystemAction;
+        }
+
+        public async Task<bool> CheckControllerNameActionNameAsync(string sAreaName, string sControllerName, string sActionName, int iActionId)
+        {
+            SystemAction entitySystemAction = await _systemActionRepository.SelectAsync(iActionId);
+            if (entitySystemAction != null)
+            {
+                SystemController entitySystemController = await _systemControllerService.SelectAsync(entitySystemAction.IcontrollerId);
+                if (entitySystemController != null)
+                {
+                    if (sAreaName == "Admin" && sControllerName == entitySystemController.ScontrollerName && sActionName == entitySystemAction.SactionName.Replace("Async", string.Empty))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

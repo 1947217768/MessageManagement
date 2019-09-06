@@ -35,7 +35,7 @@ namespace Message.Repository
         }
         public override void AfterAppend(DbContext DB, Menu entity, string sOperator)
         {
-            entity.SlinkUrl += "?id=" + entity.Id;
+            entity.SlinkUrl += "?iPageId=" + entity.Id;
             Update(entity, sOperator);
             base.AfterAppend(DB, entity, sOperator);
         }

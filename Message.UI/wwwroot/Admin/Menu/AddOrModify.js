@@ -7,13 +7,15 @@ layui.use(['form', 'layer', 'selectM'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery, selectM = layui.selectM;
+    var iPageId = GetParameter("iPageId"),
+        iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val();
     var iMenuId = $("#Id").val();
     var arrUserRoleId = new Array();
     if (iMenuId > 0) {
         $.ajax({
             type: 'Get',
             async: false,
-            url: '/Admin/RoleMenu/GetMenuRole?iMenuId=' + iMenuId,
+            url: '/Admin/RoleMenu/GetMenuRole?iMenuId=' + iMenuId + '&iPageId=' + iPageId + '&iMethodId=1315',
             dataType: "json",
             success: function (res) {
                 arrUserRoleId = res;
@@ -29,7 +31,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
         //元素容器【必填】
         elem: '#roles'
         //候选数据【必填】
-        , data: "/Admin/Roles/GetRoleList/"
+        , data: '/Admin/Roles/GetRoleList?iPageId=' + iPageId + '&iMethodId=1323'
         , max: 1000
         , selected: arrUserRoleId
         , width: 250
@@ -41,7 +43,7 @@ layui.use(['form', 'layer', 'selectM'], function () {
         //获取防伪标记
         $.ajax({
             type: 'POST',
-            url: '/Admin/Menu/AddOrModify',
+            url: '/Admin/Menu/AddOrModify?iPageId=' + iPageId + '&iMethodId=' + iAddorModifyMethodeId,
             data: {
                 Id: $("#Id").val(),  //主键
                 Sname: $("#Sname").val(),

@@ -5,10 +5,14 @@
         laytpl = layui.laytpl,
         table = layui.table;
     element = layui.element;
+    var iPageId = GetParameter("iPageId"),
+        iLoadDataMethodeId = $("#iLoadDataMethodeId").val(),
+        iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val(),
+        iDeleteMethodeId = $("#iDeleteMethodeId").val();
     //用户列表
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/Admin/Menu/LoadData/',
+        url: '/Admin/Menu/LoadData?iPageId=' + iPageId + '&iMethodId=' + iLoadDataMethodeId,
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -28,7 +32,7 @@
 
     $("#btnSearch").click(function () {
         table.reload("dataTable", {
-            url: '/Admin/Menu/LoadData/',
+            url: '/Admin/Menu/LoadData?iPageId=' + iPageId + '&iMethodId=' + iLoadDataMethodeId,
             page: {
                 curr: 1
             },
@@ -50,7 +54,7 @@
             type: 2,
             anim: 1,
             area: ['800px', '90%'],
-            content: "/Admin/Menu/AddOrModify/",
+            content: '/Admin/Menu/AddOrModify?iPageId=' + iPageId + '&iMethodId=' + iAddorModifyMethodeId,
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (edit) {
@@ -107,7 +111,7 @@
             layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/Menu/DeleteRange/',
+                    url: '/Admin/Menu/DeleteRange?iPageId=' + iPageId + '&iMethodId=' + iDeleteMethodeId,
                     data: { arrId: arrId },
                     dataType: "json",
                     headers: {
@@ -135,7 +139,7 @@
     function changeState(iMenuId, bDisplpy) {
         $.ajax({
             type: 'POST',
-            url: '/Admin/Menu/ChangeMenuState/',
+            url: '/Admin/Menu/ChangeMenuState?iPageId=' + iPageId + '&iMethodId=1309',
             data: { Id: iMenuId, Bdisplay: bDisplpy },
             dataType: "json",
             headers: {

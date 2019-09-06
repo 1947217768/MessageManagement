@@ -1,5 +1,8 @@
-﻿using Message.Core.Models;
+﻿using Message.Core.Extensions;
+using Message.Core.Models;
 using Message.Entity.Mapping;
+using Message.Entity.Redis;
+using Message.Entity.ViewEntity.Home;
 using Message.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -7,10 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Message.Core.Extensions;
 using System.Threading.Tasks;
-using Message.Entity.ViewEntity.Home;
-using Message.Entity.Redis;
 
 namespace Message.UI.Areas.Admin.Controllers
 {
@@ -107,6 +107,12 @@ namespace Message.UI.Areas.Admin.Controllers
                     break;
                 case 3:
                     sMsg = "没有权限!";
+                    break;
+                case 4:
+                    sMsg = "Action不匹配!";
+                    break;
+                default:
+                    sMsg = "未知错误!";
                     break;
             }
             ViewBag.Msg = sMsg;

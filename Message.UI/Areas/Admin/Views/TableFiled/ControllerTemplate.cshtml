@@ -17,73 +17,74 @@ namespace Message.UI.Areas.Admin.Controllers
 {
     public class <var>@Model.StableName</var>Controller : BaseAdminController
     {
-        private readonly I<var>@Model.StableName</var>Service <var>@(Model.StableName.Substring(0, 1).ToLower() + Model.StableName.Substring(1))</var>Service;
+    private readonly I<var>@Model.StableName</var>Service <var>sServiceName</var>Service;
 
-        public <var>@Model.StableName</var>Controller(I<var>@Model.StableName</var>Service <var>@Model.StableName</var>Service)
+    public <var>@Model.StableName</var>Controller(I<var>@Model.StableName</var>Service <var>@(Model.StableName.Substring(0, 1).ToLower() + Model.StableName.Substring(1))</var>Service)
+    {
+    <var>@sServiceName</var>Service = <var>@(Model.StableName.Substring(0, 1).ToLower() + Model.StableName.Substring(1))</var>Service;
+    }
+    public string LoadData(PageInfo<<var>@Model.StableName</var>>pageInfo, <var>@Model.StableName</var> oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+    {
+    return JsonHelper.ObjectToJSON(<var>@sServiceName</var>Service.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
+    }
+    public IActionResult Index(int iPageId)
+    {
+    return List(iPageId);
+    }
+    public IActionResult AddOrModify(int iPageId)
+    {
+    return Edit(iPageId);
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [CrossSiteScript]
+    public async Task<string>
+        AddOrModifyAsync([FromForm]AddOrModify<var>@Model.StableName</var> model)
         {
-            <var>@sServiceName</var>Service = <var>@(Model.StableName.Substring(0,1).ToLower()+Model.StableName.Substring(1))</var>Service;
+        BaseResult baseResult = new BaseResult();
+        try
+        {
+        if (model != null)
+        {
+        //验证规则  Validation
+        //if (!string.IsNullOrWhiteSpace(model.StypeName))
+        //{
+        if (await <var>@sServiceName</var>Service.AddOrModify<var>@Model.StableName</var>Async(model, User.Identity.Name) != null)
+        {
+        baseResult.Code = 0;
+        baseResult.Msg = "操作成功!";
         }
-        public string LoadData(PageInfo<<var>@Model.StableName</var>>pageInfo, <var>@Model.StableName</var> oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)
+        else
         {
-            return JsonHelper.ObjectToJSON(<var>@sServiceName</var>Service.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
+        baseResult.Code = 1;
+        baseResult.Msg = "操作失败!";
         }
-        public IActionResult Index()
-        {
-            return List();
+        //}
         }
-        public IActionResult AddOrModify()
-        {
-            return Edit();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [CrossSiteScript]
-        public async Task<string>AddOrModifyAsync([FromForm]AddOrModify<var>@Model.StableName</var> model)
+        catch (Exception ex)
         {
-            BaseResult baseResult = new BaseResult();
-            try
-            {
-                if (model != null)
-                {
-                   //验证规则  Validation
-                   //if (!string.IsNullOrWhiteSpace(model.StypeName))
-                   //{
-                        if (await <var>@sServiceName</var>Service.AddOrModify<var>@Model.StableName</var>Async(model, User.Identity.Name) != null)
-                        {
-                            baseResult.Code = 0;
-                            baseResult.Msg = "操作成功!";
-                        }
-                        else
-                        {
-                            baseResult.Code = 1;
-                            baseResult.Msg = "操作失败!";
-                        }
-                    //}
-                }
-            }
-            catch (Exception ex)
-            {
-                baseResult.Code = 3;
-                baseResult.Msg = ex.Message;
-            }
-            return JsonHelper.ObjectToJSON(baseResult);
+        baseResult.Code = 3;
+        baseResult.Msg = ex.Message;
+        }
+        return JsonHelper.ObjectToJSON(baseResult);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public string DeleteRange(int[] arrId)
         {
-            BaseResult baseResult = new BaseResult();
-            if (<var>@sServiceName</var>Service.DeleteRange(arrId, User.Identity.Name))
-            {
-                baseResult.Code = 0;
-                baseResult.Msg = "删除成功!";
-            }
-            else
-            {
-                baseResult.Code = 1;
-                baseResult.Msg = "删除失败!";
-            }
-            return JsonHelper.ObjectToJSON(baseResult);
+        BaseResult baseResult = new BaseResult();
+        if (<var>@sServiceName</var>Service.DeleteRange(arrId, User.Identity.Name))
+        {
+        baseResult.Code = 0;
+        baseResult.Msg = "删除成功!";
         }
-  }
-}
+        else
+        {
+        baseResult.Code = 1;
+        baseResult.Msg = "删除失败!";
+        }
+        return JsonHelper.ObjectToJSON(baseResult);
+        }
+        }
+        }

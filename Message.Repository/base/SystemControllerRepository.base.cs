@@ -32,7 +32,7 @@ namespace Message.Repository
             if (oSearchEntity != null)
             {
                 if (oSearchEntity.Id != 0) { query = query.Where(x => x.Id == oSearchEntity.Id); }
-                if (!string.IsNullOrWhiteSpace(oSearchEntity.ScontrollerName)) { query = query.Where(x => x.ScontrollerName.Contains(oSearchEntity.ScontrollerName)); }
+                if (!string.IsNullOrWhiteSpace(oSearchEntity.ScontrollerName)) { query = query.Where(x => x.ScontrollerName==oSearchEntity.ScontrollerName); }
 
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Sremarks)) { query = query.Where(x => x.Sremarks == oSearchEntity.Sremarks); }
                 if (!string.IsNullOrWhiteSpace(oSearchEntity.Screater)) { query = query.Where(x => x.Screater == oSearchEntity.Screater); }

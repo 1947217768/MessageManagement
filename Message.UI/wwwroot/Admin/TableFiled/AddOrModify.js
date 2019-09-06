@@ -2,11 +2,13 @@
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery;
+    var iPageId = GetParameter("iPageId"),
+        iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val();
     form.on("submit(btnSubmit)", function (data) {
         layer.load();
         $.ajax({
             type: 'POST',
-            url: '/Admin/TableFiled/AddOrModify',
+            url: '/Admin/TableFiled/AddOrModify?iPageId=' + iPageId + '&iMethodId=' + iAddorModifyMethodeId,
             data: {
                 Id: $("#Id").val(),
                 IdataTableId: $("#IdataTableId").val(),

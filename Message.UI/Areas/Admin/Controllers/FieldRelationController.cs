@@ -26,13 +26,13 @@ namespace Message.UI.Areas.Admin.Controllers
         {
             return JsonHelper.ObjectToJSON(_FieldRelationService.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
         }
-        public IActionResult Index()
+        public IActionResult Index(int iPageId)
         {
-            return List();
+            return List(iPageId);
         }
-        public IActionResult AddOrModify()
+        public IActionResult AddOrModify(int iPageId)
         {
-            return Edit();
+            return Edit(iPageId);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -1,9 +1,5 @@
 ﻿using FluentValidation;
 using Message.Entity.ViewEntity.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Message.UI.Areas.Admin.Validation.Account
 {

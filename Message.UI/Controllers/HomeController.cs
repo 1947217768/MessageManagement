@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Message.UI.Models;
 using Microsoft.AspNetCore.Mvc;
-using Message.UI.Models;
-using Message.Entity.Mapping;
+using System.Diagnostics;
 
 namespace Message.UI.Controllers
 {

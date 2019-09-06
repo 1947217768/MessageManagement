@@ -1,12 +1,10 @@
-﻿using FluentValidation.Results;
-using Message.Core.Models;
+﻿using Message.Core.Models;
 using Message.Entity.Mapping;
 using Message.IService;
 using Message.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -26,13 +24,13 @@ namespace Message.UI.Areas.Admin.Controllers
         {
             return JsonHelper.ObjectToJSON(_SystemControllerService.GetPageList(pageInfo, oSearchEntity, sOperator, iOrderGroup, sSortName, sSortOrder));
         }
-        public IActionResult Index()
+        public IActionResult Index(int iPageId)
         {
-            return List();
+            return List(iPageId);
         }
-        public IActionResult AddOrModify()
+        public IActionResult AddOrModify(int iPageId)
         {
-            return Edit();
+            return Edit(iPageId);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -114,6 +112,10 @@ namespace Message.UI.Areas.Admin.Controllers
                                     {
                                         ScontrollerName = item.Name.Replace("Controller", string.Empty)
                                     };
+                                    if (entity.ScontrollerName == "System")
+                                    {
+                                        entity.ScontrollerName += "Controller";
+                                    }
                                     lstSystemController.Add(entity);
                                     SystemController entitySystemController = await _SystemControllerService.SelectAsync(new SystemController() { ScontrollerName = entity.ScontrollerName });
                                     if (entitySystemController == null)

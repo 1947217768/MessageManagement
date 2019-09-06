@@ -1,10 +1,6 @@
 ﻿using FluentValidation;
-using Message.Entity.ViewEntity.UserInfo;
 using Message.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Message.Entity.ViewEntity.UserInfo;
 
 namespace Message.UI.Areas.Admin.Validation.UserInfo
 {

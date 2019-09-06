@@ -4,11 +4,15 @@
         $ = layui.jquery,
         laytpl = layui.laytpl,
         table = layui.table;
+    var iPageId = GetParameter("iPageId"),
+        iLoadDataMethodeId = $("#iLoadDataMethodeId").val(),
+        iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val(),
+        iDeleteMethodeId = $("#iDeleteMethodeId").val();
     element = layui.element;
     //用户列表
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/Admin/SystemController/LoadData/',
+        url: '/Admin/SystemController/LoadData?iPageId=' + iPageId + '&iMethodId=' + iLoadDataMethodeId,
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -25,7 +29,7 @@
 
     $("#btnSearch").click(function () {
         table.reload("dataTable", {
-            url: '/Admin/SystemController/LoadData/',
+            url: '/Admin/SystemController/LoadData?iPageId=' + iPageId + '&iMethodId=' + iLoadDataMethodeId,
             page: {
                 curr: 1
             },
@@ -46,7 +50,7 @@
             type: 2,
             anim: 1,
             area: ['800px', '90%'],
-            content: "/Admin/SystemController/AddOrModify/",
+            content: '/Admin/SystemController/AddOrModify?iPageId=' + iPageId + '&iMethodId=' + iAddorModifyMethodeId,
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (edit) {
@@ -97,7 +101,7 @@
             layer.confirm('确定删除选中的控制器？', { icon: 3, title: '提示信息' }, function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/SystemController/DeleteRange/',
+                    url: '/Admin/SystemController/DeleteRange?iPageId=' + iPageId + '&iMethodId=' + iDeleteMethodeId,
                     data: { arrId: arrId },
                     dataType: "json",
                     headers: {
@@ -125,7 +129,7 @@
         layer.load();
         $.ajax({
             type: 'POST',
-            url: '/Admin/SystemController/ReflectionController/',
+            url: '/Admin/SystemController/ReflectionController?iPageId=' + iPageId + '&iMethodId=1422',
             //data: { arrUserId: arrUserId },
             dataType: "json",
             headers: {

@@ -24,9 +24,9 @@ namespace Message.Service
         private readonly I<var>@Model.StableName</var>Repository <var>@sRepositoryName</var>Repository;
         private readonly IMapper _mapper;
 
-        public <var>@Model.StableName</var>Service(I<var>@Model.StableName</var>Repository <var>@sRepositoryName</var>Repository, IMapper mapper)
+        public <var>@Model.StableName</var>Service(I<var>@Model.StableName</var>Repository <var>@(Model.StableName.Substring(0,1).ToLower()+Model.StableName.Substring(1))</var>Repository, IMapper mapper)
         {
-            <var>@sRepositoryName</var>Repository = <var>@sRepositoryName</var>Repository;
+            <var>@sRepositoryName</var>Repository = <var>@(Model.StableName.Substring(0,1).ToLower()+Model.StableName.Substring(1))</var>Repository;
             _mapper = mapper;
         }
         public PageInfo<<var>@Model.StableName</var>> GetPageList(PageInfo<<var>@Model.StableName</var>>pageInfo, <var>@Model.StableName</var> oSearchEntity = null, string sOperator = null, int iOrderGroup = 0, string sSortName = null, string sSortOrder = null)

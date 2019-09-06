@@ -4,10 +4,14 @@
         $ = layui.jquery,
         table = layui.table;
     element = layui.element;
+    var iPageId = GetParameter("iPageId"),
+        iLoadDataMethodeId = $("#iLoadDataMethodeId").val(),
+        iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val(),
+        iDeleteMethodeId = $("#iDeleteMethodeId").val();
     //用户列表
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/Admin/TableFiled/LoadData/',
+        url: '/Admin/TableFiled/LoadData?iPageId=' + iPageId + '&iMethodId=' + iLoadDataMethodeId,
         cellMinWidth: 95,
         page: true,
         height: "full-125",
@@ -29,7 +33,7 @@
 
     $("#btnSearch").click(function () {
         table.reload("dataTable", {
-            url: '/Admin/TableFiled/LoadData/',
+            url: '/Admin/TableFiled/LoadData?iPageId=' + iPageId + '&iMethodId=' + iLoadDataMethodeId,
             page: {
                 curr: 1
             },
@@ -53,7 +57,7 @@
             type: 2,
             anim: 1,
             area: ['800px', '90%'],
-            content: "/Admin/TableFiled/AddOrModify/",
+            content: '/Admin/TableFiled/AddOrModify?iPageId=' + iPageId + '&iMethodId=' + iAddorModifyMethodeId,
             success: function (layero, index) {
                 var body = layui.layer.getChildFrame('body', index);
                 if (edit) {
@@ -62,9 +66,9 @@
                     body.find("#ImaxLength").val(edit.ImaxLength);
                     body.find("#SfiledName").val(edit.SfiledName);
                     body.find("#Sexplain").val(edit.Sexplain);
-                    body.find("#BisEmpty").val(edit.BisEmpty);
                     body.find("#IdataTypeId").val(edit.IdataTypeId);
                     body.find("#Sremarks").text(edit.Sremarks === null ? "" : edit.Sremarks);
+                    body.find("input:checkbox[id='BisEmpty']").prop("checked", edit.BisEmpty);
                     form.render();
                 }
             }
@@ -109,7 +113,7 @@
             layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/TableFiled/DeleteRange/',
+                    url: '/Admin/TableFiled/DeleteRange?iPageId=' + iPageId + '&iMethodId=' + iDeleteMethodeId,
                     data: { arrId: arrId },
                     dataType: "json",
                     headers: {
