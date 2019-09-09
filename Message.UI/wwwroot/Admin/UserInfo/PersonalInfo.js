@@ -6,7 +6,8 @@
     //上传头像
     upload.render({
         elem: '.userFaceBtn',
-        url: '/Admin/UploadFileInfo/UploadImag',
+        url: '/Admin/UploadFileInfo/UploadImage?iPageId=1&iMethodId=1336',
+        //url: '/Admin/UploadFileInfo/UploadImage',
         size: 1024,
         method: "post",
         before: function (obj) {
@@ -33,7 +34,7 @@
         layer.load();
         $.ajax({
             type: 'POST',
-            url: '/Admin/UserInfo/PersonalInfo/',
+            url: '/Admin/UserInfo/PersonalInfo?iPageId=1&iMethodId=1345',
             data: {
                 SuserName: $("#SuserName").val(),
                 SuserEmail: $("#SuserEmail").val(),

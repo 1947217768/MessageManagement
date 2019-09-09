@@ -38,6 +38,11 @@ namespace Message.UI.Areas.Admin.Controllers
             string sActionName = context.ActionDescriptor.RouteValues["action"].ToString();
             int iMenuId = Convert.ToInt32(context.HttpContext.Request.Query["iPageId"]);
             int iActionId = Convert.ToInt32(context.HttpContext.Request.Query["iMethodId"]);
+            //个人资料特殊页面权限处理
+            if (iMenuId == 1 && (sActionName == "PersonalInfo" || sActionName == "UploadImage") && (iActionId == 1345 || iActionId == 1336))
+            {
+                await base.OnActionExecutionAsync(context, next);
+            }
             if (sAreaName == "Admin" && sActionName == "Index")
             {
                 if (string.IsNullOrWhiteSpace(sAreaName) || string.IsNullOrWhiteSpace(sControllerName) || string.IsNullOrWhiteSpace(sActionName) || iMenuId == 0)

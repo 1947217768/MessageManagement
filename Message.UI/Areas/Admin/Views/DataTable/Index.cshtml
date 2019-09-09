@@ -37,7 +37,7 @@
     <script src="~/Admin/DataTable/Index.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>
     <script type="text/html" id="Operation">
         {{#  if(d.Id>0){ }}
-        <a class="layui-btn layui-btn-xs" href="/Admin/TableFiled/TableInfo?iTableId={{d.Id}}" target="view_window" name="btnTableInfo" id="btnTableInfo">详情</a>
+        <a class="layui-btn layui-btn-xs" href="/Admin/TableFiled/TableInfo?iTableId={{d.Id}}&iPageId={{eval('iPageId')}}&iMethodId=1414" target="view_window" name="btnTableInfo" id="btnTableInfo">详情</a>
         {{#  } }}
     </script>
 }

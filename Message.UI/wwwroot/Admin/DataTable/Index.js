@@ -1,11 +1,11 @@
-﻿layui.use(['form', 'element', 'layer', 'table'], function () {
+﻿var iPageId = GetParameter("iPageId");
+layui.use(['form', 'element', 'layer', 'table'], function () {
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
         table = layui.table;
     element = layui.element;
-    var iPageId = GetParameter("iPageId"),
-        iLoadDataMethodeId = $("#iLoadDataMethodeId").val(),
+    var iLoadDataMethodeId = $("#iLoadDataMethodeId").val(),
         iAddorModifyMethodeId = $("#iAddorModifyMethodeId").val(),
         iDeleteMethodeId = $("#iDeleteMethodeId").val();
     //用户列表

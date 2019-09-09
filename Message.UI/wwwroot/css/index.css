@@ -67,7 +67,7 @@ iframe{ position:absolute; height:100%; width:100%; border:none;}
 .showMenu.layui-layout-admin .layui-side{ left:-200px; }
 .showMenu .layui-body,.showMenu .layui-footer{ left:0; }
 /*左侧用户头像*/
-.top_menu{ background-color:inherit !important; position:absolute; right:0;top:0; }
+.top_menu{ background-color:inherit !important; position:absolute; right:0;top:0;right: -15px; }
 .layui-layout-admin .layui-side{ left:0; overflow:hidden;}
 .user-photo{width: 200px; height: 120px; padding:15px 0 5px;}
 .user-photo a.img{ display: block; width:80px; height:80px; margin: 0 auto 10px;}
@@ -106,9 +106,10 @@ iframe{ position:absolute; height:100%; width:100%; border:none;}
 /*多窗口页面操作下拉*/
 .closeBox {
     position: absolute;
-    right: 0; 
+    right: 0;
     color: #000;
     border-left: 1px solid #e2e2e2;
+    padding: 0 20px 0 0;
 }
 .closeBox .layui-nav-item{ line-height:40px; }
 .closeBox .layui-nav-item>a,.closeBox .layui-nav-item>a:hover{ color:#000; }

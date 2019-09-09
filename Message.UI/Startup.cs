@@ -39,7 +39,7 @@ namespace Message.UI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             var connection = Configuration.GetConnectionString("DefaultSqlServer");
-            services.AddDbContext<MessageManagementContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<MessageManagementContext>(options => options.UseSqlServer(connection), ServiceLifetime.Transient);
             //注入服务
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //初始化Redis
