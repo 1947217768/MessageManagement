@@ -22,7 +22,7 @@ namespace Message.Core.Repository
         //{
         //    _dbContext = GetDB();
         //}
-       // public abstract DbContext GetDB();
+        // public abstract DbContext GetDB();
         protected virtual IQueryable<TEntity> SearchFilter(DbContext DB, TEntity oSearchEntity, IQueryable<TEntity> query, string sOperator = null)
         {
             query = FixedQueryFilter(DB, oSearchEntity, query, sOperator);
@@ -73,6 +73,7 @@ namespace Message.Core.Repository
             _dbContext.Set<TEntity>().Add(entity);
             iResult += _dbContext.SaveChanges();
             AfterAppend(_dbContext, entity, sOperator);
+            ChangeDataDeleteKey(entity, sOperator);
             return iResult;
         }
         public virtual bool BeforeAppend(DbContext DB, TEntity entity, string sOperator)

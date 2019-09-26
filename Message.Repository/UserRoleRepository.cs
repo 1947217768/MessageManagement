@@ -30,8 +30,8 @@ namespace Message.Repository
         }
         public override void ChangeDataDeleteKey(UserRole entity, string sOperator)
         {
-            RedisMethod.DeleteUserMenu(entity.Id);
             RedisMethod.DeleteUserTreeMenu(entity.IuserId);
+            RedisMethod.DeleteUserMenu(entity.Id);
             base.ChangeDataDeleteKey(entity, sOperator);
         }
     }
