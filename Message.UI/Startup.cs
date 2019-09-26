@@ -5,6 +5,7 @@ using Message.Core.Models;
 using Message.Entity.Mapping;
 using Message.Repository;
 using Message.Service;
+using Message.UI.SignalR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,7 @@ namespace Message.UI
             services.AddDbContext<MessageManagementContext>(options => options.UseSqlServer(connection), ServiceLifetime.Transient);
             //注入服务
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSignalR();
             //初始化Redis
             var csredis = new CSRedis.CSRedisClient(Configuration.GetSection("RedisConnectionStrins")["DefaultRedis"]);
             RedisHelper.Initialization(csredis);
@@ -108,6 +110,7 @@ namespace Message.UI
                     areaName: "Admin",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<SignalRHelper>("/Memo");
             });
             AppDependencyResolver.Init(app.ApplicationServices);
         }

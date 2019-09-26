@@ -26,6 +26,7 @@ namespace Message.Entity.Mapping
         public virtual DbSet<DataType> DataType { get; set; }
         public virtual DbSet<TableFiled> TableFiled { get; set; }
         public virtual DbSet<FieldRelation> FieldRelation { get; set; }
+        public virtual DbSet<Memo> Memo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -151,6 +152,7 @@ namespace Message.Entity.Mapping
             modelBuilder.Entity<TableFiled>().HasIndex(e => new { e.IdataTableId, e.IdataTypeId });
             modelBuilder.Entity<DataTable>().HasIndex(e => new { e.IdataBaseId });
             modelBuilder.Entity<FieldRelation>().HasIndex(e => new { e.IforeignkeyId, e.IprimarykeyId });
+            modelBuilder.Entity<Memo>();
         }
     }
 }

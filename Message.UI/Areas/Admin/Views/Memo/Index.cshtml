@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "备忘录";
+    string sContent = ViewBag.Scontent;
+}
+
+<div class="layui-form">
+    <div class="layui-form-item">
+        <textarea id="Scontent">@sContent</textarea>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/layui/ace.js"></script>
+    <script src="~/signalr/signalr.js"></script>
+    @*<script src="~/Admin/Memo/Index.js?_=@DateTime.Now.ToString(" yyyyMMddHHmmss")"></script>*@
+    <script src="~/Admin/Memo/Index.js"></script>
+}

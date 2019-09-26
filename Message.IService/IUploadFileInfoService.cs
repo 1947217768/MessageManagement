@@ -24,6 +24,7 @@ namespace Message.IService
         /// <returns></returns>
         Task<UploadFileInfo> GetFileInfoAsync(UploadFileInfo entity, string sOperator = null);
 
+        bool DeleteFile(string sFilePath);
 
     }
 }

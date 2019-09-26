@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Message.UI.Areas.Admin.Controllers
@@ -49,6 +50,33 @@ namespace Message.UI.Areas.Admin.Controllers
             {
                 return JsonHelper.ObjectToJSON(new { code = 1, msg = ex.Message, });
             }
+        }
+
+        public string DeleteFile(string imgpath)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(imgpath))
+                {
+                    Regex reg = new Regex(@"(?imn)(?<do>http://[^/]+/)(?<dir>([^/]+/)*([^/.]*$)?)((?<page>[^?.]+\.[^?]+)\?)?(?<par>.*$)");
+                    MatchCollection mc = reg.Matches(imgpath);
+                    string sRelativePath = string.Empty;
+                    foreach (Match m in mc)
+                    {
+                        sRelativePath = m.Groups["dir"].Value + m.Groups["par"].Value;
+                    }
+                    _UploadFileInfoService.DeleteFile(sRelativePath);
+                }
+                else
+                {
+                    return "路径为空!";
+                }
+            }
+            catch (System.Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+            return "删除成功!";
         }
     }
 }

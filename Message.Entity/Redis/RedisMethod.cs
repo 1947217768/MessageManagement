@@ -53,6 +53,8 @@ namespace Message.Entity.Redis
             string sUserMenuKey = "UserMenu_" + iUserId;
             return await RedisHelper.CacheShellAsync(sUserMenuKey, iTimeoutSeconds, getData);
         }
+
+
         public static void DeleteUserMenu(int iUserId = 0)
         {
             string sUserMenuKey = "UserMenu_*";
@@ -73,6 +75,22 @@ namespace Message.Entity.Redis
         {
             string sRoleKey = "System_Roles";
             RedisHelper.Del(sRoleKey);
+        }
+
+        /// <summary>
+        /// 用户备忘录缓存壳
+        /// </summary>
+        /// <param name="sUserMemoKey">key</param>
+        /// <param name="iTimeoutSeconds">过期时间</param>
+        /// <param name="getData"></param>
+        /// <returns></returns>
+        public static async Task<Memo> GetUserMemoAsync(string sUserMemoKey, int iTimeoutSeconds, Func<Task<Memo>> getData)
+        {
+            return await RedisHelper.CacheShellAsync(sUserMemoKey, iTimeoutSeconds, getData);
+        }
+        public static void SetUserMemo(string sUserMemoKey, Memo entity, int iTimeoutSeconds)
+        {
+            RedisHelper.Set(sUserMemoKey, entity, -1);
         }
     }
 }

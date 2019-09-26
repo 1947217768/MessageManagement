@@ -79,5 +79,12 @@ namespace Message.Service
         {
             return await _UploadFileInfoRepository.SelectAsync(entity, sOperator);
         }
+
+        public bool DeleteFile(string sFilePath)
+        {
+            string sFullPath = _hostEnvironment.ContentRootPath + "\\wwwroot\\" + sFilePath;
+            File.Delete(sFullPath);
+            return true;
+        }
     }
 }
