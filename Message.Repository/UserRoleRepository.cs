@@ -31,7 +31,7 @@ namespace Message.Repository
         public override void ChangeDataDeleteKey(UserRole entity, string sOperator)
         {
             RedisMethod.DeleteUserTreeMenu(entity.IuserId);
-            RedisMethod.DeleteUserMenu(entity.Id);
+            RedisMethod.DeleteUserMenu(entity.IuserId);
             base.ChangeDataDeleteKey(entity, sOperator);
         }
     }
