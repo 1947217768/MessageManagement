@@ -9,3 +9,6 @@ DotNet Core3.0 SDK(dotnet-sdk-3.0.100-preview6-012264-win-x64)以上版本     h
 用户名密码 admin  admin
 如果您觉得这篇文章对您有帮助，请为我Star吧！
 项目部分截图https://www.cnblogs.com/lyzi/p/11491535.html
+
+
+非常感谢！
